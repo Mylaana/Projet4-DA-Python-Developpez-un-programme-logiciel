@@ -2,8 +2,8 @@
 Controller module
 """
 import time
-from . import model
-from . import view
+from . import view as v
+from . import model as m
 
 
 class Controller:
@@ -12,13 +12,13 @@ class Controller:
     """
     def __init__(self):
 
-        self.model = model.Model(
+        self.model = m.Model(
                             name="Tournoi club du vieux Lyon",
                             location="Lyon - France",
                             date_start=time.localtime(),
                             round_number=4
                             )
 
-        self.view = view.View()
+        self.view = v.View()
 
-        print("le controleur est bien initialisé")
+        self.model.player_list = self.view.get_player_list()
