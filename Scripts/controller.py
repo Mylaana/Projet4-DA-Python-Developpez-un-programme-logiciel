@@ -1,19 +1,20 @@
 """
-model dedicated module
+Controller module
 """
 import time
-from myclass import class_model as cls
+import model
+import view
 
 
-class Model:
+class Controller:
     """
-    awesome model
+    Controller class
     """
     def __init__(self):
-        self.list_player = []
-        self.tournament = cls.Tournament(
+        self.model = model.Model(
                             name="Tournoi club du vieux Lyon",
                             location="Lyon - France",
                             date_start=time.localtime(),
                             round_number=4
                             )
+        self.view = view.View()
