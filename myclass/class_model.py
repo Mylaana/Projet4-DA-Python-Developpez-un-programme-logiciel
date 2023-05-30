@@ -20,10 +20,11 @@ class Round:
                 le dict.J de joueur.X alors joueur.B = joueur.X
             -pop joueur.B de dict.R
             -next
-        """
 
         for player in player_list:
             print(player.name)
+        """
+
 
     def dummy_calculate_scores(self):
         """
