@@ -1,2 +1,0 @@
-"python.linting.pylintArgs": ["--rcfile=setup.cfg"],
-"python.linting.flake8Args": ["--rcfile=setup.cfg"]
