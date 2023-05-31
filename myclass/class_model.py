@@ -26,14 +26,6 @@ class Round:
         """
 
 
-    def dummy_calculate_scores(self):
-        """
-        Randomly generate players scores for this round.
-        This is a dummy function (the scores should be determined by every games,
-        instead of randomed for app building purpose).
-        """
-
-
 class Player:
     """
     player class

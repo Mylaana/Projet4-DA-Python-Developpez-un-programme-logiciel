@@ -35,6 +35,6 @@ class Model:
             -next
         """
 
-        running_round = cls.Round({})
-        self.round_list.append(running_round)
+        current_round = cls.Round({})
+        self.round_list.append(current_round)
         return None

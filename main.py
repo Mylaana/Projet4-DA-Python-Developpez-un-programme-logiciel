@@ -12,6 +12,7 @@ Controller :
 Vue :
 
 """
+
 import os
 from myscripts import controller
 
@@ -25,3 +26,4 @@ def clear_console():
 
 clear_console()
 my_controller = controller.Controller()
+print("end of treatment")

@@ -40,6 +40,13 @@ class View():
             "Guillaume Aoust 1994/10/12",
             "Christiane Laramée 1999/01/22",
             "Élise Lévesque 2004/03/19",
-            "Orville Mireault 1984/10/6",
+            "Orville Mireault 1984/10/06",
             "Étienne Salois 1992/12/06"
         ]
+
+    def dummy_calculate_scores(self):
+        """
+        Randomly generate players scores for this round.
+        This is a dummy function (the scores should be determined by every games,
+        instead of randomed for app building purpose).
+        """
