@@ -27,15 +27,9 @@ def wait_for_event(message, choice_possibilities: dict, quit_additionnal_option:
 
     while True:
         choice = input("")
-        print("valeur choisie : " + choice + " de type " + str(type(choice)))
-        try:
-            # threading.Thread(target=on_event_noob, args=(choice,)).start()
-            threading.Thread(target=on_event_middle, args=(choice, choice_possibilities,)).start()
-            # threading.Thread(target=on_event, args=(choice, choice_possibilities[choice],quit_additionnal_option,)).start()
-
-            return
-        except ValueError:
-            print("Choix invalide")
+        threading.Thread(target=on_event_middle, 
+                             args=(choice, choice_possibilities, quit_additionnal_option,)).start()
+        return
 
 
 def on_event(choice, choice_possibilities: dict, quit_additionnal_option: bool):
@@ -54,13 +48,13 @@ def on_event(choice, choice_possibilities: dict, quit_additionnal_option: bool):
         print("Choix invalide")
 
 
-def on_event_middle(choice, choice_possibilities: dict):
+def on_event_middle(choice, choice_possibilities: dict, quit_additionnal_option: bool = False):
     """
     Calling the function associated with the choice
     Returns None
     """
 
-    if choice == "q":
+    if choice == "q" and quit_additionnal_option:
         print("Sortie du programme.")
         sys.exit()
 
