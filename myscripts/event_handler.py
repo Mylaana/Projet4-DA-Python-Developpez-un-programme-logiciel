@@ -23,32 +23,16 @@ def wait_for_event(message, choice_possibilities: dict, quit_additionnal_option:
         print("MESSAGE INCORRECT EN ARGUMENT")
 
     if quit_additionnal_option:
-        message += "vous pouvez également quitter le programme en appuyant sur 'q' \n"
+        print("'q' : quitter le programme. \n")
 
     while True:
         choice = input("")
-        threading.Thread(target=on_event_middle, 
-                             args=(choice, choice_possibilities, quit_additionnal_option,)).start()
+        threading.Thread(target=on_event,
+                         args=(choice, choice_possibilities, quit_additionnal_option,)).start()
         return
 
 
-def on_event(choice, choice_possibilities: dict, quit_additionnal_option: bool):
-    """
-    Casting the function associated with the choice
-    Returns None
-    """
-
-    if choice == "q" and quit_additionnal_option:
-        print("Sortie du programme.")
-        sys.exit()
-
-    if choice_possibilities[choice] is not None:
-        print("execution de " + choice_possibilities[choice])
-    else:
-        print("Choix invalide")
-
-
-def on_event_middle(choice, choice_possibilities: dict, quit_additionnal_option: bool = False):
+def on_event(choice, choice_possibilities: dict, quit_additionnal_option: bool = False):
     """
     Calling the function associated with the choice
     Returns None
@@ -63,24 +47,6 @@ def on_event_middle(choice, choice_possibilities: dict, quit_additionnal_option:
         chose_function()
     else:
         print("choice n'est pas dans choice_possibilities")
-
-
-def on_event_noob(choice):
-    """
-    Casting the function associated with the choice
-    Returns None
-    """
-
-    if choice == "q":
-        print("Sortie du programme.")
-        sys.exit()
-
-    if choice == "1":
-        noob_message1()
-    elif choice == "2":
-        noob_message2()
-    else:
-        print("Choix invalide")
 
 
 def noob_message1():

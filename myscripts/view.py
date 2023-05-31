@@ -3,12 +3,13 @@ view module
 """
 
 
-class View():
+class View:
     """
     View class
     """
-    def __init__(self):
+    def __init__(self, controller):
         self.player_list = self.dummy_generate_player_list()
+        self.controller = controller
 
     def get_player_list(self):
         """

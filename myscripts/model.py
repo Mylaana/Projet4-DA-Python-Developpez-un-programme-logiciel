@@ -8,13 +8,15 @@ class Model:
     """
     Model = tournament class
     """
-    def __init__(self, name: str, location: str, date_start: str, round_number: int = 4):
-        self.name = name
-        self.location = location
-        self.date_start = date_start
+    default_round_number = 4
+
+    def __init__(self):
+        self.name = ""
+        self.location = ""
+        self.date_start = ""
         self.date_end = ""
         self.round_list = []
-        self.round_number = round_number
+        self.round_number = self.default_round_number
         self.player_list = []
         self.description = ""
 

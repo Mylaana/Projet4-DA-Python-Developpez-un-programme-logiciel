@@ -15,6 +15,8 @@ Vue :
 
 import os
 from myscripts import controller
+from myscripts import view
+from myscripts import model
 
 
 def clear_console():
@@ -24,6 +26,18 @@ def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-clear_console()
-my_controller = controller.Controller()
-print("end of treatment")
+def main():
+    """
+    main function
+    """
+    clear_console()
+    my_model = model.Model()
+    my_controller = controller.Controller(my_model, None)
+    my_view = view.View(my_controller)
+    my_controller.view = my_view
+
+    print("end of treatment")
+
+
+if __name__ == "__main__":
+    main()
