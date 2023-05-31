@@ -1,6 +1,8 @@
 """
 view module
 """
+from . import event_handler as event
+# from . import controller as c
 
 
 class View:
@@ -10,6 +12,21 @@ class View:
     def __init__(self, controller):
         self.player_list = self.dummy_generate_player_list()
         self.controller = controller
+
+    def start(self):
+        """
+        Starting function
+        """
+        event.wait_for_event(
+            message=["souhaitez-vous :",
+                     "'1' créer un nouveau tournoi",
+                     "'2' charger un tournoi existant"
+                     ],
+            choice_possibilities={
+                "1": self.controller.create_new_tournament,
+                "2": self.controller.load_existing_tournament
+                },
+            quit_additionnal_option=True)
 
     def get_player_list(self):
         """

@@ -35,6 +35,7 @@ def main():
     my_controller = controller.Controller(my_model, None)
     my_view = view.View(my_controller)
     my_controller.view = my_view
+    my_controller.program_start()
 
     print("end of treatment")
 

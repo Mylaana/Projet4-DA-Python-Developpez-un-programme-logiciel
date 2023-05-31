@@ -2,7 +2,7 @@
 Controller module
 """
 # import time
-from . import event_handler as event
+# from . import event_handler as event
 from . import view as v
 from . import model as m
 
@@ -23,23 +23,19 @@ class Controller:
         self.model = model
         self.view = view
 
-        event.wait_for_event(
-                    message=["souhaitez-vous :", 
-                             "'1' créer un nouveau tournoi",
-                             "'2' charger un tournoi existant"
-                             ],
-                    choice_possibilities={
-                        "1": self.create_new_tournament,
-                        "2": self.load_existing_tournament
-                        },
-                    quit_additionnal_option=True)
+    def program_start(self):
+        """
+        Starting the view prompts
+        """
+        self.view.start()
 
     def create_new_tournament(self):
         """
         Create new tournament from view's player list
         returns None
         """
-        self.model.player_list = self.view.get_player_list()
+        the_list = self.view.get_player_list()
+        self.model.player_list = the_list
 
     def load_existing_tournament(self):
         """

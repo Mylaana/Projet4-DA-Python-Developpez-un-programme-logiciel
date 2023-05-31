@@ -47,17 +47,3 @@ def on_event(choice, choice_possibilities: dict, quit_additionnal_option: bool =
         chose_function()
     else:
         print("choice n'est pas dans choice_possibilities")
-
-
-def noob_message1():
-    """
-    msg 1
-    """
-    print("message 1 dskjhfqlsdkj")
-
-
-def noob_message2():
-    """
-    msg 2
-    """
-    print("message 2 123456789")
