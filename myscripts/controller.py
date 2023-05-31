@@ -4,7 +4,7 @@ Controller module
 import time
 from . import view as v
 from . import model as m
-from . import event_handleing as event
+from . import event_handler as event
 
 
 class Controller:
