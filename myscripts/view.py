@@ -1,15 +1,15 @@
 """
 view module
 """
+from typing import Callable
 from . import event_handler as event
-# from . import controller as c
-
+from .controller import ControllerInterface
 
 class View:
     """
     View class
     """
-    def __init__(self, controller):
+    def __init__(self, controller: Controller):
         self.player_list = self.dummy_generate_player_list()
         self.controller = controller
 
@@ -24,7 +24,7 @@ class View:
                      ],
             choice_possibilities={
                 "1": self.controller.create_new_tournament,
-                "2": self.controller.load_existing_tournament
+                "2": self.controller.load_existing_tournament,
                 },
             quit_additionnal_option=True)
 
@@ -47,7 +47,7 @@ class View:
             print("tant pis")
             return None
 
-    def dummy_generate_player_list(self):
+    def dummy_generate_player_list(self) -> list[str]:
         """
         player list for testing purpose
         """

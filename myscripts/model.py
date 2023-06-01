@@ -20,7 +20,7 @@ class Model:
         self.player_list = []
         self.description = ""
 
-    def add_new_round(self):
+    def create_new_round(self):
         """
         Generates new round and player pairings.
         Returns None
