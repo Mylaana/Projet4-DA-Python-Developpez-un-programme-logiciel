@@ -10,42 +10,69 @@ class View:
     def __init__(self):
         self.player_list = self.dummy_generate_player_list()
 
-    def show_in_console(self, message):
+    def show_in_console(self, message: str = "", title: str = ""):
         """
         Receives either str or list[str]
         Returns none
         """
+        print("\n\n")
+
+        if title != "":
+            print("-----------------------------------\n" + title.upper() + "\n-----------------------------------\n")
+
         if isinstance(message, str):
-            print("\n\n" + message + "\n")
+            print(message)
         elif isinstance(message, list):
             for line in message:
                 print(line)
-
-    def prompt_tournament_selection(self) -> str:
-        """
-        Starting function, prompts user for :
-        - new tournament
-        - load tournament
-
-        Returns :
-        - '1' for new tournament
-        - '2' for load tournament
-        - 'q' for exit program
-        """
-
-        message = ["souhaitez-vous :",
-                   "'1' créer un nouveau tournoi",
-                   "'2' charger un tournoi existant",
-                   "'q' : quitter le programme."
-                   ]
-        self.show_in_console(message)
-        return input("")
+        print("\n")
 
     def invalid_choice(self):
         """
         shows the choice is not valid
         """
         print("\n\nLe choix effectué n'est pas valide !\n")
+
+    def prompt_tournament_selection(self) -> str:
+        """
+        Prompts user for :
+        - new tournament
+        - load tournament
+        - exiting the program
+
+        Returns :
+        - '1' to create new tournament
+        - '2' to load tournament
+        - 'q' to exit program
+        """
+        self.show_in_console(["souhaitez-vous :",
+                              "'1' créer un nouveau tournoi",
+                              "'2' charger un tournoi existant",
+                              "'q' : quitter le programme."
+                              ])
+        return input("")
+
+    def prompt_player_list_selection(self):
+        """
+        Prompts user for :
+        - using default player list
+        - create new list of player
+        - return to tournament selection
+        - exiting the program
+
+        Returns :
+        - '1' to default player list
+        - '2' to create new list of player
+        - 'r' to return to tournament selection
+        - 'q' to exit program
+        """
+        self.show_in_console(message=["souhaitez-vous :",
+                                      "'1' utiliser la liste de joueurs par défaut",
+                                      "'2' créer une liste de joueurs",
+                                      "'r' : retourner à la sélection de tournoi.",
+                                      "'q' : quitter le programme."],
+                             title="selection du tournoi")
+        return input("")
 
     def get_player_list(self):
         """
