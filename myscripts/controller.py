@@ -39,6 +39,7 @@ class Controller:
             _MENU_TREE_PARENT[child]: parent
             _MENU_TREE_CHILD[parent]: child
         print(_MENU_TREE_PARENT)
+
     # basic menu commands
     _MENU_COMMAND_RETURN = "r"
     _MENU_COMMAND_EXIT = "q"
@@ -59,7 +60,6 @@ class Controller:
         self.selected_element = {self._MENU_NAME_TOURNAMENT: False,
                                  self._MENU_NAME_PLAYER_LIST: False
                                  }
-
 
     def kernel(self) -> None:
         """
@@ -102,6 +102,7 @@ class Controller:
             self.view.invalid_choice()
             return False
 
+        # runs the controller's function related to choice, see choice_dict
         choice_dict[choice]()
         return True
 
