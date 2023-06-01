@@ -30,7 +30,7 @@ def main():
     """
     main function
     """
-    clear_console()
+
     my_model = model.Model()
     my_controller = controller.Controller(my_model, None)
     my_view = view.View()
@@ -39,4 +39,6 @@ def main():
 
 
 if __name__ == "__main__":
+    # clear_console()
+    print("debut code")
     main()

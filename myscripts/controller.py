@@ -19,16 +19,15 @@ class Controller:
     _MENU_NAME_PLAYER_LIST = "player_list"
     _MENU_NAME_ROUND = "round"
 
-    # key = child : value = parent
-    _MENU_TREE_PARENT = {}
-
-    # key = parent : value = child
-    _MENU_TREE_CHILD = {}
-
     # Creating menu tree
     _MENU_TREE = (_MENU_NAME_TOURNAMENT,
                   _MENU_NAME_PLAYER_LIST,
                   _MENU_NAME_ROUND)
+    
+    # key = child : value = parent
+    _MENU_TREE_CHILD = {}
+    # key = parent : value = child
+    _MENU_TREE_PARENT = {}
 
     # filling _MENU_TREE_PARENT and _MENU_TREE_CHILD
     parent = None
@@ -36,9 +35,8 @@ class Controller:
         child = parent
         parent = item
         if child is not None:
-            _MENU_TREE_PARENT[child]: parent
-            _MENU_TREE_CHILD[parent]: child
-        print(_MENU_TREE_PARENT)
+            _MENU_TREE_CHILD[child] = parent
+            _MENU_TREE_PARENT[parent] = child
 
     # basic menu commands
     _MENU_COMMAND_RETURN = "r"
@@ -65,17 +63,6 @@ class Controller:
         """
         the almighty kernel
         """
-        # test
-        test_list = []
-        for key, value in self._MENU_TREE_CHILD:
-            test_list.append(f"{key} -> {value}")
-        self.view.show_in_console(test_list, "_MENU_TREE_CHILD")
-
-        test_list = []
-        for key, value in self._MENU_TREE_PARENT:
-            test_list.append(key + " -> " + value)
-        self.view.show_in_console(test_list, "_MENU_TREE_PARENT")
-
         while True:
             # select a tournament by either creating or loading one
             if self.selected_element[self._MENU_NAME_TOURNAMENT] is False:
