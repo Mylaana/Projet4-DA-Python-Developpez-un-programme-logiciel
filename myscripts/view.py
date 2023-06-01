@@ -9,6 +9,7 @@ class View:
     """
     def __init__(self):
         self.player_list = self.dummy_generate_player_list()
+        self.aaa = "aaa"
 
     def show_in_console(self, message="", title=""):  # type: (str or list or None, str or None) -> None
         """

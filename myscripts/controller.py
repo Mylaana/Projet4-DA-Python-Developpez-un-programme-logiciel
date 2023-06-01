@@ -23,7 +23,7 @@ class Controller:
     _MENU_TREE = (_MENU_NAME_TOURNAMENT,
                   _MENU_NAME_PLAYER_LIST,
                   _MENU_NAME_ROUND)
-    
+
     # key = child : value = parent
     _MENU_TREE_CHILD = {}
     # key = parent : value = child
@@ -125,7 +125,7 @@ class Controller:
         return self.rooter(choice=self.view.prompt_tournament_selection(),
                            choice_dict={"1": self.create_new_tournament,
                                         "2": self.load_existing_tournament,
-                                        "q": self.exit_program})
+                                        self._MENU_COMMAND_EXIT: self.exit_program})
 
     def select_player_list(self) -> bool:
         """
@@ -141,7 +141,7 @@ class Controller:
         return self.rooter(choice=prompt_result,
                            choice_dict={"1": self.create_new_tournament,
                                         "2": self.load_existing_tournament,
-                                        "q": self.exit_program})
+                                        self._MENU_COMMAND_EXIT: self.exit_program})
 
     def create_new_tournament(self):
         """
