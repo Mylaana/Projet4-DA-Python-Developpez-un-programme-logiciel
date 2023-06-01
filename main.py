@@ -37,8 +37,6 @@ def main():
     my_controller.view = my_view
     my_controller.program_start()
 
-    print("end of treatment")
-
 
 if __name__ == "__main__":
     main()

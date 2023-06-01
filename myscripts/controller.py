@@ -3,8 +3,23 @@ Controller module
 """
 # import time
 # from . import event_handler as event
+from abc import ABC, abstractmethod
 from . import view as v
 from . import model as m
+
+
+
+class ControllerInterface(ABC):
+    """
+    Controller's interface for import & implementation without creating circular import errors
+    """
+    @abstractmethod
+    def create_new_tournament(self):
+        pass
+
+    @abstractmethod
+    def load_existing_tournament(self):
+        pass
 
 
 class Controller:
