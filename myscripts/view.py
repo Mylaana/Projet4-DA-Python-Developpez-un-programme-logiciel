@@ -1,15 +1,14 @@
 """
 view module
 """
-from typing import Callable
 from . import event_handler as event
-from .controller import ControllerInterface
+
 
 class View:
     """
     View class
     """
-    def __init__(self, controller: Controller):
+    def __init__(self, controller):
         self.player_list = self.dummy_generate_player_list()
         self.controller = controller
 
