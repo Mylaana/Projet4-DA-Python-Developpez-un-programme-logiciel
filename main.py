@@ -33,9 +33,9 @@ def main():
     clear_console()
     my_model = model.Model()
     my_controller = controller.Controller(my_model, None)
-    my_view = view.View(my_controller)
+    my_view = view.View()
     my_controller.view = my_view
-    my_controller.program_start()
+    my_controller.kernel()
 
 
 if __name__ == "__main__":

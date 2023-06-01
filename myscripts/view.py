@@ -1,32 +1,51 @@
 """
 view module
 """
-from typing import Callable
-from . import event_handler as event
-from .controller import ControllerInterface
+
 
 class View:
     """
     View class
     """
-    def __init__(self, controller: Controller):
+    def __init__(self):
         self.player_list = self.dummy_generate_player_list()
-        self.controller = controller
 
-    def start(self):
+    def show_in_console(self, message):
         """
-        Starting function
+        Receives either str or list[str]
+        Returns none
         """
-        event.wait_for_event(
-            message=["souhaitez-vous :",
-                     "'1' créer un nouveau tournoi",
-                     "'2' charger un tournoi existant"
-                     ],
-            choice_possibilities={
-                "1": self.controller.create_new_tournament,
-                "2": self.controller.load_existing_tournament,
-                },
-            quit_additionnal_option=True)
+        if isinstance(message, str):
+            print("\n\n" + message + "\n")
+        elif isinstance(message, list):
+            for line in message:
+                print(line)
+
+    def prompt_tournament_selection(self) -> str:
+        """
+        Starting function, prompts user for :
+        - new tournament
+        - load tournament
+
+        Returns :
+        - '1' for new tournament
+        - '2' for load tournament
+        - 'q' for exit program
+        """
+
+        message = ["souhaitez-vous :",
+                   "'1' créer un nouveau tournoi",
+                   "'2' charger un tournoi existant",
+                   "'q' : quitter le programme."
+                   ]
+        self.show_in_console(message)
+        return input("")
+
+    def invalid_choice(self):
+        """
+        shows the choice is not valid
+        """
+        print("\n\nLe choix effectué n'est pas valide !\n")
 
     def get_player_list(self):
         """
