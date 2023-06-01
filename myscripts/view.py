@@ -10,15 +10,17 @@ class View:
     def __init__(self):
         self.player_list = self.dummy_generate_player_list()
 
-    def show_in_console(self, message: str = "", title: str = ""):
+    def show_in_console(self, message="", title=""):  # type: (str or list or None, str or None) -> None
         """
         Receives either str or list[str]
         Returns none
         """
         print("\n\n")
-
         if title != "":
             print("-----------------------------------\n" + title.upper() + "\n-----------------------------------\n")
+
+        if message == "":
+            return
 
         if isinstance(message, str):
             print(message)

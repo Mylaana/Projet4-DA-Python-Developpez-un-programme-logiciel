@@ -15,20 +15,33 @@ class Controller:
 
     # these elements helps adding a hierarchy in console's choice for navigation purpose
     # menu names
-    _TOURNAMENT = "tournament"
-    _PLAYER_LIST = "player_list"
+    _MENU_NAME_TOURNAMENT = "tournament"
+    _MENU_NAME_PLAYER_LIST = "player_list"
+    _MENU_NAME_ROUND = "round"
 
     # key = child : value = parent
-    _PARENT_MENU = {_PLAYER_LIST: _TOURNAMENT
-                    }
+    _MENU_TREE_PARENT = {}
 
     # key = parent : value = child
-    _CHILD_MENU = {_TOURNAMENT: _PLAYER_LIST
-                   }
+    _MENU_TREE_CHILD = {}
 
-    # parent menu tuple
-    _PARENT_TUPLE = (_TOURNAMENT,
-                     _PLAYER_LIST)
+    # Creating menu tree
+    _MENU_TREE = (_MENU_NAME_TOURNAMENT,
+                  _MENU_NAME_PLAYER_LIST,
+                  _MENU_NAME_ROUND)
+
+    # filling _MENU_TREE_PARENT and _MENU_TREE_CHILD
+    parent = None
+    for item in _MENU_TREE:
+        child = parent
+        parent = item
+        if child is not None:
+            _MENU_TREE_PARENT[child]: parent
+            _MENU_TREE_CHILD[parent]: child
+        print(_MENU_TREE_PARENT)
+    # basic menu commands
+    _MENU_COMMAND_RETURN = "r"
+    _MENU_COMMAND_EXIT = "q"
 
     def __init__(self, model: m.Model, view: v.View):
         """
@@ -43,23 +56,34 @@ class Controller:
         self.view = view
 
         # stocks the status (value) of every selection
-        self.selected_element = {self._TOURNAMENT: False,
-                                 self._PLAYER_LIST: False
+        self.selected_element = {self._MENU_NAME_TOURNAMENT: False,
+                                 self._MENU_NAME_PLAYER_LIST: False
                                  }
+
 
     def kernel(self) -> None:
         """
         the almighty kernel
         """
+        # test
+        test_list = []
+        for key, value in self._MENU_TREE_CHILD:
+            test_list.append(f"{key} -> {value}")
+        self.view.show_in_console(test_list, "_MENU_TREE_CHILD")
+
+        test_list = []
+        for key, value in self._MENU_TREE_PARENT:
+            test_list.append(key + " -> " + value)
+        self.view.show_in_console(test_list, "_MENU_TREE_PARENT")
 
         while True:
             # select a tournament by either creating or loading one
-            if self.selected_element[self._TOURNAMENT] is False:
-                self.selected_element[self._TOURNAMENT] = self.select_tournament()
+            if self.selected_element[self._MENU_NAME_TOURNAMENT] is False:
+                self.selected_element[self._MENU_NAME_TOURNAMENT] = self.select_tournament()
                 continue
 
-            if self.selected_element[self._PLAYER_LIST] is False:
-                self.selected_element[self._PLAYER_LIST] = self.select_player_list()
+            if self.selected_element[self._MENU_NAME_PLAYER_LIST] is False:
+                self.selected_element[self._MENU_NAME_PLAYER_LIST] = self.select_player_list()
                 continue
 
             # exit program if reached, preventing infinite loop
@@ -95,11 +119,11 @@ class Controller:
         Cleans self variable and reset related status if needed
         """
         # sets the parent menu selection value to false
-        if running_menu_name != self._TOURNAMENT:
-            self.selected_element[self._PARENT_MENU[running_menu_name]] = False
+        if running_menu_name != self._MENU_NAME_TOURNAMENT:
+            self.selected_element[self._MENU_TREE_PARENT[running_menu_name]] = False
 
         # sets every child selection value to false if parent is set to false
-        for parent, child in self._CHILD_MENU.items():
+        for parent, child in self._MENU_TREE_CHILD.items():
             if not self.selected_element[parent]:
                 self.selected_element[child] = False
 
@@ -123,7 +147,7 @@ class Controller:
         """
         prompt_result = self.view.prompt_player_list_selection()
         if prompt_result == "r":
-            self.menu_cleaner(self._PLAYER_LIST)
+            self.menu_cleaner(self._MENU_NAME_PLAYER_LIST)
             return False
 
         return self.rooter(choice=prompt_result,
