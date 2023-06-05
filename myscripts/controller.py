@@ -1,63 +1,32 @@
 """
 Controller module
 """
-# import time
-# from . import event_handler as event
+
+
 import sys
-from . import view as v
-from . import model as m
+import time
+from myclass import class_menu
+from myscripts import view as v
+from myscripts import model as m
+
+sys.path.insert(0, '../myclass')
+sys.path.insert(0, '../myscripts')
 
 
 class Controller:
     """
     Controller class
     """
-
-    # these elements helps adding a hierarchy in console's choice for navigation purpose
-    # menu names
-    _MENU_NAME_TOURNAMENT = "tournament"
-    _MENU_NAME_PLAYER_LIST = "player_list"
-    _MENU_NAME_ROUND = "round"
-
-    # Creating menu tree
-    _MENU_TREE = (_MENU_NAME_TOURNAMENT,
-                  _MENU_NAME_PLAYER_LIST,
-                  _MENU_NAME_ROUND)
-
-    # key = child : value = parent
-    _MENU_TREE_CHILD = {}
-    # key = parent : value = child
-    _MENU_TREE_PARENT = {}
-
-    # filling _MENU_TREE_PARENT and _MENU_TREE_CHILD
-    parent = None
-    for item in _MENU_TREE:
-        child = parent
-        parent = item
-        if child is not None:
-            _MENU_TREE_CHILD[child] = parent
-            _MENU_TREE_PARENT[parent] = child
-
-    # basic menu commands
-    _MENU_COMMAND_RETURN = "r"
-    _MENU_COMMAND_EXIT = "q"
-
     def __init__(self, model: m.Model, view: v.View):
-        """
-        self.model = m.Model(
-                            name="Tournoi club du vieux Lyon",
-                            location="Lyon - France",
-                            date_start=time.localtime(),
-                            round_number=4
-                            )
-        """
         self.model = model
         self.view = view
+        self.menu = class_menu.Menu()
 
-        # stocks the status (value) of every selection
-        self.selected_element = {self._MENU_NAME_TOURNAMENT: False,
-                                 self._MENU_NAME_PLAYER_LIST: False
-                                 }
+        # initialize values of every menu'selection (status)
+        self.selected_element = {}
+        for navigation in self.menu.tree:
+            self.selected_element[navigation] = False
+        print(self.selected_element)
 
     def kernel(self) -> None:
         """
@@ -65,12 +34,16 @@ class Controller:
         """
         while True:
             # select a tournament by either creating or loading one
-            if self.selected_element[self._MENU_NAME_TOURNAMENT] is False:
-                self.selected_element[self._MENU_NAME_TOURNAMENT] = self.select_tournament()
+            if self.selected_element[self.menu.navigation_tournament] is False:
+                self.selected_element[self.menu.navigation_tournament] = self.select_tournament()
                 continue
 
-            if self.selected_element[self._MENU_NAME_PLAYER_LIST] is False:
-                self.selected_element[self._MENU_NAME_PLAYER_LIST] = self.select_player_list()
+            if self.selected_element[self.menu.navigation_player_list] is False:
+                self.selected_element[self.menu.navigation_player_list] = self.select_player_list()
+                continue
+
+            if self.selected_element[self.menu.navigation_round] is False:
+                self.selected_element[self.menu.navigation_round] = self.select_player_list()
                 continue
 
             # exit program if reached, preventing infinite loop
@@ -103,15 +76,15 @@ class Controller:
 
     def menu_cleaner(self, running_menu_name: str):
         """
-        Gets the name of RUNNING MENU
+        Gets the name of RUNNING MENU and sets his parent to false
         Cleans self variable and reset related status if needed
         """
-        # sets the parent menu selection value to false
-        if running_menu_name != self._MENU_NAME_TOURNAMENT:
-            self.selected_element[self._MENU_TREE_PARENT[running_menu_name]] = False
+        # sets the parent of running_menu_name menu selection value to false
+        if running_menu_name != self.menu.navigation_tournament:
+            self.selected_element[self.menu.tree_parent[running_menu_name]] = False
 
         # sets every child selection value to false if parent is set to false
-        for parent, child in self._MENU_TREE_CHILD.items():
+        for parent, child in self.menu.tree_child.items():
             if not self.selected_element[parent]:
                 self.selected_element[child] = False
 
@@ -123,9 +96,10 @@ class Controller:
         Returns boolean == choice in choice list and could be executed.
         """
         return self.rooter(choice=self.view.prompt_tournament_selection(),
-                           choice_dict={"1": self.create_new_tournament,
-                                        "2": self.load_existing_tournament,
-                                        self._MENU_COMMAND_EXIT: self.exit_program})
+                           choice_dict={self.menu.command_one: self.create_new_tournament,
+                                        self.menu.command_two: self.load_existing_tournament,
+                                        self.menu.command_three: self.load_dummy_default_player_list,
+                                        self.menu.command_exit: self.exit_program})
 
     def select_player_list(self) -> bool:
         """
@@ -135,19 +109,23 @@ class Controller:
         """
         prompt_result = self.view.prompt_player_list_selection()
         if prompt_result == "r":
-            self.menu_cleaner(self._MENU_NAME_PLAYER_LIST)
+            self.menu_cleaner(self.menu.navigation_player_list)
             return False
 
         return self.rooter(choice=prompt_result,
-                           choice_dict={"1": self.create_new_tournament,
-                                        "2": self.load_existing_tournament,
-                                        self._MENU_COMMAND_EXIT: self.exit_program})
+                           choice_dict={self.menu.command_one: self.create_player_list,
+                                        self.menu.command_two: self.load_dummy_default_player_list,
+                                        self.menu.command_exit: self.exit_program})
 
     def create_new_tournament(self):
         """
         Create new tournament from view's player list
         returns None
         """
+        self.model.name = "Tournoi club du vieux Lyon"
+        self.model.location = "Lyon - France"
+        self.model.date_start = time.localtime()
+
         self.model.player_list = self.view.get_player_list()
 
     def load_existing_tournament(self):
@@ -155,3 +133,38 @@ class Controller:
         load an existing tournament
         """
         print("pas encore possbible")
+
+    def create_player_list(self):
+        """
+        Create new tournament from view's player list
+        returns None
+        """
+        self.model.name = "Tournoi club du vieux Lyon"
+        self.model.location = "Lyon - France"
+        self.model.date_start = time.localtime()
+
+        self.model.player_list = self.view.get_player_list()
+
+    def load_existing_player_list(self):
+        """
+        load an existing tournament
+        """
+        print("pas encore possbible")
+
+    def load_dummy_default_tournament(self):
+        """
+        load an existing tournament
+        """
+        print("pas encore possbible")
+
+    def load_dummy_default_player_list(self):
+        """
+        load an existing tournament
+        """
+        print("pas encore possbible")
+
+    def select_round(self):
+        """
+        round selection
+        """
+        self.model.create_new_round()
