@@ -8,19 +8,17 @@ class Model:
     """
     Model = tournament class
     """
-    default_round_number = 4
-
-    def __init__(self):
+    def __init__(self, round_number: int = 4):
         self.name = ""
         self.location = ""
         self.date_start = ""
         self.date_end = ""
         self.round_list = []
-        self.round_number = self.default_round_number
+        self.round_number = round_number
         self.player_list = []
         self.description = ""
 
-    def create_new_round(self):
+    def create_new_round(self, is_first_round: bool = False):
         """
         Generates new round and player pairings.
         Returns None
@@ -38,5 +36,7 @@ class Model:
         """
 
         current_round = cls.Round({})
+        current_round.generate_round_pairings(is_first_round=is_first_round)
         self.round_list.append(current_round)
+
         return None

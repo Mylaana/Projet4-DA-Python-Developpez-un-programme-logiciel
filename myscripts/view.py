@@ -48,11 +48,11 @@ class View:
         - '2' to load tournament
         - 'q' to exit program
         """
-        self.show_in_console(["souhaitez-vous :",
-                              "'1' créer un nouveau tournoi",
-                              "'2' charger un tournoi existant",
-                              "'q' : quitter le programme."
-                              ])
+        self.show_in_console(message=["souhaitez-vous :",
+                                      "'1' créer un nouveau tournoi",
+                                      "'2' charger un tournoi existant",
+                                      "'q' : quitter le programme."],
+                             title="tournoi")
         return input("")
 
     def prompt_player_list_selection(self):
@@ -74,7 +74,7 @@ class View:
                                       "'2' créer une liste de joueurs",
                                       "'r' : retourner à la sélection de tournoi.",
                                       "'q' : quitter le programme."],
-                             title="selection du tournoi")
+                             title="liste des joueurs")
         return input("")
 
     def get_player_list(self):
@@ -111,7 +111,7 @@ class View:
             "Étienne Salois 1992/12/06"
         ]
 
-    def dummy_calculate_scores(self):
+    def dummy_generate_scores(self):
         """
         Randomly generate players scores for this round.
         This is a dummy function (the scores should be determined by every games,

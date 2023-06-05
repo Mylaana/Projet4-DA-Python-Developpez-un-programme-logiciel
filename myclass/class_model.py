@@ -1,18 +1,21 @@
 """
 Tournament class module
 """
+import random
 
 
 class Round:
     """
     manage round infos
     """
-    def __init__(self, player_score_total_start_of_round: dict):
+    def __init__(self, player_list: list):
         self.player_score_round = {}
-        self.player_score_total_start_of_round = player_score_total_start_of_round
+        self.player_score_total_start_of_round = []
         self.player_score_total_end_of_round = {}
+        self.player_list = player_list
+        self.pairing_list = []
 
-    def generate_round_pairings(self, player_list: list):
+    def generate_round_pairings(self, is_first_round: bool = False):
         """
         calculer nouveau appariement en supprimant de dict.R deux joueurs :
             -prendre le premier joueur de dict.R = joueur.A
@@ -24,6 +27,23 @@ class Round:
         for player in player_list:
             print(player.name)
         """
+        if is_first_round:
+            self.pairings_random()
+
+    def pairings_random(self):
+        """
+        create parings at random
+        """
+        unpaired_players = self.player_list
+        while unpaired_players is not None:
+            player_a = random.choice(unpaired_players)
+            unpaired_players.pop(player_a)
+
+            player_b = random.choice(unpaired_players)
+            unpaired_players.pop(player_b)
+
+        self.pairing_list = [player_a + "-" + player_b]
+        print(self.pairing_list)
 
 
 class Player:
