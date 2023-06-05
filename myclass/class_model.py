@@ -15,7 +15,7 @@ class Round:
         self.player_list = player_list
         self.pairing_list = []
 
-    def generate_round_pairings(self, is_first_round: bool = False):
+    def generate_round_pairings(self, is_first_round: bool = False) -> None:
         """
         calculer nouveau appariement en supprimant de dict.R deux joueurs :
             -prendre le premier joueur de dict.R = joueur.A
@@ -29,21 +29,38 @@ class Round:
         """
         if is_first_round:
             self.pairings_random()
+        else:
+            self.pairings_descending_score()
 
     def pairings_random(self):
         """
         create parings at random
         """
         unpaired_players = self.player_list
-        while unpaired_players is not None:
-            player_a = random.choice(unpaired_players)
-            unpaired_players.pop(player_a)
+
+        while unpaired_players:
+            player_a = str(random.choice(unpaired_players))
+            unpaired_players.remove(player_a)
 
             player_b = random.choice(unpaired_players)
-            unpaired_players.pop(player_b)
+            unpaired_players.remove(player_b)
 
-        self.pairing_list = [player_a + "-" + player_b]
-        print(self.pairing_list)
+            self.pairing_list.append(str(player_a) + "-" + str(player_b))
+
+    def pairings_descending_score(self):
+        """
+        create parings following descendig scores
+        """
+        unpaired_players = self.player_list
+
+        while unpaired_players:
+            player_a = str(random.choice(unpaired_players))
+            unpaired_players.remove(player_a)
+
+            player_b = random.choice(unpaired_players)
+            unpaired_players.remove(player_b)
+
+            self.pairing_list.append(str(player_a) + "-" + str(player_b))
 
 
 class Player:
@@ -70,3 +87,39 @@ class Player:
         returns player info as a string
         """
         return "name : " + self.name + "  rank : " + self.rank + " "
+
+
+class PlayerList:
+    """
+    player list
+    """
+    def __init__(self):
+        """
+        stores player list with a dictionnaty :
+        Key = id, value = class Player
+        """
+        self.player_dict = {}
+
+    def get_default_player_list(self) -> list:
+        """
+        dummy function
+        returns default player list
+        """
+        return [
+            "Jeanne Thériault 1989/12/07",
+            "Dexter Chesnay 1995/07/16",
+            "Chandler Bisaillon 1969/02/15",
+            "Guillaume Aoust 1994/10/12",
+            "Christiane Laramée 1999/01/22",
+            "Élise Lévesque 2004/03/19",
+            "Orville Mireault 1984/10/06",
+            "Étienne Salois 1992/12/06"
+        ]
+
+    def add_player_to_list(self, player: Player) -> None:
+        """
+        stores player in dict
+        gets a player class argument
+        returns none
+        """
+        self.player_dict[len(self.player_dict) + 1] = player

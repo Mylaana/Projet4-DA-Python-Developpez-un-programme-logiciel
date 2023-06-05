@@ -83,18 +83,9 @@ class View:
         [Name1 FamilyName1 Birthdate1(AAAA/MM/DD), ...]
         """
 
-        print("voici la liste des joueurs par défaut :")
+        print("voici la liste des joueurs par défaut :\n")
         for player_info in self.player_list:
             print(str(player_info))
-
-        default_player_list = input("\nvoulez vous utiliser la liste des joueurs par défaut ? (y/n)\n")
-
-        if default_player_list == "y":
-            print(r"c'est parti")
-            return self.player_list
-        else:
-            print("tant pis")
-            return None
 
     def dummy_generate_player_list(self) -> list[str]:
         """
@@ -117,3 +108,10 @@ class View:
         This is a dummy function (the scores should be determined by every games,
         instead of randomed for app building purpose).
         """
+
+    def display_round_pairings(self, pairing_list):
+        """
+        gets list with uneven index being player "A"s and even players being players "B"s
+        returns none
+        """
+        self.show_in_console(pairing_list)

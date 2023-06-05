@@ -26,30 +26,6 @@ class Controller:
         self.selected_element = {}
         for navigation in self.menu.tree:
             self.selected_element[navigation] = False
-        print(self.selected_element)
-
-    def kernel(self) -> None:
-        """
-        the almighty kernel
-        """
-        while True:
-            # select a tournament by either creating or loading one
-            if self.selected_element[self.menu.navigation_tournament] is False:
-                self.selected_element[self.menu.navigation_tournament] = self.select_tournament()
-                continue
-
-            if self.selected_element[self.menu.navigation_player_list] is False:
-                self.selected_element[self.menu.navigation_player_list] = self.select_player_list()
-                continue
-
-            if self.selected_element[self.menu.navigation_round] is False:
-                self.selected_element[self.menu.navigation_round] = self.select_player_list()
-                continue
-
-            # exit program if reached, preventing infinite loop
-            self.view.show_in_console(title="BOUCLE INFINIE -> fin du programme")
-
-            self.exit_program(show_exit_message=False)
 
     def rooter(self, choice: str, choice_dict: dict) -> bool:
         """
@@ -126,7 +102,7 @@ class Controller:
         self.model.location = "Lyon - France"
         self.model.date_start = time.localtime()
 
-        self.model.player_list = self.view.get_player_list()
+        # self.model.player_list = self.view.get_player_list()
 
     def load_existing_tournament(self):
         """
@@ -143,7 +119,7 @@ class Controller:
         self.model.location = "Lyon - France"
         self.model.date_start = time.localtime()
 
-        self.model.player_list = self.view.get_player_list()
+        self.model.player_list = self.view.player_list
 
     def load_existing_player_list(self):
         """
@@ -163,8 +139,18 @@ class Controller:
         """
         print("pas encore possbible")
 
-    def select_round(self):
+    def start_first_round(self):
         """
-        round selection
+        first round generation
         """
         self.model.create_new_round()
+        self.view.display_round_pairings(self.model.get_current_round_pairings())
+        return True
+
+    def start_next_round(self):
+        """
+        any following round
+        """
+        result = self.model.create_new_round()
+        self.view.display_round_pairings(self.model.get_current_round_pairings())
+        return result

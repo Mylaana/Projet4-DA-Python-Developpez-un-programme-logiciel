@@ -14,11 +14,13 @@ class Model:
         self.date_start = ""
         self.date_end = ""
         self.round_list = []
+        self.round_counter = 1
         self.round_number = round_number
-        self.player_list = []
+        self.player_list = cls.PlayerList
         self.description = ""
+        self.current_round = None
 
-    def create_new_round(self, is_first_round: bool = False):
+    def create_new_round(self):
         """
         Generates new round and player pairings.
         Returns None
@@ -35,8 +37,25 @@ class Model:
             -next
         """
 
-        current_round = cls.Round({})
-        current_round.generate_round_pairings(is_first_round=is_first_round)
-        self.round_list.append(current_round)
+        print("round number : " + str(self.round_counter))
 
-        return None
+        self.current_round = cls.Round(self.player_list)
+        self.current_round.generate_round_pairings(is_first_round=self.round_counter == self.round_counter)
+        self.round_list.append(self.current_round)
+
+        self.round_counter += 1
+        if self.round_counter > self.round_number:
+            return True
+        else:
+            return False
+
+    def get_current_round_pairings(self) -> list:
+        """
+        gets none
+        returns current round pairings as list like :
+        str(Table 1 :)
+        str('playerA - playerB')
+        str(Table 2 :)
+        str('playerA - playerB')
+        """
+        return self.current_round.pairing_list
