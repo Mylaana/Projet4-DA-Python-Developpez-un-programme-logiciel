@@ -5,7 +5,7 @@ from . import m_round as m_r
 from . import m_player as m_p
 
 
-class Model:
+class Tournament:
     """
     Model = tournament class
     """
