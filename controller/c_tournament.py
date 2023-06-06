@@ -5,11 +5,12 @@ Controller module
 
 import sys
 import time
-from view import v_tournament as v
-from model import m_tournament as m
-from . import class_menu
-sys.path.insert(0, '../view')
-sys.path.insert(0, '../model')
+from View import v_tournament as v
+from Model import m_tournament as m
+from CommonClass import menu
+sys.path.insert(0, '../View')
+sys.path.insert(0, '../Model')
+sys.path.insert(0, '../CommonClass')
 
 
 class Controller:
@@ -19,7 +20,7 @@ class Controller:
     def __init__(self, model: m.Model, view: v.View):
         self.model = model
         self.view = view
-        self.menu = class_menu.Menu()
+        self.menu = menu.Menu()
 
         # initialize values of every menu'selection (status)
         self.selected_element = {}
@@ -46,8 +47,8 @@ class Controller:
         Exit program
         """
         if show_exit_message:
-            print("Fin du programme")
-        sys.exit()
+            self.view.show_in_console(title="fin du programme")
+            sys.exit()
 
     def menu_cleaner(self, running_menu_name: str):
         """
@@ -82,15 +83,27 @@ class Controller:
         Roots view's return to related function.
         Returns boolean == choice in choice list and could be executed.
         """
+        # get user command
         prompt_result = self.view.prompt_player_list_selection()
-        if prompt_result == "r":
+
+        # treat generic user commands
+        if prompt_result == self.menu.command_exit:
+            self.exit_program()
+            return False
+        elif prompt_result == self.menu.command_return:
             self.menu_cleaner(self.menu.navigation_player_list)
             return False
+        elif prompt_result == self.menu.command_save:
+            print("sauvegardé !")
+            return False
+        elif prompt_result == self.menu.command_load:
+            print("chargé !")
+            return False
 
+        # treat selection if not generic
         return self.rooter(choice=prompt_result,
                            choice_dict={self.menu.command_one: self.create_player_list,
-                                        self.menu.command_two: self.load_dummy_default_player_list,
-                                        self.menu.command_exit: self.exit_program})
+                                        self.menu.command_two: self.load_dummy_default_player_list})
 
     def create_new_tournament(self):
         """
