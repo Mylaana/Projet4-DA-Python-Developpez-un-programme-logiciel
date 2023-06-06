@@ -1,6 +1,9 @@
 """
 view module
 """
+import sys
+from CommonClass import menu as m
+sys.path.insert(0, '../CommonClass')
 
 
 class View:
@@ -9,7 +12,7 @@ class View:
     """
     def __init__(self):
         self.player_list = self.dummy_generate_player_list()
-        self.aaa = "aaa"
+        self.menu = m.Menu()
 
     def show_in_console(self, message="", title=""):  # type: (str or list or None, str or None) -> None
         """
@@ -44,14 +47,16 @@ class View:
         - exiting the program
 
         Returns :
-        - '1' to create new tournament
-        - '2' to load tournament
-        - 'q' to exit program
+        - [COMMAND_ONE] to create new tournament
+        - [COMMAND_TWO] to load tournament
+        - [COMMAND_SAVE] to save the tournament actual state
+        - [COMMAND_LOAD] to load a previously saved tournament
+        - [COMMAND_EXIT] to exit program
         """
         self.show_in_console(message=["souhaitez-vous :",
-                                      "'1' créer un nouveau tournoi",
-                                      "'2' charger un tournoi existant",
-                                      "'q' : quitter le programme."],
+                                      f"{self.menu.command_one} créer un nouveau tournoi",
+                                      f"{self.menu.command_two} charger un tournoi existant",
+                                      f"{self.menu.command_exit} : quitter le programme."],
                              title="tournoi")
         return input("")
 
@@ -64,16 +69,20 @@ class View:
         - exiting the program
 
         Returns :
-        - '1' to default player list
-        - '2' to create new list of player
-        - 'r' to return to tournament selection
-        - 'q' to exit program
+        - [COMMAND_ONE] to default player list
+        - [COMMAND_TWO] to create new list of player
+        - [COMMAND_RETURN] to return to tournament selection
+        - [COMMAND_SAVE] to save the tournament actual state
+        - [COMMAND_LOAD] to load a previously saved tournament
+        - [COMMAND_EXIT] to exit program
         """
         self.show_in_console(message=["souhaitez-vous :",
-                                      "'1' utiliser la liste de joueurs par défaut",
-                                      "'2' créer une liste de joueurs",
-                                      "'r' : retourner à la sélection de tournoi.",
-                                      "'q' : quitter le programme."],
+                                      f"{self.menu.command_one} utiliser la liste de joueurs par défaut",
+                                      f"{self.menu.command_two} créer une liste de joueurs",
+                                      f"{self.menu.command_save} : {self.menu.command_description_save}",
+                                      f"{self.menu.command_load} : {self.menu.command_description_load}",
+                                      f"{self.menu.command_return} : {self.menu.command_description_return}",
+                                      f"{self.menu.command_exit} : {self.menu.command_description_exit}"],
                              title="liste des joueurs")
         return input("")
 

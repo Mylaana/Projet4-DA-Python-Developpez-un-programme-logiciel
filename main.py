@@ -14,10 +14,9 @@ Vue :
 """
 
 import os
-from controller import c_tournament
-from view import v_tournament
-from model import m_tournament
-
+from Controller import c_tournament
+from View import v_tournament
+from Model import m_tournament
 
 
 def clear_console():
@@ -31,42 +30,40 @@ def main():
     """
     main function
     """
-
     my_model = m_tournament.Model()
-    my_controller = c_tournament.Controller(my_model, None)
     my_view = v_tournament.View()
-    my_controller.view = my_view
+    controller_tournament = c_tournament.Controller(my_model, my_view)
 
     while True:
         # select a tournament by either creating or loading one
-        if my_controller.selected_element[my_controller.menu.navigation_tournament] is False:
+        if controller_tournament.selected_element[controller_tournament.menu.navigation_tournament] is False:
             clear_console()
-            my_controller.selected_element[
-                my_controller.menu.navigation_tournament] = my_controller.select_tournament()
+            controller_tournament.selected_element[
+                controller_tournament.menu.navigation_tournament] = controller_tournament.select_tournament()
             continue
 
-        if my_controller.selected_element[my_controller.menu.navigation_player_list] is False:
+        if controller_tournament.selected_element[controller_tournament.menu.navigation_player_list] is False:
             clear_console()
-            my_controller.selected_element[
-                my_controller.menu.navigation_player_list] = my_controller.select_player_list()
+            controller_tournament.selected_element[
+                controller_tournament.menu.navigation_player_list] = controller_tournament.select_player_list()
             continue
 
-        if my_controller.selected_element[my_controller.menu.navigation_round_first] is False:
-            my_controller.selected_element[
-                my_controller.menu.navigation_round_first] = my_controller.start_first_round()
+        if controller_tournament.selected_element[controller_tournament.menu.navigation_round_first] is False:
+            controller_tournament.selected_element[
+                controller_tournament.menu.navigation_round_first] = controller_tournament.start_first_round()
             print("round 1")
             continue
 
-        if my_controller.selected_element[my_controller.menu.navigation_round_subsequent] is False:
-            my_controller.selected_element[
-                my_controller.menu.navigation_round_subsequent] = my_controller.start_next_round()
+        if controller_tournament.selected_element[controller_tournament.menu.navigation_round_subsequent] is False:
+            controller_tournament.selected_element[
+                controller_tournament.menu.navigation_round_subsequent] = controller_tournament.start_next_round()
             print("round")
             continue
 
         # end of tournament
-        my_controller.view.show_in_console(title="fin du tournoi")
+        controller_tournament.view.show_in_console(title="fin du tournoi")
 
-        my_controller.exit_program(show_exit_message=False)
+        controller_tournament.exit_program(show_exit_message=False)
 
 
 if __name__ == "__main__":

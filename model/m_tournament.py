@@ -1,7 +1,8 @@
 """
 model dedicated module
 """
-from . import class_model as cls
+from . import m_round as m_r
+from . import m_player as m_p
 
 
 class Model:
@@ -16,7 +17,7 @@ class Model:
         self.round_list = []
         self.round_counter = 1
         self.round_number = round_number
-        self.player_list = cls.PlayerList
+        self.player_list = m_p.PlayerList
         self.description = ""
         self.current_round = None
 
@@ -39,7 +40,7 @@ class Model:
 
         print("round number : " + str(self.round_counter))
 
-        self.current_round = cls.Round(self.player_list)
+        self.current_round = m_r.Round(self.player_list)
         self.current_round.generate_round_pairings(is_first_round=self.round_counter == self.round_counter)
         self.round_list.append(self.current_round)
 

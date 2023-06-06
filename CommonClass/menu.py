@@ -35,11 +35,18 @@ class Menu:
             _MENU_TREE_PARENT[parent] = child
 
     # basic menu commands
-    _MENU_COMMAND_RETURN = "r"
+    _MENU_COMMAND_RETURN = "0"
     _MENU_COMMAND_EXIT = "q"
+    _MENU_COMMAND_SAVE = "s"
+    _MENU_COMMAND_LOAD = "d"
     _MENU_COMMAND_ONE = "1"
     _MENU_COMMAND_TWO = "2"
     _MENU_COMMAND_THREE = "3"
+
+    _MENU_COMMAND_DESCRIPTION_SAVE = "sauvegarder l'etat actuel du tournoi"
+    _MENU_COMMAND_DESCRIPTION_LOAD = "charger un tournoi précédemment sauvegardé"
+    _MENU_COMMAND_DESCRIPTION_EXIT = "quitter le programme"
+    _MENU_COMMAND_DESCRIPTION_RETURN = "retourner au menu précédent"
 
     def __init__(self):
         self.navigation_tournament = self._MENU_NAME_TOURNAMENT
@@ -53,6 +60,13 @@ class Menu:
 
         self.command_exit = self._MENU_COMMAND_EXIT
         self.command_return = self._MENU_COMMAND_RETURN
+        self.command_save = self._MENU_COMMAND_SAVE
+        self.command_load = self._MENU_COMMAND_LOAD
         self.command_one = self._MENU_COMMAND_ONE
         self.command_two = self._MENU_COMMAND_TWO
         self.command_three = self._MENU_COMMAND_THREE
+
+        self.command_description_save = self._MENU_COMMAND_DESCRIPTION_SAVE
+        self.command_description_load = self._MENU_COMMAND_DESCRIPTION_LOAD
+        self.command_description_exit = self._MENU_COMMAND_DESCRIPTION_EXIT
+        self.command_description_return = self._MENU_COMMAND_DESCRIPTION_RETURN
