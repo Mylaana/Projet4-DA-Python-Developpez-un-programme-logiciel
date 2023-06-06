@@ -5,12 +5,11 @@ Controller module
 
 import sys
 import time
-from myclass import class_menu
-from myscripts import view as v
-from myscripts import model as m
-
-sys.path.insert(0, '../myclass')
-sys.path.insert(0, '../myscripts')
+from view import v_tournament as v
+from model import m_tournament as m
+from . import class_menu
+sys.path.insert(0, '../view')
+sys.path.insert(0, '../model')
 
 
 class Controller:

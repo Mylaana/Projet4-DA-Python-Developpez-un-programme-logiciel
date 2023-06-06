@@ -1,7 +1,7 @@
 """
 model dedicated module
 """
-from myclass import class_model as cls
+from . import class_model as cls
 
 
 class Model:

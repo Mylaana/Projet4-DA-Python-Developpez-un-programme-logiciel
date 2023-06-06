@@ -14,9 +14,10 @@ Vue :
 """
 
 import os
-from myscripts import controller
-from myscripts import view
-from myscripts import model
+from controller import c_tournament
+from view import v_tournament
+from model import m_tournament
+
 
 
 def clear_console():
@@ -31,9 +32,9 @@ def main():
     main function
     """
 
-    my_model = model.Model()
-    my_controller = controller.Controller(my_model, None)
-    my_view = view.View()
+    my_model = m_tournament.Model()
+    my_controller = c_tournament.Controller(my_model, None)
+    my_view = v_tournament.View()
     my_controller.view = my_view
 
     while True:
