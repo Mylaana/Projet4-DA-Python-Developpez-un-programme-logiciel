@@ -11,14 +11,12 @@ class Menu:
     # menu names
     _MENU_NAME_TOURNAMENT = "tournament"
     _MENU_NAME_PLAYER_LIST = "player_list"
-    _MENU_NAME_ROUND_FIRST = "first_round"
-    _MENU_NAME_ROUND_SUBSEQUENT = "subsequent_round"
+    _MENU_NAME_ROUND = "round"
 
     # Creating menu tree
     _MENU_TREE = (_MENU_NAME_TOURNAMENT,
                   _MENU_NAME_PLAYER_LIST,
-                  _MENU_NAME_ROUND_FIRST,
-                  _MENU_NAME_ROUND_SUBSEQUENT)
+                  _MENU_NAME_ROUND)
 
     # key = child : value = parent
     _MENU_TREE_CHILD = {}
@@ -51,8 +49,7 @@ class Menu:
     def __init__(self):
         self.navigation_tournament = self._MENU_NAME_TOURNAMENT
         self.navigation_player_list = self._MENU_NAME_PLAYER_LIST
-        self.navigation_round_first = self._MENU_NAME_ROUND_FIRST
-        self.navigation_round_subsequent = self._MENU_NAME_ROUND_SUBSEQUENT
+        self.navigation_round = self._MENU_NAME_ROUND
 
         self.tree = self._MENU_TREE
         self.tree_child = self._MENU_TREE_CHILD

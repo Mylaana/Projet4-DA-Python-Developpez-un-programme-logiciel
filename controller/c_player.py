@@ -4,7 +4,6 @@ Controller module
 
 
 import sys
-import time
 from View import v_player as v
 from Model import m_player as m
 from . import controller as c
@@ -17,8 +16,10 @@ class ControllerPlayer(c.Controller):
     """
     Controller class
     """
-    def __init__(self, model: m.PlayerList, view: v.View):
+    def __init__(self, model: m.PlayerList, view: v.ViewPlayer):
         super().__init__(model=model, view=view)
+        self.view = view
+        self.model = model
 
         # initialize values of every menu'selection (status)
         self.selected_element = {}
@@ -46,11 +47,8 @@ class ControllerPlayer(c.Controller):
         Create new tournament from view's player list
         returns None
         """
-        self.model.name = "Tournoi club du vieux Lyon"
-        self.model.location = "Lyon - France"
-        self.model.date_start = time.localtime()
 
-        self.model.player_list = self.view.player_list
+        print("pas encore possbible")
 
     def load_existing_player_list(self):
         """
@@ -62,4 +60,11 @@ class ControllerPlayer(c.Controller):
         """
         load an existing tournament
         """
-        print("pas encore possbible")
+        self.model.set_player_group(self.view.dummy_generate_player_list())
+
+    def get_player_list_id(self) -> list:
+        """
+        gets none
+        returns a player id list
+        """
+        return self.model.player_list_id

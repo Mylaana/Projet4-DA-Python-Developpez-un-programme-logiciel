@@ -2,9 +2,8 @@
 Controller module
 """
 
-
+import os
 import sys
-import time
 from CommonClass import menu
 sys.path.insert(0, '../CommonClass')
 
@@ -61,37 +60,16 @@ class Controller:
             if not self.selected_element[parent]:
                 self.selected_element[child] = False
 
-    def select_tournament(self) -> bool:
+    def set_player_group(self, player_list: list):
         """
-        Ask view if the user wants to create or load tournament.
-        Roots view's return to related function.
+        gets a list of player id
+        pass the list to model
+        returns none
+        """
+        self.model.player_list_id = player_list
 
-        Returns boolean == choice in choice list and could be executed.
+    def clear_console(self):
         """
-        return self.rooter(choice=self.view.prompt_tournament_selection(),
-                           choice_dict={self.menu.command_one: self.create_new_tournament,
-                                        self.menu.command_two: self.load_existing_tournament,
-                                        self.menu.command_exit: self.exit_program})
-
-    def create_new_tournament(self):
+        clear console
         """
-        Create new tournament from view's player list
-        returns None
-        """
-        self.model.name = "Tournoi club du vieux Lyon"
-        self.model.location = "Lyon - France"
-        self.model.date_start = time.localtime()
-
-        # self.model.player_list = self.view.get_player_list()
-
-    def load_existing_tournament(self):
-        """
-        load an existing tournament
-        """
-        print("pas encore possbible")
-
-    def load_dummy_default_tournament(self):
-        """
-        load an existing tournament
-        """
-        print("pas encore possbible")
+        os.system('cls' if os.name == 'nt' else 'clear')

@@ -17,7 +17,7 @@ class ControllerTournament(c.Controller):
     """
     Controller class
     """
-    def __init__(self, model: m.Tournament, view: v.View):
+    def __init__(self, model: m.Tournament, view: v.ViewTournament):
         super().__init__(model=model, view=view)
 
         # initialize values of every menu'selection (status)

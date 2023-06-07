@@ -16,26 +16,81 @@ class ControllerRound(c.Controller):
     """
     Controller class
     """
-    def __init__(self, model: m.RoundList, view: v.View):
+    def __init__(self, model: m.RoundList, view: v.ViewRound):
         super().__init__(model=model, view=view)
+        self.model = model
+        self.view = view
+        self.last_round_over = False
 
         # initialize values of every menu'selection (status)
         self.selected_element = {}
         for navigation in self.menu.tree:
             self.selected_element[navigation] = False
 
-    def start_first_round(self):
+    def round_loop(self):
+        """
+        Loops while rounds need to be run
+        Returns True when last round is over
+        """
+        go_to_next_round = True
+        while not self.model.round_counter >= self.model.round_max_number:
+            if go_to_next_round:
+                self.clear_console()
+                self.start_new_round()
+                go_to_next_round = False
+
+            prompt_result = self.view.prompt_next_round()
+            if prompt_result == self.menu.command_one:
+                go_to_next_round = True
+            elif prompt_result == self.menu.command_two:
+                self.clear_console()
+                self.display_scores()
+            elif prompt_result == self.menu.command_exit:
+                self.exit_program()
+
+        return True
+
+    def start_new_round(self):
         """
         first round generation
         """
         self.model.create_new_round()
-        self.view.display_round_pairings(self.model.get_current_round_pairings())
-        return True
+        self.view.display_round_pairings(pairing_list=self.model.get_current_round_pairings(),
+                                         round_number=self.model.round_counter)
 
-    def start_next_round(self):
+        prompt_result = self.view.prompt_score_calculation_method()
+
+        return self.rooter(choice=prompt_result,
+                           choice_dict={self.menu.command_one: self.enter_score_results,
+                                        self.menu.command_two: self.set_random_scores,
+                                        self.menu.command_exit: self.exit_program})
+
+    def enter_score_results(self):
         """
-        any following round
+        prompts user for players' scores on the current round
         """
-        result = self.model.create_new_round()
-        self.view.display_round_pairings(self.model.get_current_round_pairings())
-        return result
+        print("pas encore possible")
+
+    def set_random_scores(self):
+        """
+        generates random scores for the current round
+        """
+        self.model.set_random_scores()
+
+    def display_scores(self):
+        """
+        gets none
+        display score and total score end of round
+        Returns none
+        """
+        # display round's score
+        self.view.display_scores(
+            score=self.model.current_round.player_score_round,
+            round_number=self.model.round_counter,
+            total_score=False)
+
+        # display total score at end of round
+        self.view.display_scores(
+            score=self.model.current_round.player_score_total_end_of_round,
+            round_number=self.model.round_counter,
+            total_score=True)

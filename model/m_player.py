@@ -8,26 +8,17 @@ class Player:
     """
     player class
     """
-    def __init__(self,
-                 player_id: int,
-                 name: str = "",
-                 family_name: str = "",
-                 birth_date: str = "",
-                 rank: str = "",
-                 ):
+    def __init__(self, player_id: int, name: str = "", family_name: str = "", birth_date: str = ""):
         self.name = name
-        self.family_name = family_name
+        self.last_name = family_name
         self.birth_date = birth_date
-        self.rank = rank
-
-        self._id = player_id
-        self._already_paired_players_id = []
+        self.player_id = player_id
 
     def get_player_info(self):
         """
         returns player info as a string
         """
-        return "name : " + self.name + "  rank : " + self.rank + " "
+        return "name : " + self.name + "  last name : " + self.last_name
 
 
 class PlayerList:
@@ -39,28 +30,35 @@ class PlayerList:
         stores player list with a dictionnaty :
         Key = id, value = class Player
         """
-        self.player_dict = {}
+        self.player_group = {}
+        self.player_list_id = []
 
-    def get_default_player_list(self) -> list:
+    def set_player_group(self, player_info_list: list) -> list:
         """
-        dummy function
-        returns default player list
-        """
-        return [
-            "Jeanne Thériault 1989/12/07",
-            "Dexter Chesnay 1995/07/16",
-            "Chandler Bisaillon 1969/02/15",
-            "Guillaume Aoust 1994/10/12",
-            "Christiane Laramée 1999/01/22",
-            "Élise Lévesque 2004/03/19",
-            "Orville Mireault 1984/10/06",
-            "Étienne Salois 1992/12/06"
-        ]
+        get a list like :
+        'Name FamilyName Birthdate',
+        'Name FamilyName Birthdate',
 
-    def add_player_to_list(self, player: Player) -> None:
+        generate a dict
+        returns none
+        """
+        # reset player group
+        self.player_group = {}
+        player_counter = 1
+
+        for player_info in player_info_list:
+            player = Player(player_id=player_counter)
+            player.name = player_info["name"]
+            player.last_name = player_info["name"]
+            player.birth_date = player_info["name"]
+
+            self.add_player_to_group(player)
+
+    def add_player_to_group(self, player: Player) -> None:
         """
         stores player in dict
         gets a player class argument
         returns none
         """
-        self.player_dict[len(self.player_dict) + 1] = player
+        self.player_group[len(self.player_group) + 1] = player
+        self.player_list_id.append(len(self.player_group))

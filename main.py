@@ -37,15 +37,15 @@ def main():
     main function
     """
     model_tournament = m_tournament.Tournament()
-    view_tournament = v_tournament.View()
+    view_tournament = v_tournament.ViewTournament()
     controller_tournament = c_tournament.ControllerTournament(model_tournament, view_tournament)
 
     model_round_list = m_round.RoundList()
-    view_round = v_round.View()
+    view_round = v_round.ViewRound()
     controller_round = c_round.ControllerRound(model_round_list, view_round)
 
     model_player_list = m_player.PlayerList()
-    view_player = v_player.View()
+    view_player = v_player.ViewPlayer()
     controller_player = c_player.ControllerPlayer(model_player_list, view_player)
 
     while True:
@@ -60,20 +60,14 @@ def main():
             clear_console()
             controller_player.selected_element[
                 controller_player.menu.navigation_player_list] = controller_player.select_player_list()
+
+            controller_tournament.set_player_group(controller_player.get_player_list_id())
+            controller_round.set_player_group(controller_player.get_player_list_id())
             continue
 
-        if controller_round.selected_element[controller_round.menu.navigation_round_first] is False:
-            clear_console()
+        if controller_round.selected_element[controller_round.menu.navigation_round] is False:
             controller_round.selected_element[
-                controller_round.menu.navigation_round_first] = controller_round.start_first_round()
-            print("round 1")
-            continue
-
-        if controller_round.selected_element[controller_round.menu.navigation_round_subsequent] is False:
-            controller_round.selected_element[
-                controller_round.menu.navigation_round_subsequent] = controller_round.start_next_round()
-            print("round")
-            continue
+                controller_round.menu.navigation_round] = controller_round.round_loop()
 
         # end of tournament
         controller_tournament.view.show_in_console(title="fin du tournoi")
