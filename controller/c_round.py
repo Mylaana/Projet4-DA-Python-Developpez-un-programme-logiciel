@@ -38,14 +38,13 @@ class ControllerRound(c.Controller):
                 self.clear_console()
                 self.start_new_round()
                 go_to_next_round = False
+                self.display_scores()
 
             prompt_result = self.view.prompt_next_round()
             if prompt_result == self.menu.command_one:
                 go_to_next_round = True
-            elif prompt_result == self.menu.command_two:
-                self.clear_console()
-                self.display_scores()
-            elif prompt_result == self.menu.command_exit:
+
+            if prompt_result == self.menu.command_exit:
                 self.exit_program()
 
         return True
@@ -58,12 +57,14 @@ class ControllerRound(c.Controller):
         self.view.display_round_pairings(pairing_list=self.model.get_current_round_pairings(),
                                          round_number=self.model.round_counter)
 
+        choice_dict = {self.menu.command_one: self.enter_score_results,
+                       self.menu.command_two: self.set_random_scores,
+                       self.menu.command_exit: self.exit_program}
+
         prompt_result = self.view.prompt_score_calculation_method()
 
         return self.rooter(choice=prompt_result,
-                           choice_dict={self.menu.command_one: self.enter_score_results,
-                                        self.menu.command_two: self.set_random_scores,
-                                        self.menu.command_exit: self.exit_program})
+                           choice_dict=choice_dict)
 
     def enter_score_results(self):
         """
@@ -77,12 +78,20 @@ class ControllerRound(c.Controller):
         """
         self.model.set_random_scores()
 
-    def display_scores(self):
+    def display_scores_previous_round(self):
+        """
+        Calls display scores with previous round = true
+        """
+        self.display_scores(previous_round=True)
+
+    def display_scores(self, previous_round: bool = False):
         """
         gets none
         display score and total score end of round
         Returns none
         """
+        self.clear_console()
+
         # display round's score
         self.view.display_scores(
             score=self.model.current_round.player_score_round,

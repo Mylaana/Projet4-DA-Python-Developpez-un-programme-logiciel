@@ -68,24 +68,22 @@ class ViewRound(v.View):
                                       f"{self.menu.command_return} : {self.menu.command_description_return}",
                                       f"{self.menu.command_exit} : {self.menu.command_description_exit}"],)
         return input("")
-    
+
     def prompt_next_round(self):
         """
         Gets None\n
         Prompts user for a choice,\n
         Returns str :
         - [COMMAND_ONE] go to next round
-        - [COMMAND_TWO] show last round score
         - [COMMAND_SAVE] to save the tournament actual state
         - [COMMAND_LOAD] to load a previously saved tournament
         - [COMMAND_EXIT] to exit program
         """
         self.show_in_console(message=["souhaitez-vous :",
                                       f"{self.menu.command_one} : passer au round suivant",
-                                      f"{self.menu.command_two} : afficher les scores du rounds précédent",
                                       "",
                                       f"{self.menu.command_save} : {self.menu.command_description_save}",
                                       f"{self.menu.command_load} : {self.menu.command_description_load}",
                                       f"{self.menu.command_return} : {self.menu.command_description_return}",
-                                      f"{self.menu.command_exit} : {self.menu.command_description_exit}"],)
+                                      f"{self.menu.command_exit} : {self.menu.command_description_exit}"])
         return input("")

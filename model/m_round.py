@@ -10,11 +10,11 @@ class RoundList:
     """
 
     def __init__(self, round_max_number: int = 4):
-        self.round_list = []
+        self.round_list: list[Round] = []
         self.round_counter = 0
         self.round_max_number = round_max_number
         self.player_list_id = []
-        self.current_round = None     
+        self.current_round = None
 
     def create_new_round(self):
         """
@@ -23,6 +23,9 @@ class RoundList:
         """
         self.round_counter += 1
         self.current_round = Round(self.player_list_id)
+        if self.round_counter > 1:
+            self.current_round.player_score_total_start_of_round = self.round_list[
+                -1].player_score_total_end_of_round.copy()
         self.current_round.generate_round_pairings(
             is_first_round=self.round_counter == self.round_counter)
         self.round_list.append(self.current_round)
@@ -90,7 +93,8 @@ class Round:
         if is_first_round:
             self.pairings_random()
         else:
-            self.pairings_descending_score()
+            self.pairings_random()
+            # self.pairings_descending_score()
 
     def pairings_random(self):
         """
