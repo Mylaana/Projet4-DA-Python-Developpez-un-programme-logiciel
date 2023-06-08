@@ -19,7 +19,10 @@ class ControllerTournament(c.Controller):
     """
     def __init__(self, model: m.Tournament, view: v.ViewTournament):
         super().__init__(model=model, view=view)
-
+        """
+        self.view: v.ViewTournament = view
+        self.model: m.Tournament = model
+        """
         # initialize values of every menu'selection (status)
         self.selected_element = {}
         for navigation in self.menu.tree:

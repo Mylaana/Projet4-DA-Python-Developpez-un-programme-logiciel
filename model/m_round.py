@@ -2,19 +2,27 @@
 Tournament class module
 """
 import random
+from . import m_match as m
 
 
-class RoundList:
+class Round:
     """
     Model = tournament class
     """
 
     def __init__(self, round_max_number: int = 4):
-        self.round_list: list[Round] = []
+        self.round_list: list[m.Match] = []
         self.round_counter = 0
         self.round_max_number = round_max_number
         self.player_list_id = []
-        self.current_round = None
+        self.current_round: m.Match = None
+
+        """
+        a dictA of dictBs
+        dictA has key = playerA and value = dictBs
+        dictBs has a key of playerB previously matched with playerA
+        """
+        self.previous_pairings: dict[int, list] = {}
 
     def create_new_round(self):
         """
@@ -22,12 +30,14 @@ class RoundList:
         Returns None
         """
         self.round_counter += 1
-        self.current_round = Round(self.player_list_id)
+        self.current_round = m.Match(self.player_list_id.copy())
         if self.round_counter > 1:
             self.current_round.player_score_total_start_of_round = self.round_list[
                 -1].player_score_total_end_of_round.copy()
-        self.current_round.generate_round_pairings(
-            is_first_round=self.round_counter == self.round_counter)
+
+        self.current_round.generate_round_pairings(is_first_round=self.round_counter == 1,
+                                                   previous_pairing=self.previous_pairings)
+        self.add_previous_pairings()
         self.round_list.append(self.current_round)
 
         return self.round_counter >= self.round_max_number
@@ -60,77 +70,15 @@ class RoundList:
             self.current_round.set_player_score(
                 player_id=player_b_id, player_match_result=player_b_score)
 
-        for key, values in self.current_round.player_score_round.items():
-            print(f"joueur {key}: {values}")
-
-
-class Round:
-    """
-    manage round infos
-    """
-
-    def __init__(self, player_list_id: list):
-        self.player_list_id = player_list_id
-        self.pairing_list = []
-
-        # initializing player score at 0
-        self.player_score_round = {k: 0.0 for k in self.player_list_id}
-        self.player_score_total_start_of_round = self.player_score_round.copy()
-        self.player_score_total_end_of_round = self.player_score_round.copy()
-
-    def generate_round_pairings(self, is_first_round: bool = False) -> None:
+    def add_previous_pairings(self):
         """
-        calculer nouveau appariement en supprimant de dict.R deux joueurs :
-            -prendre le premier joueur de dict.R = joueur.A
-            -iterer sur joueur.X de dict.R jusqu'a ne pas trouver joueur.A dans
-                le dict.J de joueur.X alors joueur.B = joueur.X
-            -pop joueur.B de dict.R
-            -next
-
-        for player in player_list:
-            print(player.name)
+        adds the curent round pairings to the previous pairings dict
         """
-        if is_first_round:
-            self.pairings_random()
-        else:
-            self.pairings_random()
-            # self.pairings_descending_score()
+        if not self.previous_pairings:
+            for player_id in self.player_list_id:
+                self.previous_pairings[player_id] = []
 
-    def pairings_random(self):
-        """
-        create parings at random
-        """
-        unpaired_players = self.player_list_id
+        for pairing in self.current_round.pairing_list:
 
-        while unpaired_players:
-            player_a = str(random.choice(unpaired_players))
-            unpaired_players.remove(int(player_a))
-
-            player_b = str(random.choice(unpaired_players))
-            unpaired_players.remove(int(player_b))
-            self.pairing_list.append(str(player_a) + "-" + str(player_b))
-
-    def pairings_descending_score(self):
-        """
-        create parings following descendig scores
-        """
-        unpaired_players = self.player_list_id
-
-        while unpaired_players:
-            player_a = str(random.choice(unpaired_players))
-            unpaired_players.remove(player_a)
-
-            player_b = random.choice(unpaired_players)
-            unpaired_players.remove(player_b)
-
-            self.pairing_list.append(str(player_a) + "-" + str(player_b))
-
-    def set_player_score(self, player_id, player_match_result: float):
-        """
-        gets a player_id and a float(player_match_result)
-        updates score for player_id
-        returns None
-        """
-        self.player_score_round[player_id] = player_match_result
-        self.player_score_total_end_of_round[player_id] = self.player_score_total_start_of_round[player_id] + \
-            self.player_score_round[player_id]
+            self.previous_pairings[int(pairing.split("-")[0])].append(int(pairing.split("-")[1]))
+            self.previous_pairings[int(pairing.split("-")[1])].append(int(pairing.split("-")[0]))

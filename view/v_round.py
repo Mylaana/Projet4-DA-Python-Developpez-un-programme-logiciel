@@ -38,11 +38,15 @@ class ViewRound(v.View):
         returns none
         """
         score_list = []
-        for key, value in score.items():
-            score_list.append(f"Joueur {key} : {value}")
+
         if total_score:
-            title = f"score total à fin de round {round_number}"
+            list_of_tuple = sorted(score.items(), key=lambda x: x[1], reverse=True)
+            score_list = [f"Joueur {k[0]} : {float(score[k[0]])}" for k in list_of_tuple]
+            title = f"classement à fin de round {round_number}"
+
         else:
+            for key, value in score.items():
+                score_list.append(f"Joueur {key} : {float(value)}")
             title = f"resultat du round {round_number}"
 
         self.show_in_console(message=score_list, title=title)
@@ -61,7 +65,7 @@ class ViewRound(v.View):
         """
         self.show_in_console(message=["souhaitez-vous :",
                                       f"{self.menu.command_one} : entrer les scores des joueurs",
-                                      f"{self.menu.command_two} : demo mode - utiliser les scores aléatoires",
+                                      f"{self.menu.command_two} : [demo mode] utiliser les scores aléatoires",
                                       "",
                                       f"{self.menu.command_save} : {self.menu.command_description_save}",
                                       f"{self.menu.command_load} : {self.menu.command_description_load}",

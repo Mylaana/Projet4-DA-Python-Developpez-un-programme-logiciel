@@ -36,11 +36,11 @@ def main():
     """
     main function
     """
-    model_tournament = m_tournament.Tournament()
+    model_tournament: m_tournament.Tournament = m_tournament.Tournament()
     view_tournament = v_tournament.ViewTournament()
     controller_tournament = c_tournament.ControllerTournament(model_tournament, view_tournament)
 
-    model_round_list = m_round.RoundList()
+    model_round_list: m_round.Round = m_round.Round()
     view_round = v_round.ViewRound()
     controller_round = c_round.ControllerRound(model_round_list, view_round)
 

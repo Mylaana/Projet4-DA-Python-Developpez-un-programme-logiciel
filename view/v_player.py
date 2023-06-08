@@ -26,7 +26,7 @@ class ViewPlayer(v.View):
         """
         self.show_in_console(message=["souhaitez-vous :",
                                       f"{self.menu.command_one} : créer une liste de joueurs",
-                                      f"{self.menu.command_two} : utiliser la liste de joueurs par défaut",
+                                      f"{self.menu.command_two} : [demo mode] utiliser la liste de joueurs par défaut",
                                       "",
                                       f"{self.menu.command_save} : {self.menu.command_description_save}",
                                       f"{self.menu.command_load} : {self.menu.command_description_load}",
@@ -53,7 +53,7 @@ class ViewPlayer(v.View):
                 {"name": "Dexter", "last_name": "Chesnay", "birth_date": "1995/07/16"},
                 {"name": "Chandler", "last_name": "Bisaillon", "birth_date": "1969/02/15"},
                 {"name": "Guillaume", "last_name": "Aoust", "birth_date": "1994/10/12"},
-                {"name": "Christiane", "last_name": "Laramée", "birth_date": "aaaa"},
-                {"name": "Élise", "last_name": "Lévesque", "birth_date": "aaaa"},
-                {"name": "Orville", "last_name": "Mireault", "birth_date": "aaaa"},
-                {"name": "Étienne", "last_name": "Salois", "birth_date": "aaaa"}]
+                {"name": "Christiane", "last_name": "Laramée", "birth_date": "06/17/1998"},
+                {"name": "Élise", "last_name": "Lévesque", "birth_date": "03/28/2004"},
+                {"name": "Orville", "last_name": "Mireault", "birth_date": "02/24/2003"},
+                {"name": "Étienne", "last_name": "Salois", "birth_date": "09/11/1993"}]

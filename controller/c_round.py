@@ -16,7 +16,7 @@ class ControllerRound(c.Controller):
     """
     Controller class
     """
-    def __init__(self, model: m.RoundList, view: v.ViewRound):
+    def __init__(self, model: m.Round, view: v.ViewRound):
         super().__init__(model=model, view=view)
         self.model = model
         self.view = view
