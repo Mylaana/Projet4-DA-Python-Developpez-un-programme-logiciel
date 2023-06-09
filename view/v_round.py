@@ -38,6 +38,7 @@ class ViewRound(v.View):
         returns none
         """
         score_list = []
+        print(score)
 
         if total_score:
             list_of_tuple = sorted(score.items(), key=lambda x: x[1], reverse=True)

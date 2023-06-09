@@ -35,6 +35,55 @@ class ViewPlayer(v.View):
                              title="liste des joueurs")
         return input("")
 
+    def prompt_player_group_creation(self) -> list[dict[str, str]]:
+        """
+        gets none
+        return a player list of dict with informations :
+        [{name : 'player name', last_name : 'player last name', birth_date : 'DD/MM/YYYY'}]
+        """
+        player_list = []
+        list_complete = False
+        while not list_complete:
+            result = self.prompt_new_player()
+            if result == self.menu.command_two:
+                break
+
+            player = self.get_new_player_info()
+            self.show_in_console(f"confirmez-vous vouloir ajouter le joueur suivant : {player} \n 1 : oui \n2 : non")
+            validate_player = input("")
+            if validate_player == 1:
+                player_list.append(player)
+
+        return player_list
+
+    def prompt_new_player(self):
+        """
+        prompt user if he wants new player or if he's done
+        """
+        while True:
+            self.show_in_console(message=["souhaitez-vous :",
+                                          f"{self.menu.command_one} : ajouter un nouveau joueur",
+                                          f"{self.menu.command_two} : ne plus ajouter de joueurs"])
+            result = input("")
+            if result == self.menu.command_one:
+                return self.menu.command_one
+            elif result == self.menu.command_two:
+                return self.menu.command_two
+            else:
+                self.invalid_choice()
+
+    def get_new_player_info(self) -> dict:
+        """
+        gets None
+        returns dict
+        """
+        player = {}
+        player["name"] = input("enter player name :")
+        player["last_name"] = input("enter player last name :")
+        player["birth_date"] = input("enter player birth date :")
+
+        return player
+
     def get_player_list(self):
         """
         Returns player list with following shape :

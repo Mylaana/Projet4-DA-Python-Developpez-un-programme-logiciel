@@ -33,34 +33,36 @@ class ControllerPlayer(c.Controller):
         Returns boolean == choice in choice list and could be executed.
         """
         prompt_result = self.view.prompt_player_list_selection()
-        if prompt_result == "r":
+        if prompt_result == self.menu.command_return:
             self.menu_cleaner(self.menu.navigation_player_list)
             return False
 
         return self.rooter(choice=prompt_result,
-                           choice_dict={self.menu.command_one: self.create_player_list,
+                           choice_dict={self.menu.command_one: self.create_player_group,
                                         self.menu.command_two: self.load_dummy_default_player_list,
                                         self.menu.command_exit: self.exit_program})
 
-    def create_player_list(self):
+    def create_player_group(self):
         """
         Create new tournament from view's player list
         returns None
         """
 
-        print("pas encore possbible")
+        self.model.set_player_group(self.view.prompt_player_group_creation())
+        return False
 
     def load_existing_player_list(self):
         """
         load an existing tournament
         """
-        print("pas encore possbible")
+        input("pas encore possbible")
 
     def load_dummy_default_player_list(self):
         """
         load an existing tournament
         """
         self.model.set_player_group(self.view.dummy_generate_player_list())
+        return True
 
     def get_player_list_id(self) -> list:
         """

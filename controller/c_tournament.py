@@ -19,10 +19,9 @@ class ControllerTournament(c.Controller):
     """
     def __init__(self, model: m.Tournament, view: v.ViewTournament):
         super().__init__(model=model, view=view)
-        """
         self.view: v.ViewTournament = view
         self.model: m.Tournament = model
-        """
+
         # initialize values of every menu'selection (status)
         self.selected_element = {}
         for navigation in self.menu.tree:
@@ -48,17 +47,16 @@ class ControllerTournament(c.Controller):
         self.model.name = "Tournoi club du vieux Lyon"
         self.model.location = "Lyon - France"
         self.model.date_start = time.localtime()
-
-        # self.model.player_list = self.view.get_player_list()
+        return True
 
     def load_existing_tournament(self):
         """
         load an existing tournament
         """
-        print("pas encore possbible")
+        input("pas encore possbible")
 
     def load_dummy_default_tournament(self):
         """
         load an existing tournament
         """
-        print("pas encore possbible")
+        input("pas encore possbible")

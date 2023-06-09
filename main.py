@@ -61,8 +61,10 @@ def main():
             controller_player.selected_element[
                 controller_player.menu.navigation_player_list] = controller_player.select_player_list()
 
-            controller_tournament.set_player_group(controller_player.get_player_list_id())
-            controller_round.set_player_group(controller_player.get_player_list_id())
+            if controller_player.selected_element[controller_player.menu.navigation_player_list] is True:
+                controller_tournament.set_player_group(controller_player.get_player_list_id())
+                controller_round.set_player_group(controller_player.get_player_list_id())
+
             continue
 
         if controller_round.selected_element[controller_round.menu.navigation_round] is False:

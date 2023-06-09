@@ -34,8 +34,7 @@ class Controller:
             return False
 
         # runs the controller's function related to choice, see choice_dict
-        choice_dict[choice]()
-        return True
+        return choice_dict[choice]()
 
     def exit_program(self, show_exit_message: bool = True) -> None:
         """
