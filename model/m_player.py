@@ -8,7 +8,8 @@ class Player:
     """
     player class
     """
-    def __init__(self, player_id: int, name: str = "", family_name: str = "", birth_date: str = ""):
+    def __init__(self, player_id: int, name: str = "", family_name: str = "",
+                 birth_date: str = ""):
         self.name = name
         self.last_name = family_name
         self.birth_date = birth_date
@@ -30,31 +31,25 @@ class PlayerList:
         stores player list with a dictionnaty :
         Key = id, value = class Player
         """
-        self.player_group = {}
+        self.player_group: dict[int, dict] = {}
         self.player_list_id = []
+        self.minimum_player_number: int = 0
 
     def set_player_group(self, player_info_list: list) -> list:
         """
-        get a list like :
+        get a list of dict :
         'Name FamilyName Birthdate',
         'Name FamilyName Birthdate',
-
-        generate a dict
         returns none
         """
         # reset player group
         self.player_group = {}
-        player_counter = 1
 
+        # adds every player to de player group dict
         for player_info in player_info_list:
-            player = Player(player_id=player_counter)
-            player.name = player_info["name"]
-            player.last_name = player_info["name"]
-            player.birth_date = player_info["name"]
+            self.add_player_to_group(player_info)
 
-            self.add_player_to_group(player)
-
-    def add_player_to_group(self, player: Player) -> None:
+    def add_player_to_group(self, player: dict) -> None:
         """
         stores player in dict
         gets a player class argument

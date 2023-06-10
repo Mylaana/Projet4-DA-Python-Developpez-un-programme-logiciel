@@ -17,10 +17,11 @@ class ControllerTournament(c.Controller):
     """
     Controller class
     """
-    def __init__(self, model: m.Tournament, view: v.ViewTournament):
+    def __init__(self, model: m.Tournament, view: v.ViewTournament, debug: bool = False):
         super().__init__(model=model, view=view)
         self.view: v.ViewTournament = view
         self.model: m.Tournament = model
+        self.debug = debug
 
         # initialize values of every menu'selection (status)
         self.selected_element = {}

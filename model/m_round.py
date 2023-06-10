@@ -15,6 +15,7 @@ class Round:
         self.round_counter = 0
         self.round_max_number = round_max_number
         self.player_list_id = []
+        self.player_group: dict[int, dict] = {}
         self.current_round: m.Match = None
 
         """
@@ -61,9 +62,9 @@ class Round:
         """
 
         for match in self.current_round.pairing_list:
-            player_a_id = int(match.split("-")[0])
+            player_a_id = int(match[0][0])
             player_a_score = random.choice([0, 0.5, 1])
-            player_b_id = int(match.split("-")[1])
+            player_b_id = int(match[1][0])
             player_b_score = 1.0 - player_a_score
             self.current_round.set_player_score(
                 player_id=player_a_id, player_match_result=player_a_score)
@@ -79,6 +80,5 @@ class Round:
                 self.previous_pairings[player_id] = []
 
         for pairing in self.current_round.pairing_list:
-
-            self.previous_pairings[int(pairing.split("-")[0])].append(int(pairing.split("-")[1]))
-            self.previous_pairings[int(pairing.split("-")[1])].append(int(pairing.split("-")[0]))
+            self.previous_pairings[int(pairing[0][0])].append(int(pairing[1][0]))
+            self.previous_pairings[int(pairing[1][0])].append(int(pairing[0][0]))

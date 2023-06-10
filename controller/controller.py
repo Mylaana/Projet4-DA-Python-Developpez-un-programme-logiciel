@@ -12,10 +12,11 @@ class Controller:
     """
     Controller class
     """
-    def __init__(self, model, view):
+    def __init__(self, model, view, debug: bool = False):
         self.model = model
         self.view = view
         self.menu = menu.Menu()
+        self.debug = debug
 
         # initialize values of every menu'selection (status)
         self.selected_element = {}
@@ -59,16 +60,19 @@ class Controller:
             if not self.selected_element[parent]:
                 self.selected_element[child] = False
 
-    def set_player_group(self, player_list: list):
+    def set_player_group(self, player_list: list, player_group: dict[int, dict]):
         """
         gets a list of player id
         pass the list to model
         returns none
         """
         self.model.player_list_id = player_list
+        self.model.player_group = player_group
 
     def clear_console(self):
         """
         clear console
         """
+        if self.debug:
+            return
         os.system('cls' if os.name == 'nt' else 'clear')

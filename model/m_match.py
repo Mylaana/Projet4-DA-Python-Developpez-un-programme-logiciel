@@ -11,7 +11,7 @@ class Match:
 
     def __init__(self, player_list_id: list):
         self.player_list_id: list[int] = player_list_id.copy()
-        self.pairing_list: list[str] = []  # str('player_a-player_b'
+        self.pairing_list: list[tuple] = []
 
         # initializing player score at 0
         self.player_score_round: dict[int, float] = {k: 0.0 for k in self.player_list_id}
@@ -56,7 +56,7 @@ class Match:
 
             player_b = random.choice(unpaired_players)
             unpaired_players.remove(int(player_b))
-            self.pairing_list.append(str(player_a) + "-" + str(player_b))
+            self.pairing_list.append(([player_a, 0], [player_b, 0]))
 
     def set_pairings_descending_score(self, previous_pairing: dict[int, list]):
         """
@@ -80,7 +80,7 @@ class Match:
                 player_b = unpaired_players.pop(0)
 
             # unpaired_players.pop(unpaired_players.index(player_b))
-            self.pairing_list.append(str(player_a) + "-" + str(player_b))
+            self.pairing_list.append(([player_a, 0], [player_b, 0]))
 
     def first_player_not_in_list(self, player_list: list[int], player_list_to_exclude: list[int]) -> int:
         """
@@ -104,3 +104,31 @@ class Match:
         self.player_score_round[player_id] = player_match_result
         self.player_score_total_end_of_round[player_id] = self.player_score_total_start_of_round[player_id] + \
             self.player_score_round[player_id]
+
+    def get_id_player_a(self, match: tuple) -> int:
+        """
+        gets the match as tuple
+        returns player_a id
+        """
+        return match[0][0]
+
+    def get_id_player_b(self, match: tuple) -> int:
+        """
+        gets the match as tuple
+        returns player_a id
+        """
+        return match[1][0]
+
+    def get_score_player_a(self, match: tuple) -> float:
+        """
+        gets the match as tuple
+        returns player_a id
+        """
+        return match[0][1]
+
+    def get_score_player_b(self, match: tuple) -> float:
+        """
+        gets the match as tuple
+        returns player_a id
+        """
+        return match[1][1]

@@ -36,17 +36,19 @@ def main():
     """
     main function
     """
+    DEBUG = True
+
     model_tournament: m_tournament.Tournament = m_tournament.Tournament()
     view_tournament = v_tournament.ViewTournament()
-    controller_tournament = c_tournament.ControllerTournament(model_tournament, view_tournament)
+    controller_tournament = c_tournament.ControllerTournament(model_tournament, view_tournament, DEBUG)
 
     model_round_list: m_round.Round = m_round.Round()
     view_round = v_round.ViewRound()
-    controller_round = c_round.ControllerRound(model_round_list, view_round)
+    controller_round = c_round.ControllerRound(model_round_list, view_round, DEBUG)
 
     model_player_list = m_player.PlayerList()
     view_player = v_player.ViewPlayer()
-    controller_player = c_player.ControllerPlayer(model_player_list, view_player)
+    controller_player = c_player.ControllerPlayer(model_player_list, view_player, DEBUG)
 
     while True:
         # select a tournament by either creating or loading one
@@ -54,16 +56,22 @@ def main():
             clear_console()
             controller_tournament.selected_element[
                 controller_tournament.menu.navigation_tournament] = controller_tournament.select_tournament()
+
+            # forces the minimum player number to two times the number of round
+            controller_player.model.minimum_player_number = controller_tournament.model.round_number * 2
             continue
 
         if controller_player.selected_element[controller_player.menu.navigation_player_list] is False:
-            clear_console()
+            # clear_console()
             controller_player.selected_element[
                 controller_player.menu.navigation_player_list] = controller_player.select_player_list()
 
+            # pass player_list_id and player_group for models that needs it
             if controller_player.selected_element[controller_player.menu.navigation_player_list] is True:
-                controller_tournament.set_player_group(controller_player.get_player_list_id())
-                controller_round.set_player_group(controller_player.get_player_list_id())
+                controller_tournament.set_player_group(player_list=controller_player.get_player_list_id(),
+                                                       player_group=controller_player.get_player_group())
+                controller_round.set_player_group(player_list=controller_player.get_player_list_id(),
+                                                  player_group=controller_player.get_player_group())
 
             continue
 

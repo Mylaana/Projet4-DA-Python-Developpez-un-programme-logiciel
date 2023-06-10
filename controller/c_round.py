@@ -16,11 +16,12 @@ class ControllerRound(c.Controller):
     """
     Controller class
     """
-    def __init__(self, model: m.Round, view: v.ViewRound):
+    def __init__(self, model: m.Round, view: v.ViewRound, debug: bool = False):
         super().__init__(model=model, view=view)
         self.model = model
         self.view = view
         self.last_round_over = False
+        self.debug = debug
 
         # initialize values of every menu'selection (status)
         self.selected_element = {}
@@ -55,7 +56,8 @@ class ControllerRound(c.Controller):
         """
         self.model.create_new_round()
         self.view.display_round_pairings(pairing_list=self.model.get_current_round_pairings(),
-                                         round_number=self.model.round_counter)
+                                         round_number=self.model.round_counter,
+                                         player_group=self.model.player_group)
 
         choice_dict = {self.menu.command_one: self.enter_score_results,
                        self.menu.command_two: self.set_random_scores,
@@ -96,10 +98,12 @@ class ControllerRound(c.Controller):
         self.view.display_scores(
             score=self.model.current_round.player_score_round,
             round_number=self.model.round_counter,
-            total_score=False)
+            total_score=False,
+            player_group=self.model.player_group)
 
         # display total score at end of round
         self.view.display_scores(
             score=self.model.current_round.player_score_total_end_of_round,
             round_number=self.model.round_counter,
-            total_score=True)
+            total_score=True,
+            player_group=self.model.player_group)

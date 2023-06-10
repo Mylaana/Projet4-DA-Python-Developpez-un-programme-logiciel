@@ -13,4 +13,6 @@ class Tournament:
         self.date_start = ""
         self.date_end = ""
         self.player_list_id: list[int] = None
+        self.player_group: dict[int, dict] = {}
         self.description = ""
+        self.round_number = 4

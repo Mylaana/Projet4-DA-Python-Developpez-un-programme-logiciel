@@ -35,7 +35,7 @@ class ViewPlayer(v.View):
                              title="liste des joueurs")
         return input("")
 
-    def prompt_player_group_creation(self) -> list[dict[str, str]]:
+    def prompt_player_group_creation(self, round_number: int) -> list[dict[str, str]]:
         """
         gets none
         return a player list of dict with informations :
@@ -49,10 +49,21 @@ class ViewPlayer(v.View):
                 break
 
             player = self.get_new_player_info()
-            self.show_in_console(f"confirmez-vous vouloir ajouter le joueur suivant : {player} \n 1 : oui \n2 : non")
+            self.show_in_console(f"confirmez-vous vouloir ajouter le joueur suivant : {player} \n1 : oui\n2 : non")
             validate_player = input("")
-            if validate_player == 1:
+            if validate_player == self.menu.command_one:
                 player_list.append(player)
+        input(player_list)
+
+        # checks if provided player_list is valid
+        if len(player_list) % 2 != 0:
+            self.show_in_console("Liste invalide, veuillez entrer un nombre pair de joueur")
+            return False
+
+        if len(player_list) < 2 * round_number:
+            self.show_in_console(f"Liste invalide, veuillez entrer au moins {2 * round_number} joueurs"
+                                 f"pour un tournoi de {round_number} round(s)")
+            return False
 
         return player_list
 
@@ -63,7 +74,7 @@ class ViewPlayer(v.View):
         while True:
             self.show_in_console(message=["souhaitez-vous :",
                                           f"{self.menu.command_one} : ajouter un nouveau joueur",
-                                          f"{self.menu.command_two} : ne plus ajouter de joueurs"])
+                                          f"{self.menu.command_two} : terminer la création de la liste"])
             result = input("")
             if result == self.menu.command_one:
                 return self.menu.command_one

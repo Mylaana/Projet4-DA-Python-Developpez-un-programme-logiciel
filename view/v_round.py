@@ -15,7 +15,7 @@ class ViewRound(v.View):
         instead of randomed for app building purpose).
         """
 
-    def display_round_pairings(self, pairing_list: list, round_number: int):
+    def display_round_pairings(self, pairing_list: list, round_number: int, player_group: dict[int, dict]):
         """
         gets list of pairings with each line being 'player_a_id-player_b_id'
         returns none
@@ -26,23 +26,22 @@ class ViewRound(v.View):
         for line in pairing_list:
             table_number += 1
             round_pairings.append(f"Table {table_number} :")
-            round_pairings.append("Joueur " + line.replace("-", " vs Joueur "))
+            round_pairings.append(f"J{line[0][0]}-" + player_group[line[0][0]]["name"] +
+                                  f" vs J{line[1][0]}-" + player_group[line[1][0]]["name"])
             round_pairings.append("")
 
         self.show_in_console(round_pairings, f"round : {round_number}")
 
-    def display_scores(self, score: dict, round_number: int, total_score: bool):
+    def display_scores(self, score: dict, round_number: int, total_score: bool, player_group: dict[int, dict]):
         """
         gets a list
         show list in console
         returns none
         """
         score_list = []
-        print(score)
-
         if total_score:
             list_of_tuple = sorted(score.items(), key=lambda x: x[1], reverse=True)
-            score_list = [f"Joueur {k[0]} : {float(score[k[0]])}" for k in list_of_tuple]
+            score_list = [f"J{k[0]} {player_group[k[0]]['name']} : {float(score[k[0]])}" for k in list_of_tuple]
             title = f"classement à fin de round {round_number}"
 
         else:
@@ -92,3 +91,9 @@ class ViewRound(v.View):
                                       f"{self.menu.command_return} : {self.menu.command_description_return}",
                                       f"{self.menu.command_exit} : {self.menu.command_description_exit}"])
         return input("")
+
+    def display_invalid_list(self, message):
+        """
+        gets message
+        returns none
+        """

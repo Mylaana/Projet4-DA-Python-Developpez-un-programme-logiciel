@@ -16,10 +16,11 @@ class ControllerPlayer(c.Controller):
     """
     Controller class
     """
-    def __init__(self, model: m.PlayerList, view: v.ViewPlayer):
+    def __init__(self, model: m.PlayerList, view: v.ViewPlayer, debug: bool = False):
         super().__init__(model=model, view=view)
         self.view = view
         self.model = model
+        self.debug = debug
 
         # initialize values of every menu'selection (status)
         self.selected_element = {}
@@ -47,9 +48,9 @@ class ControllerPlayer(c.Controller):
         Create new tournament from view's player list
         returns None
         """
-
-        self.model.set_player_group(self.view.prompt_player_group_creation())
-        return False
+        player_list = self.view.prompt_player_group_creation()
+        if player_list:
+            return True
 
     def load_existing_player_list(self):
         """
@@ -70,3 +71,10 @@ class ControllerPlayer(c.Controller):
         returns a player id list
         """
         return self.model.player_list_id
+    
+    def get_player_group(self) -> dict[int, dict]:
+        """
+        gets none
+        returns a player id list
+        """
+        return self.model.player_group
