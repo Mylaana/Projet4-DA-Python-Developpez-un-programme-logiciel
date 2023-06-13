@@ -40,6 +40,7 @@ class ControllerRound(c.Controller):
                 self.start_new_round()
                 go_to_next_round = False
                 self.display_scores()
+                self.model.update_data()
 
             prompt_result = self.view.prompt_next_round()
             if prompt_result == self.menu.command_one:
@@ -107,3 +108,9 @@ class ControllerRound(c.Controller):
             round_number=self.model.round_counter,
             total_score=True,
             player_group=self.model.player_group)
+
+    def load_existing_rounds(self):
+        """
+        load an existing tournament
+        """
+        self.model.load_data()

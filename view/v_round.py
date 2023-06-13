@@ -46,7 +46,7 @@ class ViewRound(v.View):
 
         else:
             for key, value in score.items():
-                score_list.append(f"Joueur {key} : {float(value)}")
+                score_list.append(f"J{key} {player_group[key]['name']} : {float(value)}")
             title = f"resultat du round {round_number}"
 
         self.show_in_console(message=score_list, title=title)

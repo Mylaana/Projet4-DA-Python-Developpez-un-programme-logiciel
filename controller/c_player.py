@@ -56,7 +56,7 @@ class ControllerPlayer(c.Controller):
         """
         load an existing tournament
         """
-        input("pas encore possbible")
+        self.model.load_data()
 
     def load_dummy_default_player_list(self):
         """
@@ -71,7 +71,7 @@ class ControllerPlayer(c.Controller):
         returns a player id list
         """
         return self.model.player_list_id
-    
+
     def get_player_group(self) -> dict[int, dict]:
         """
         gets none

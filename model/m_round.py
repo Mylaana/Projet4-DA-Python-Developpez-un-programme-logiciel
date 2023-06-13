@@ -1,22 +1,31 @@
 """
 Tournament class module
 """
+import sys
 import random
+from CommonClass import data
 from . import m_match as m
+from . import m_save_load
+sys.path.insert(0, '../CommonClass')
 
 
-class Round:
+class Round(m_save_load.SaveLoad):
     """
     Model = tournament class
     """
 
     def __init__(self, round_max_number: int = 4):
+        super().__init__()
         self.round_list: list[m.Match] = []
         self.round_counter = 0
         self.round_max_number = round_max_number
         self.player_list_id = []
         self.player_group: dict[int, dict] = {}
         self.current_round: m.Match = None
+
+        self.data: data.Data() = None
+        self.data_section_name = "round"
+        self.data_excluded = ["data", "data_section_name", "data_excluded", "round_list", "current_round"]
 
         """
         a dictA of dictBs
@@ -82,3 +91,17 @@ class Round:
         for pairing in self.current_round.pairing_list:
             self.previous_pairings[int(pairing[0][0])].append(int(pairing[1][0]))
             self.previous_pairings[int(pairing[1][0])].append(int(pairing[0][0]))
+
+    def update_data_excluded(self) -> None:
+        """
+        void function, must be overridden
+        """
+        counter = 1
+        self.data.data["round"]["round_list"] = {}
+        for match in self.round_list:
+            # translates Match() in to a dict
+            self.data.data[self.data_section_name]["round_list"][counter] = {}
+            for attribute, values in vars(match).items():
+                self.data.data[self.data_section_name]["round_list"][counter][attribute] = values
+
+            counter += 1

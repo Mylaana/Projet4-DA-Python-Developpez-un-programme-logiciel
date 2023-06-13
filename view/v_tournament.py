@@ -29,3 +29,10 @@ class ViewTournament(v.View):
                                       f"{self.menu.command_exit} : quitter le programme."],
                              title="tournoi")
         return input("")
+
+    def display_loading_status(self, message) -> None:
+        """
+        gets a message to display as str or list
+        returns none
+        """
+        self.show_in_console(message)

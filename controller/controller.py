@@ -44,6 +44,7 @@ class Controller:
         if show_exit_message:
             self.view.show_in_console(title="fin du programme")
 
+        self.model.data.update_all()
         sys.exit()
 
     def menu_cleaner(self, running_menu_name: str):

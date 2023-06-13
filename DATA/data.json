@@ -1,0 +1,40 @@
+{
+    "status": {
+        "finished": false,
+        "tournament": true,
+        "player_list": false
+    },
+    "tournament": {
+        "name": "Tournoi club du vieux Lyon",
+        "location": "Lyon - France",
+        "date_start": [
+            2023,
+            6,
+            13,
+            14,
+            39,
+            25,
+            1,
+            164,
+            1
+        ],
+        "date_end": "",
+        "player_list_id": null,
+        "player_group": {},
+        "description": "",
+        "round_number": 4
+    },
+    "player_list": {
+        "player_group": {},
+        "player_list_id": [],
+        "minimum_player_number": 8
+    },
+    "round": {
+        "round_counter": 0,
+        "round_max_number": 4,
+        "player_list_id": [],
+        "player_group": {},
+        "previous_pairings": {},
+        "round_list": {}
+    }
+}
