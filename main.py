@@ -73,13 +73,6 @@ def main():
             # forces the minimum player number to two times the number of round
             controller_player.model.minimum_player_number = controller_tournament.model.round_number * 2
 
-            if controller_tournament.load and controller_tournament.selected_element[
-                                                controller_tournament.menu.navigation_tournament]:
-                controller_tournament.load = False
-                controller_player.load_existing_player_list()
-                controller_round.load_existing_rounds()
-                print("loading all")
-
             continue
 
         controller_tournament.model.data.save_data()

@@ -40,7 +40,7 @@ class PlayerList(m_save_load.SaveLoad):
         self.player_list_id = []
         self.minimum_player_number: int = 0
 
-        self.data: data.Data() = None
+        self.data: data.Data = None
         self.data_section_name = "player_list"
         self.data_excluded = ["data", "data_section_name", "data_excluded"]
 

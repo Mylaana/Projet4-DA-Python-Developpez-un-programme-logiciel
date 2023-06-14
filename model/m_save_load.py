@@ -26,7 +26,6 @@ class SaveLoad(ABC):
                 self.data.data[self.data_section_name][attribute] = values
 
         self.update_data_excluded()
-        self.save_data()
 
     def update_data_excluded(self) -> None:
         """
@@ -44,9 +43,10 @@ class SaveLoad(ABC):
         loads data from the data object
         returns None
         """
-
-        for attribute, values in vars(self).items():
+        print("load data")
+        for attribute in vars(self):
             if attribute not in self.data_excluded:
+                print(self.data.data[self.data_section_name][attribute])
                 attribute = self.data.data[self.data_section_name][attribute]
 
         self.load_data_excluded()

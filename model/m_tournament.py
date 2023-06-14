@@ -23,6 +23,6 @@ class Tournament(m_save_load.SaveLoad):
         self.description = ""
         self.round_number = 4
 
-        self.data: data.Data() = None
+        self.data: data.Data = None
         self.data_section_name = "tournament"
         self.data_excluded = ["data", "data_section_name", "data_excluded"]

@@ -23,7 +23,7 @@ class Round(m_save_load.SaveLoad):
         self.player_group: dict[int, dict] = {}
         self.current_round: m.Match = None
 
-        self.data: data.Data() = None
+        self.data: data.Data = None
         self.data_section_name = "round"
         self.data_excluded = ["data", "data_section_name", "data_excluded", "round_list", "current_round"]
 
