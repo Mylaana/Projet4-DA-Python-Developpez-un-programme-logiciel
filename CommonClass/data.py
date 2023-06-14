@@ -24,14 +24,16 @@ class Data:
         """
         dumps data into the json
         """
+        print("save json")
         with open(file=self._path + self.file_name, mode="w", encoding="utf-8") as data_file:
             json.dump(self.data, data_file, indent=4)
 
-    def load_data(self):
+    def load_file(self):
         """
         gets data from the file_name json
         """
-        with open(file='data.json', encoding="utf-8") as data_file:
+        print("load json")
+        with open(file=self._path + self.file_name, encoding="utf-8") as data_file:
             self.data = json.load(data_file)
 
     def create_json(self):
@@ -49,3 +51,12 @@ class Data:
         """
         for model in self.model_list:
             model.update_data()
+
+    def load_all(self):
+        """
+        gets none
+        call every model update method
+        returns none
+        """
+        for model in self.model_list:
+            model.load_data()
