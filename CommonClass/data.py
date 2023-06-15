@@ -15,13 +15,14 @@ class Data:
         self.file_name: str = "data.json"
         self._path = os.path.dirname(os.path.abspath(sys.argv[0])) + "/Data/"
         self.data = {"status": {"finished": False}}
+        self.loaded_data = None
         self.controller_list: list = []
 
     def save_data(self):
         """
         dumps data into the json
         """
-        print("save json")
+        print("save json file")
         with open(file=self._path + self.file_name, mode="w", encoding="utf-8") as data_file:
             json.dump(self.data, data_file, indent=4)
 
@@ -29,9 +30,9 @@ class Data:
         """
         gets data from the file_name json
         """
-        print("load json")
+        print("load json file")
         with open(file=self._path + self.file_name, encoding="utf-8") as data_file:
-            self.data = json.load(data_file)
+            self.loaded_data = json.load(data_file)
 
     def create_json(self):
         """
@@ -57,3 +58,5 @@ class Data:
         """
         for controller in self.controller_list:
             controller.load_data()
+
+        self.loaded_data = None

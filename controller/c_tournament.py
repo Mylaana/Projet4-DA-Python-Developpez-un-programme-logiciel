@@ -24,6 +24,7 @@ class ControllerTournament(c.Controller):
         self.debug = debug
         self.model.data_section_name = self.menu.navigation_tournament
         self.menu.name_controller = self.model.data_section_name
+        self.step_validated = False
 
     def select_tournament(self) -> bool:
         """
@@ -53,7 +54,10 @@ class ControllerTournament(c.Controller):
         """
         self.model.data.load_file()
         self.model.data.load_all()
-        if self.step_validated:
+        self.model.data.update_all()
+        self.model.data.save_data()
+
+        if self.step_validated is False:
             message = "pas de donnée à charger dans ce tournoi, veuillez en créer un nouveau"
         else:
             message = self.get_tournament_info()

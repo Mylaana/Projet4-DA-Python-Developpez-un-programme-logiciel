@@ -49,6 +49,9 @@ def main():
     controller_player.model.data: data.Data = database
     controller_round.model.data: data.Data = database
 
+    controller_tournament.set_up_data_info()
+    controller_player.set_up_data_info()
+    controller_round.set_up_data_info()
     # controller_round.model.save_data()
 
     while True:
@@ -60,7 +63,7 @@ def main():
 
         # select a tournament by either creating or loading one
         if controller_tournament.step_validated is False:
-            controller_tournament.set_up_data_info()
+
             controller_tournament.step_validated = controller_tournament.select_tournament()
 
             # forces the minimum player number to two times the number of round
@@ -75,7 +78,7 @@ def main():
 
         if controller_player.step_validated is False:
             # clear_console()
-            controller_player.set_up_data_info()
+
             controller_player.step_validated = controller_player.select_player_list()
 
             # pass player_list_id and player_group for models that needs it
@@ -88,7 +91,6 @@ def main():
             continue
 
         if controller_round.step_validated is False:
-            controller_round.set_up_data_info()
             controller_round.step_validated = controller_round.round_loop()
 
         # end of tournament

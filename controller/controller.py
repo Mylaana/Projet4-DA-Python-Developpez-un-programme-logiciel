@@ -101,7 +101,7 @@ class Controller:
         returns none
         """
         self.model.load_data()
-        self.step_validated = self.model.data.data["status"][self.menu.name_controller]
+        self.step_validated = self.model.data.loaded_data["status"][self.menu.name_controller]
 
     def update_data(self):
         """
