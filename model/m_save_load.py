@@ -21,6 +21,7 @@ class SaveLoad(ABC):
         updates the tournament's json file with every attribute's value
         returns None
         """
+
         for attribute, values in vars(self).items():
             if attribute not in self.data_excluded:
                 self.data.data[self.data_section_name][attribute] = values
@@ -43,12 +44,9 @@ class SaveLoad(ABC):
         loads data from the data object
         returns None
         """
-        print("load data")
-        for attribute in vars(self):
+        for attribute, value in vars(self).items():
             if attribute not in self.data_excluded:
-                print(self.data.data[self.data_section_name][attribute])
-                attribute = self.data.data[self.data_section_name][attribute]
-
+                value = self.data.data[self.data_section_name][attribute]
         self.load_data_excluded()
 
     def load_data_excluded(self):

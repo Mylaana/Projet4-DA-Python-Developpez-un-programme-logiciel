@@ -50,6 +50,7 @@ class Menu:
         self.navigation_tournament = self._MENU_NAME_TOURNAMENT
         self.navigation_player_list = self._MENU_NAME_PLAYER_LIST
         self.navigation_round = self._MENU_NAME_ROUND
+        self.name_controller = ""
 
         self.tree = self._MENU_TREE
         self.tree_child = self._MENU_TREE_CHILD

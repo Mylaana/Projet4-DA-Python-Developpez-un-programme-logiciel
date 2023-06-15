@@ -35,4 +35,4 @@ class ViewTournament(v.View):
         gets a message to display as str or list
         returns none
         """
-        self.show_in_console(message)
+        self.show_in_console(message=message, title="loading status")

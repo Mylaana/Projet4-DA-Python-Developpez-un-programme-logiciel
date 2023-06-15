@@ -18,14 +18,11 @@ class ControllerPlayer(c.Controller):
     """
     def __init__(self, model: m.PlayerList, view: v.ViewPlayer, debug: bool = False):
         super().__init__(model=model, view=view)
-        self.view = view
-        self.model = model
+        self.view: v.ViewPlayer = view
+        self.model: m.PlayerList = model
         self.debug = debug
-
-        # initialize values of every menu'selection (status)
-        self.selected_element = {}
-        for navigation in self.menu.tree:
-            self.selected_element[navigation] = False
+        self.model.data_section_name = self.menu.navigation_player_list
+        self.menu.name_controller = self.model.data_section_name
 
     def select_player_list(self) -> bool:
         """

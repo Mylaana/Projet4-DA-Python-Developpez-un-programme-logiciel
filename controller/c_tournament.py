@@ -22,11 +22,8 @@ class ControllerTournament(c.Controller):
         self.view: v.ViewTournament = view
         self.model: m.Tournament = model
         self.debug = debug
-
-        # initialize values of every menu'selection (status)
-        self.selected_element = {}
-        for navigation in self.menu.tree:
-            self.selected_element[navigation] = False
+        self.model.data_section_name = self.menu.navigation_tournament
+        self.menu.name_controller = self.model.data_section_name
 
     def select_tournament(self) -> bool:
         """
@@ -56,14 +53,14 @@ class ControllerTournament(c.Controller):
         """
         self.model.data.load_file()
         self.model.data.load_all()
-        if self.selected_element[self.menu.navigation_tournament]:
+        if self.step_validated:
             message = "pas de donnée à charger dans ce tournoi, veuillez en créer un nouveau"
         else:
             message = self.get_tournament_info()
 
         self.view.display_loading_status(message=message)
 
-        return self.selected_element[self.menu.navigation_tournament]
+        return self.step_validated
 
     def load_dummy_default_tournament(self):
         """

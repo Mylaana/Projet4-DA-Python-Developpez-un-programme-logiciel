@@ -14,11 +14,8 @@ class Data:
     def __init__(self) -> None:
         self.file_name: str = "data.json"
         self._path = os.path.dirname(os.path.abspath(sys.argv[0])) + "/Data/"
-        self.data = {"status": {"finished": False},
-                     "tournament": {},
-                     "player_list": {},
-                     "round": {}}
-        self.model_list: list = []
+        self.data = {"status": {"finished": False}}
+        self.controller_list: list = []
 
     def save_data(self):
         """
@@ -49,8 +46,8 @@ class Data:
         call every model update method
         returns none
         """
-        for model in self.model_list:
-            model.update_data()
+        for controller in self.controller_list:
+            controller.update_data()
 
     def load_all(self):
         """
@@ -58,5 +55,5 @@ class Data:
         call every model update method
         returns none
         """
-        for model in self.model_list:
-            model.load_data()
+        for controller in self.controller_list:
+            controller.load_data()

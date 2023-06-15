@@ -2,10 +2,7 @@
 """
 Player and player list model
 """
-import sys
-from CommonClass import data
-from . import m_save_load
-sys.path.insert(0, '../CommonClass')
+from . import model as m
 
 
 class Player:
@@ -26,7 +23,7 @@ class Player:
         return "name : " + self.name + "  last name : " + self.last_name
 
 
-class PlayerList(m_save_load.SaveLoad):
+class PlayerList(m.Model):
     """
     player list
     """
@@ -39,10 +36,6 @@ class PlayerList(m_save_load.SaveLoad):
         self.player_group: dict[int, dict] = {}
         self.player_list_id = []
         self.minimum_player_number: int = 0
-
-        self.data: data.Data = None
-        self.data_section_name = "player_list"
-        self.data_excluded = ["data", "data_section_name", "data_excluded"]
 
     def set_player_group(self, player_info_list: list) -> list:
         """

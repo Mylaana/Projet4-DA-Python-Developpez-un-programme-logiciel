@@ -3,13 +3,12 @@ Tournament class module
 """
 import sys
 import random
-from CommonClass import data
 from . import m_match as m
-from . import m_save_load
+from . import model
 sys.path.insert(0, '../CommonClass')
 
 
-class Round(m_save_load.SaveLoad):
+class Round(model.Model):
     """
     Model = tournament class
     """
@@ -23,8 +22,6 @@ class Round(m_save_load.SaveLoad):
         self.player_group: dict[int, dict] = {}
         self.current_round: m.Match = None
 
-        self.data: data.Data = None
-        self.data_section_name = "round"
         self.data_excluded = ["data", "data_section_name", "data_excluded", "round_list", "current_round"]
 
         """

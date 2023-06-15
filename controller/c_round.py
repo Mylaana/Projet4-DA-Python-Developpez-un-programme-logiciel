@@ -18,15 +18,12 @@ class ControllerRound(c.Controller):
     """
     def __init__(self, model: m.Round, view: v.ViewRound, debug: bool = False):
         super().__init__(model=model, view=view)
-        self.model = model
-        self.view = view
+        self.model: m.Round = model
+        self.view: v.ViewRound = view
         self.last_round_over = False
         self.debug = debug
-
-        # initialize values of every menu'selection (status)
-        self.selected_element = {}
-        for navigation in self.menu.tree:
-            self.selected_element[navigation] = False
+        self.model.data_section_name = self.menu.navigation_round
+        self.menu.name_controller = self.model.data_section_name
 
     def round_loop(self):
         """
@@ -40,7 +37,8 @@ class ControllerRound(c.Controller):
                 self.start_new_round()
                 go_to_next_round = False
                 self.display_scores()
-                self.model.update_data()
+                self.update_data()
+                self.save_data()
 
             prompt_result = self.view.prompt_next_round()
             if prompt_result == self.menu.command_one:

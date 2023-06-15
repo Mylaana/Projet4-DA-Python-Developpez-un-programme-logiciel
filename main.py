@@ -44,46 +44,42 @@ def main():
 
     # initialize data object
     # controller_tournament.model.data.create_json()  # DELETE
-    controller_tournament.model.data: data.Data = data.Data()
-    controller_player.model.data: data.Data = controller_tournament.model.data
-    controller_round.model.data: data.Data = controller_tournament.model.data
+    database = data.Data()
+    controller_tournament.model.data: data.Data = database
+    controller_player.model.data: data.Data = database
+    controller_round.model.data: data.Data = database
 
-    controller_tournament.model.data.model_list.append(controller_tournament.model)
-    controller_player.model.data.model_list.append(controller_player.model)
-    controller_round.model.data.model_list.append(controller_round.model)
+    # controller_round.model.save_data()
 
     while True:
-        # update tournament section status
+        # update data section status
         controller_tournament.model.data.data["status"][
-            controller_tournament.menu.navigation_tournament] = controller_tournament.selected_element[
-                controller_tournament.menu.navigation_tournament]
+            controller_tournament.menu.name_controller] = controller_tournament.step_validated
         controller_player.model.data.data["status"][
-            controller_player.menu.navigation_player_list] = controller_player.selected_element[
-                controller_player.menu.navigation_player_list]
-
-        controller_tournament.model.update_data()
-        controller_player.model.update_data()
-        controller_round.model.update_data()
+            controller_player.menu.name_controller] = controller_player.step_validated
 
         # select a tournament by either creating or loading one
-        if controller_tournament.selected_element[controller_tournament.menu.navigation_tournament] is False:
-            controller_tournament.selected_element[
-                controller_tournament.menu.navigation_tournament] = controller_tournament.select_tournament()
+        if controller_tournament.step_validated is False:
+            controller_tournament.set_up_data_info()
+            controller_tournament.step_validated = controller_tournament.select_tournament()
 
             # forces the minimum player number to two times the number of round
             controller_player.model.minimum_player_number = controller_tournament.model.round_number * 2
 
             continue
 
-        controller_tournament.model.data.save_data()
+        controller_tournament.model.update_data()
+        controller_player.model.update_data()
+        controller_round.model.update_data()
+        database.save_data()
 
-        if controller_player.selected_element[controller_player.menu.navigation_player_list] is False:
+        if controller_player.step_validated is False:
             # clear_console()
-            controller_player.selected_element[
-                controller_player.menu.navigation_player_list] = controller_player.select_player_list()
+            controller_player.set_up_data_info()
+            controller_player.step_validated = controller_player.select_player_list()
 
             # pass player_list_id and player_group for models that needs it
-            if controller_player.selected_element[controller_player.menu.navigation_player_list] is True:
+            if controller_player.step_validated:
                 controller_tournament.set_player_group(player_list=controller_player.get_player_list_id(),
                                                        player_group=controller_player.get_player_group())
                 controller_round.set_player_group(player_list=controller_player.get_player_list_id(),
@@ -91,16 +87,13 @@ def main():
 
             continue
 
-        if controller_round.selected_element[controller_round.menu.navigation_round] is False:
-            controller_round.selected_element[
-                controller_round.menu.navigation_round] = controller_round.round_loop()
+        if controller_round.step_validated is False:
+            controller_round.set_up_data_info()
+            controller_round.step_validated = controller_round.round_loop()
 
         # end of tournament
         controller_tournament.view.show_in_console(title="fin du tournoi")
         controller_tournament.model.data.data["status"]["finished"] = True
-        controller_round.model.data.data["status"][
-            controller_round.menu.navigation_round] = controller_round.selected_element[
-                controller_round.menu.navigation_round]
         controller_tournament.model.data.save_data()
 
         controller_tournament.exit_program(show_exit_message=False)

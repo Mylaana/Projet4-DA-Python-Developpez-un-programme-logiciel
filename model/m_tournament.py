@@ -2,13 +2,10 @@
 model dedicated module
 """
 
-import sys
-from CommonClass import data
-from . import m_save_load
-sys.path.insert(0, '../CommonClass')
+from . import model as m
 
 
-class Tournament(m_save_load.SaveLoad):
+class Tournament(m.Model):
     """
     Model = tournament class
     """
@@ -22,7 +19,3 @@ class Tournament(m_save_load.SaveLoad):
         self.player_group: dict[int, dict] = {}
         self.description = ""
         self.round_number = 4
-
-        self.data: data.Data = None
-        self.data_section_name = "tournament"
-        self.data_excluded = ["data", "data_section_name", "data_excluded"]
