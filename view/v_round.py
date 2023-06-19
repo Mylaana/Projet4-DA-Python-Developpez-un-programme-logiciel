@@ -67,9 +67,6 @@ class ViewRound(v.View):
                                       f"{self.menu.command_one} : entrer les scores des joueurs",
                                       f"{self.menu.command_two} : [demo mode] utiliser les scores aléatoires",
                                       "",
-                                      f"{self.menu.command_save} : {self.menu.command_description_save}",
-                                      f"{self.menu.command_load} : {self.menu.command_description_load}",
-                                      f"{self.menu.command_return} : {self.menu.command_description_return}",
                                       f"{self.menu.command_exit} : {self.menu.command_description_exit}"],)
         return input("")
 
@@ -86,9 +83,6 @@ class ViewRound(v.View):
         self.show_in_console(message=["souhaitez-vous :",
                                       f"{self.menu.command_one} : passer au round suivant",
                                       "",
-                                      f"{self.menu.command_save} : {self.menu.command_description_save}",
-                                      f"{self.menu.command_load} : {self.menu.command_description_load}",
-                                      f"{self.menu.command_return} : {self.menu.command_description_return}",
                                       f"{self.menu.command_exit} : {self.menu.command_description_exit}"])
         return input("")
 
