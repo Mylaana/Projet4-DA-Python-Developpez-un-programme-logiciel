@@ -1,3 +1,4 @@
 #ignore
 /Misc/
 __pycache__/
+DATA/*
