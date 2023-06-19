@@ -30,8 +30,8 @@ class Controller:
         if choice not in choice_dict:
             self.view.invalid_choice()
             return False
-
         # runs the controller's function related to choice, see choice_dict
+
         return choice_dict[choice]()
 
     def exit_program(self, show_exit_message: bool = True) -> None:

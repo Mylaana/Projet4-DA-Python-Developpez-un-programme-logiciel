@@ -30,46 +30,65 @@ class ControllerRound(c.Controller):
         Loops while rounds need to be run
         Returns True when last round is over
         """
-        go_to_next_round = True
-        while not self.model.round_counter >= self.model.round_max_number:
+        while not self.model.round_counter > self.model.round_max_number:
+            self.update_data()
+            self.save_data()
 
-            if go_to_next_round and self.model.current_round is None:
+            # creating new round with pairings
+            if self.model.current_round_step == 0:
                 self.clear_console()
                 self.start_new_round()
-                go_to_next_round = False
+                self.model.current_round_step = 1
+                continue
+
+            # displaying pairings and asking for round score method
+            if self.model.current_round_step == 1:
+                self.view.display_round_pairings(pairing_list=self.model.get_current_round_pairings(),
+                                                 round_number=self.model.round_counter,
+                                                 player_group=self.model.player_group)
+
+                choice_dict = {self.menu.command_one: self.enter_score_results,
+                               self.menu.command_two: self.set_random_scores,
+                               self.menu.command_exit: self.exit_program}
+
+                prompt_result = self.view.prompt_score_calculation_method()
+                result = self.rooter(choice=prompt_result, choice_dict=choice_dict)
+                if result:
+                    self.model.current_round_step = 2
+
+                continue
+
+            if self.model.current_round_step == 2:
                 self.display_scores()
-                self.update_data()
-                self.save_data()
+                prompt_result = self.view.prompt_next_round()
 
-            prompt_result = self.view.prompt_next_round()
-            if prompt_result == self.menu.command_one:
-                go_to_next_round = True
-                self.model.current_round = None
+                if prompt_result == self.menu.command_one:
+                    self.finalize_round()
 
-            if prompt_result == self.menu.command_exit:
-                self.exit_program()
+                if prompt_result == self.menu.command_exit:
+                    self.exit_program()
+
+                continue
 
         self.step_validated = True
 
         return self.step_validated
 
-    def start_new_round(self):
+    def start_new_round(self) -> None:
         """
-        first round generation
+        gets none
+        create new round
+        returns none
         """
         self.model.create_new_round()
-        self.view.display_round_pairings(pairing_list=self.model.get_current_round_pairings(),
-                                         round_number=self.model.round_counter,
-                                         player_group=self.model.player_group)
 
-        choice_dict = {self.menu.command_one: self.enter_score_results,
-                       self.menu.command_two: self.set_random_scores,
-                       self.menu.command_exit: self.exit_program}
-
-        prompt_result = self.view.prompt_score_calculation_method()
-
-        return self.rooter(choice=prompt_result,
-                           choice_dict=choice_dict)
+    def finalize_round(self):
+        """
+        gets none
+        runs round finalization
+        returns none
+        """
+        self.model.finalize_round()
 
     def enter_score_results(self):
         """
@@ -77,11 +96,15 @@ class ControllerRound(c.Controller):
         """
         print("pas encore possible")
 
+        return False
+
     def set_random_scores(self):
         """
         generates random scores for the current round
         """
         self.model.set_random_scores()
+
+        return True
 
     def display_scores_previous_round(self):
         """

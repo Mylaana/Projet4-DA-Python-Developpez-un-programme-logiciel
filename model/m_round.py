@@ -16,13 +16,21 @@ class Round(model.Model):
     def __init__(self, round_max_number: int = 4):
         super().__init__()
         self.round_list: list[m.Match] = []
-        self.round_counter = 0
+        self.round_counter = 1
         self.round_max_number = round_max_number
         self.player_list_id = []
-        self.player_group: dict[int, dict] = {}
+        self.player_group: dict[int, list] = {}
         self.current_round: m.Match = None
 
-        self.data_excluded = ["data", "data_section_name", "data_excluded", "round_list", "current_round"]
+        """
+        0=not created
+        1=pairings done, no results yet
+        2=round finished, scores entered
+        """
+        self.current_round_step: int = 0
+
+        self.data_excluded = ["data", "data_section_name", "data_excluded", "round_list", "current_round",
+                              "previous_pairings"]
 
         """
         a dictA of dictBs
@@ -36,8 +44,9 @@ class Round(model.Model):
         Generates new round and player pairings.
         Returns None
         """
-        self.round_counter += 1
+
         self.current_round = m.Match(self.player_list_id.copy())
+
         if self.round_counter > 1:
             self.current_round.player_score_total_start_of_round = self.round_list[
                 -1].player_score_total_end_of_round.copy()
@@ -48,6 +57,16 @@ class Round(model.Model):
         self.round_list.append(self.current_round)
 
         return self.round_counter >= self.round_max_number
+
+    def finalize_round(self):
+        """
+        gets none
+        cleans round data and prepare for next
+        returns none
+        """
+        self.round_counter += 1
+        self.current_round = None
+        self.current_round_step = 0
 
     def get_current_round_pairings(self) -> list:
         """
@@ -102,3 +121,51 @@ class Round(model.Model):
                 self.data.data[self.data_section_name]["round_list"][counter][attribute] = values
 
             counter += 1
+
+    def load_data_excluded(self):
+        """
+        gets none
+        loads match objects and tuple pairings from json file
+        returns none
+        """
+
+        if self.data.loaded_data["status"]["player_list"] is False:
+            return
+
+        # custom loading round_list
+        for i in range(1, self.round_counter + 1, 1):
+            load_match = m.Match(self.data.loaded_data[self.data_section_name]["round_list"][str(i)]["player_list_id"])
+            load_match.player_score_round = self.formated_dict_int_float(self.data.loaded_data[
+                    self.data_section_name]["round_list"][str(i)]["player_score_round"])
+            load_match.player_score_total_start_of_round = self.formated_dict_int_float(self.data.loaded_data[
+                    self.data_section_name]["round_list"][str(i)]["player_score_total_start_of_round"])
+            load_match.player_score_total_end_of_round = self.formated_dict_int_float(self.data.loaded_data[
+                    self.data_section_name]["round_list"][str(i)]["player_score_total_end_of_round"])
+
+            if i == self.round_counter and self.current_round_step < 1:
+                break
+
+            pairing_list = self.data.loaded_data[self.data_section_name]["round_list"][str(i)]["pairing_list"]
+
+            # formating the score result into tuple for each match for each score
+            for match in pairing_list:
+                match_formated: list[tuple] = []
+                for score in match:
+                    match_formated.append(tuple(score))
+
+                load_match.pairing_list.append(match_formated.copy())
+
+            self.round_list.append(load_match)
+            self.current_round = load_match
+            self.add_previous_pairings()
+
+    def formated_dict_int_float(self, dict_to_format: dict) -> dict[int, float]:
+        """
+        gets unformated dict
+        returns formated dict[int,float]
+        """
+        formated_dict = {}
+        for key, value in dict_to_format.items():
+            formated_dict[int(key)] = float(value)
+
+        return formated_dict

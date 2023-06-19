@@ -18,17 +18,11 @@ class Match:
         self.player_score_total_start_of_round: dict[int, float] = self.player_score_round.copy()
         self.player_score_total_end_of_round: dict[int, float] = self.player_score_round.copy()
 
-    def generate_round_pairings(self, is_first_round: bool, previous_pairing: dict[dict]) -> None:
+    def generate_round_pairings(self, is_first_round: bool, previous_pairing: dict[int, list]) -> None:
         """
-        calculer nouveau appariement en supprimant de dict.R deux joueurs :
-            -prendre le premier joueur de dict.R = joueur.A
-            -iterer sur joueur.X de dict.R jusqu'a ne pas trouver joueur.A dans
-                le dict.J de joueur.X alors joueur.B = joueur.X
-            -pop joueur.B de dict.R
-            -next
-
-        for player in player_list:
-            print(player.name)
+        gets a bool for round number rooting and previous pairing dict of [int,list]
+        calls the correct pairing calculation method (related to round number)
+        returns none
         """
         if is_first_round:
             self.set_pairings_random()
@@ -68,7 +62,7 @@ class Match:
 
         # assigns the two first player of the list as a pair
         while unpaired_players:
-            player_a = unpaired_players.pop(0)
+            player_a = int(unpaired_players.pop(0))
 
             # assigns the first available player in unpaired_player which has not already been playing vs player_a
             if len(unpaired_players) > 1:

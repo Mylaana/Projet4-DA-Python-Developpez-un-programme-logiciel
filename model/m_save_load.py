@@ -47,6 +47,7 @@ class SaveLoad(ABC):
         for attribute, value in vars(self).items():
             if attribute not in self.data_excluded:
                 setattr(self, attribute, self.data.loaded_data[self.data_section_name][attribute])
+
         self.load_data_excluded()
 
     def load_data_excluded(self):
