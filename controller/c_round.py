@@ -32,7 +32,8 @@ class ControllerRound(c.Controller):
         """
         go_to_next_round = True
         while not self.model.round_counter >= self.model.round_max_number:
-            if go_to_next_round:
+
+            if go_to_next_round and self.model.current_round is None:
                 self.clear_console()
                 self.start_new_round()
                 go_to_next_round = False
@@ -43,11 +44,14 @@ class ControllerRound(c.Controller):
             prompt_result = self.view.prompt_next_round()
             if prompt_result == self.menu.command_one:
                 go_to_next_round = True
+                self.model.current_round = None
 
             if prompt_result == self.menu.command_exit:
                 self.exit_program()
 
-        return True
+        self.step_validated = True
+
+        return self.step_validated
 
     def start_new_round(self):
         """
