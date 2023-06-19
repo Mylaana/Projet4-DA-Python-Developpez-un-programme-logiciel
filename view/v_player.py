@@ -28,9 +28,6 @@ class ViewPlayer(v.View):
                                       f"{self.menu.command_one} : créer une liste de joueurs",
                                       f"{self.menu.command_two} : [demo mode] utiliser la liste de joueurs par défaut",
                                       "",
-                                      f"{self.menu.command_save} : {self.menu.command_description_save}",
-                                      f"{self.menu.command_load} : {self.menu.command_description_load}",
-                                      f"{self.menu.command_return} : {self.menu.command_description_return}",
                                       f"{self.menu.command_exit} : {self.menu.command_description_exit}"],
                              title="liste des joueurs")
         return input("")

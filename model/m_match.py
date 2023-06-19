@@ -2,6 +2,7 @@
 Match class
 """
 import random
+import time
 
 
 class Match:
@@ -17,6 +18,8 @@ class Match:
         self.player_score_round: dict[int, float] = {k: 0.0 for k in self.player_list_id}
         self.player_score_total_start_of_round: dict[int, float] = self.player_score_round.copy()
         self.player_score_total_end_of_round: dict[int, float] = self.player_score_round.copy()
+        self.date_start: time = None
+        self.date_end: time = None
 
     def generate_round_pairings(self, is_first_round: bool, previous_pairing: dict[int, list]) -> None:
         """
@@ -98,6 +101,14 @@ class Match:
         self.player_score_round[player_id] = player_match_result
         self.player_score_total_end_of_round[player_id] = self.player_score_total_start_of_round[player_id] + \
             self.player_score_round[player_id]
+
+        for i, match in enumerate(self.pairing_list):
+            if int(match[0][0]) == int(player_id):
+                self.pairing_list[i] = ([match[0][0], player_match_result], [match[1][0], match[1][1]])
+            elif int(match[1][0]) == int(player_id):
+                self.pairing_list[i] = ([match[0][0], match[0][1]], [match[1][0], player_match_result])
+            else:
+                continue
 
     def get_id_player_a(self, match: tuple) -> int:
         """

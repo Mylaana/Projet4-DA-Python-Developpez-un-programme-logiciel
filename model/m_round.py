@@ -3,6 +3,7 @@ Tournament class module
 """
 import sys
 import random
+import time
 from . import m_match as m
 from . import model
 sys.path.insert(0, '../CommonClass')
@@ -46,6 +47,7 @@ class Round(model.Model):
         """
 
         self.current_round = m.Match(self.player_list_id.copy())
+        self.current_round.date_start = time.localtime()
 
         if self.round_counter > 1:
             self.current_round.player_score_total_start_of_round = self.round_list[
@@ -65,6 +67,7 @@ class Round(model.Model):
         returns none
         """
         self.round_counter += 1
+        self.current_round.date_end = time.localtime()
         self.current_round = None
         self.current_round_step = 0
 
@@ -88,7 +91,7 @@ class Round(model.Model):
 
         for match in self.current_round.pairing_list:
             player_a_id = int(match[0][0])
-            player_a_score = random.choice([0, 0.5, 1])
+            player_a_score = random.choice([0.0, 0.5, 1.0])
             player_b_id = int(match[1][0])
             player_b_score = 1.0 - player_a_score
             self.current_round.set_player_score(
@@ -145,19 +148,19 @@ class Round(model.Model):
             if i == self.round_counter and self.current_round_step < 1:
                 break
 
-            pairing_list = self.data.loaded_data[self.data_section_name]["round_list"][str(i)]["pairing_list"]
+            pairing_list: list[tuple(list)] = self.data.loaded_data[
+                self.data_section_name]["round_list"][str(i)]["pairing_list"]
 
             # formating the score result into tuple for each match for each score
             for match in pairing_list:
-                match_formated: list[tuple] = []
-                for score in match:
-                    match_formated.append(tuple(score))
-
-                load_match.pairing_list.append(match_formated.copy())
+                match_formated: tuple(list) = ([match[0][0], match[0][1]],
+                                               [match[1][0], match[1][1]])
+                load_match.pairing_list.append(match_formated)
 
             self.round_list.append(load_match)
             self.current_round = load_match
             self.add_previous_pairings()
+            print(self.current_round.pairing_list)
 
     def formated_dict_int_float(self, dict_to_format: dict) -> dict[int, float]:
         """
