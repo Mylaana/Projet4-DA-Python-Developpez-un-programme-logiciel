@@ -37,11 +37,11 @@ class PlayerList(m.Model):
         self.player_list_id = []
         self.minimum_player_number: int = 0
 
-    def set_player_group(self, player_info_list: list) -> list:
+    def set_player_group(self, player_info_list: list[dict]) -> None:
         """
         get a list of dict :
-        'Name FamilyName Birthdate',
-        'Name FamilyName Birthdate',
+        'Name1 FamilyName1 Birthdate1',
+        'Name2 FamilyName2 Birthdate2',
         returns none
         """
         # reset player group

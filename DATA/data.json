@@ -1,6 +1,6 @@
 {
     "status": {
-        "finished": false,
+        "finished": true,
         "tournament": true,
         "player_list": true,
         "round": false
@@ -8,55 +8,55 @@
     "tournament": {
         "player_group": {
             "1": {
-                "name": "Jeanne",
-                "last_name": "Th\u00e9riault",
-                "birth_date": "1989/12/07"
+                "name": "name1",
+                "last_name": "last_name1",
+                "birthday": "birthday1"
             },
             "2": {
-                "name": "Dexter",
-                "last_name": "Chesnay",
-                "birth_date": "1995/07/16"
+                "name": "name2",
+                "last_name": "last_name2",
+                "birthday": "birthday2"
             },
             "3": {
-                "name": "Chandler",
-                "last_name": "Bisaillon",
-                "birth_date": "1969/02/15"
+                "name": "name3",
+                "last_name": "last_name3",
+                "birthday": "birthday3"
             },
             "4": {
-                "name": "Guillaume",
-                "last_name": "Aoust",
-                "birth_date": "1994/10/12"
+                "name": "name4",
+                "last_name": "last_name4",
+                "birthday": "birthday4"
             },
             "5": {
-                "name": "Christiane",
-                "last_name": "Laram\u00e9e",
-                "birth_date": "06/17/1998"
+                "name": "name5",
+                "last_name": "last_name5",
+                "birthday": "birthday5"
             },
             "6": {
-                "name": "\u00c9lise",
-                "last_name": "L\u00e9vesque",
-                "birth_date": "03/28/2004"
+                "name": "name6",
+                "last_name": "last_name6",
+                "birthday": "birthday6"
             },
             "7": {
-                "name": "Orville",
-                "last_name": "Mireault",
-                "birth_date": "02/24/2003"
+                "name": "name7",
+                "last_name": "last_name7",
+                "birthday": "birthday7"
             },
             "8": {
-                "name": "\u00c9tienne",
-                "last_name": "Salois",
-                "birth_date": "09/11/1993"
+                "name": "name8",
+                "last_name": "last_name8",
+                "birthday": "birthday8"
             }
         },
-        "name": "a",
-        "location": "b",
+        "name": "Tournoi club du vieux Lyon",
+        "location": "Lyon - France",
         "date_start": [
             2023,
             6,
             20,
-            12,
-            48,
-            26,
+            15,
+            33,
+            45,
             1,
             171,
             1
@@ -72,50 +72,50 @@
             7,
             8
         ],
-        "description": "c",
+        "description": "tournoi par temps bleu",
         "round_number": 4
     },
     "player_list": {
         "player_group": {
             "1": {
-                "name": "Jeanne",
-                "last_name": "Th\u00e9riault",
-                "birth_date": "1989/12/07"
+                "name": "name1",
+                "last_name": "last_name1",
+                "birthday": "birthday1"
             },
             "2": {
-                "name": "Dexter",
-                "last_name": "Chesnay",
-                "birth_date": "1995/07/16"
+                "name": "name2",
+                "last_name": "last_name2",
+                "birthday": "birthday2"
             },
             "3": {
-                "name": "Chandler",
-                "last_name": "Bisaillon",
-                "birth_date": "1969/02/15"
+                "name": "name3",
+                "last_name": "last_name3",
+                "birthday": "birthday3"
             },
             "4": {
-                "name": "Guillaume",
-                "last_name": "Aoust",
-                "birth_date": "1994/10/12"
+                "name": "name4",
+                "last_name": "last_name4",
+                "birthday": "birthday4"
             },
             "5": {
-                "name": "Christiane",
-                "last_name": "Laram\u00e9e",
-                "birth_date": "06/17/1998"
+                "name": "name5",
+                "last_name": "last_name5",
+                "birthday": "birthday5"
             },
             "6": {
-                "name": "\u00c9lise",
-                "last_name": "L\u00e9vesque",
-                "birth_date": "03/28/2004"
+                "name": "name6",
+                "last_name": "last_name6",
+                "birthday": "birthday6"
             },
             "7": {
-                "name": "Orville",
-                "last_name": "Mireault",
-                "birth_date": "02/24/2003"
+                "name": "name7",
+                "last_name": "last_name7",
+                "birthday": "birthday7"
             },
             "8": {
-                "name": "\u00c9tienne",
-                "last_name": "Salois",
-                "birth_date": "09/11/1993"
+                "name": "name8",
+                "last_name": "last_name8",
+                "birthday": "birthday8"
             }
         },
         "player_list_id": [
@@ -133,47 +133,47 @@
     "round": {
         "player_group": {
             "1": {
-                "name": "Jeanne",
-                "last_name": "Th\u00e9riault",
-                "birth_date": "1989/12/07"
+                "name": "name1",
+                "last_name": "last_name1",
+                "birthday": "birthday1"
             },
             "2": {
-                "name": "Dexter",
-                "last_name": "Chesnay",
-                "birth_date": "1995/07/16"
+                "name": "name2",
+                "last_name": "last_name2",
+                "birthday": "birthday2"
             },
             "3": {
-                "name": "Chandler",
-                "last_name": "Bisaillon",
-                "birth_date": "1969/02/15"
+                "name": "name3",
+                "last_name": "last_name3",
+                "birthday": "birthday3"
             },
             "4": {
-                "name": "Guillaume",
-                "last_name": "Aoust",
-                "birth_date": "1994/10/12"
+                "name": "name4",
+                "last_name": "last_name4",
+                "birthday": "birthday4"
             },
             "5": {
-                "name": "Christiane",
-                "last_name": "Laram\u00e9e",
-                "birth_date": "06/17/1998"
+                "name": "name5",
+                "last_name": "last_name5",
+                "birthday": "birthday5"
             },
             "6": {
-                "name": "\u00c9lise",
-                "last_name": "L\u00e9vesque",
-                "birth_date": "03/28/2004"
+                "name": "name6",
+                "last_name": "last_name6",
+                "birthday": "birthday6"
             },
             "7": {
-                "name": "Orville",
-                "last_name": "Mireault",
-                "birth_date": "02/24/2003"
+                "name": "name7",
+                "last_name": "last_name7",
+                "birthday": "birthday7"
             },
             "8": {
-                "name": "\u00c9tienne",
-                "last_name": "Salois",
-                "birth_date": "09/11/1993"
+                "name": "name8",
+                "last_name": "last_name8",
+                "birthday": "birthday8"
             }
         },
-        "round_counter": 1,
+        "round_counter": 5,
         "round_max_number": 4,
         "player_list_id": [
             1,
@@ -186,6 +186,401 @@
             8
         ],
         "current_round_step": 0,
-        "round_list": {}
+        "round_list": {
+            "1": {
+                "player_list_id": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                ],
+                "pairing_list": [
+                    [
+                        [
+                            8,
+                            1.0
+                        ],
+                        [
+                            2,
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            5,
+                            0.0
+                        ],
+                        [
+                            4,
+                            1.0
+                        ]
+                    ],
+                    [
+                        [
+                            3,
+                            0.0
+                        ],
+                        [
+                            7,
+                            1.0
+                        ]
+                    ],
+                    [
+                        [
+                            1,
+                            1.0
+                        ],
+                        [
+                            6,
+                            0.0
+                        ]
+                    ]
+                ],
+                "player_score_round": {
+                    "1": 1.0,
+                    "2": 0.0,
+                    "3": 0.0,
+                    "4": 1.0,
+                    "5": 0.0,
+                    "6": 0.0,
+                    "7": 1.0,
+                    "8": 1.0
+                },
+                "player_score_total_start_of_round": {
+                    "1": 0.0,
+                    "2": 0.0,
+                    "3": 0.0,
+                    "4": 0.0,
+                    "5": 0.0,
+                    "6": 0.0,
+                    "7": 0.0,
+                    "8": 0.0
+                },
+                "player_score_total_end_of_round": {
+                    "1": 1.0,
+                    "2": 0.0,
+                    "3": 0.0,
+                    "4": 1.0,
+                    "5": 0.0,
+                    "6": 0.0,
+                    "7": 1.0,
+                    "8": 1.0
+                },
+                "date_start": null,
+                "date_end": null
+            },
+            "2": {
+                "player_list_id": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                ],
+                "pairing_list": [
+                    [
+                        [
+                            1,
+                            3.0
+                        ],
+                        [
+                            4,
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            7,
+                            0.0
+                        ],
+                        [
+                            8,
+                            5.0
+                        ]
+                    ],
+                    [
+                        [
+                            2,
+                            1.0
+                        ],
+                        [
+                            3,
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            5,
+                            2.0
+                        ],
+                        [
+                            6,
+                            5.0
+                        ]
+                    ]
+                ],
+                "player_score_round": {
+                    "1": 3.0,
+                    "2": 1.0,
+                    "3": 0.0,
+                    "4": 0.0,
+                    "5": 2.0,
+                    "6": 5.0,
+                    "7": 0.0,
+                    "8": 5.0
+                },
+                "player_score_total_start_of_round": {
+                    "1": 1.0,
+                    "2": 0.0,
+                    "3": 0.0,
+                    "4": 1.0,
+                    "5": 0.0,
+                    "6": 0.0,
+                    "7": 1.0,
+                    "8": 1.0
+                },
+                "player_score_total_end_of_round": {
+                    "1": 4.0,
+                    "2": 1.0,
+                    "3": 0.0,
+                    "4": 1.0,
+                    "5": 2.0,
+                    "6": 5.0,
+                    "7": 1.0,
+                    "8": 6.0
+                },
+                "date_start": null,
+                "date_end": [
+                    2023,
+                    6,
+                    20,
+                    15,
+                    35,
+                    56,
+                    1,
+                    171,
+                    1
+                ]
+            },
+            "3": {
+                "player_list_id": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                ],
+                "pairing_list": [
+                    [
+                        [
+                            8,
+                            0.0
+                        ],
+                        [
+                            6,
+                            1.0
+                        ]
+                    ],
+                    [
+                        [
+                            1,
+                            0.0
+                        ],
+                        [
+                            5,
+                            1.0
+                        ]
+                    ],
+                    [
+                        [
+                            2,
+                            0.5
+                        ],
+                        [
+                            4,
+                            0.5
+                        ]
+                    ],
+                    [
+                        [
+                            7,
+                            0.5
+                        ],
+                        [
+                            3,
+                            0.5
+                        ]
+                    ]
+                ],
+                "player_score_round": {
+                    "1": 0.0,
+                    "2": 0.5,
+                    "3": 0.5,
+                    "4": 0.5,
+                    "5": 1.0,
+                    "6": 1.0,
+                    "7": 0.5,
+                    "8": 0.0
+                },
+                "player_score_total_start_of_round": {
+                    "1": 4.0,
+                    "2": 1.0,
+                    "3": 0.0,
+                    "4": 1.0,
+                    "5": 2.0,
+                    "6": 5.0,
+                    "7": 1.0,
+                    "8": 6.0
+                },
+                "player_score_total_end_of_round": {
+                    "1": 4.0,
+                    "2": 1.5,
+                    "3": 0.5,
+                    "4": 1.5,
+                    "5": 3.0,
+                    "6": 6.0,
+                    "7": 1.5,
+                    "8": 6.0
+                },
+                "date_start": [
+                    2023,
+                    6,
+                    20,
+                    15,
+                    35,
+                    56,
+                    1,
+                    171,
+                    1
+                ],
+                "date_end": [
+                    2023,
+                    6,
+                    20,
+                    15,
+                    35,
+                    59,
+                    1,
+                    171,
+                    1
+                ]
+            },
+            "4": {
+                "player_list_id": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                ],
+                "pairing_list": [
+                    [
+                        [
+                            6,
+                            0.5
+                        ],
+                        [
+                            2,
+                            0.5
+                        ]
+                    ],
+                    [
+                        [
+                            8,
+                            1.0
+                        ],
+                        [
+                            1,
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            5,
+                            1.0
+                        ],
+                        [
+                            7,
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            4,
+                            0.5
+                        ],
+                        [
+                            3,
+                            0.5
+                        ]
+                    ]
+                ],
+                "player_score_round": {
+                    "1": 0.0,
+                    "2": 0.5,
+                    "3": 0.5,
+                    "4": 0.5,
+                    "5": 1.0,
+                    "6": 0.5,
+                    "7": 0.0,
+                    "8": 1.0
+                },
+                "player_score_total_start_of_round": {
+                    "1": 4.0,
+                    "2": 1.5,
+                    "3": 0.5,
+                    "4": 1.5,
+                    "5": 3.0,
+                    "6": 6.0,
+                    "7": 1.5,
+                    "8": 6.0
+                },
+                "player_score_total_end_of_round": {
+                    "1": 4.0,
+                    "2": 2.0,
+                    "3": 1.0,
+                    "4": 2.0,
+                    "5": 4.0,
+                    "6": 6.5,
+                    "7": 1.5,
+                    "8": 7.0
+                },
+                "date_start": [
+                    2023,
+                    6,
+                    20,
+                    15,
+                    35,
+                    59,
+                    1,
+                    171,
+                    1
+                ],
+                "date_end": [
+                    2023,
+                    6,
+                    20,
+                    15,
+                    36,
+                    1,
+                    1,
+                    171,
+                    1
+                ]
+            }
+        }
     }
 }

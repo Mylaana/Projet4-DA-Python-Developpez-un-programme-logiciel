@@ -20,7 +20,7 @@ class Round(model.Model):
         self.round_counter = 1
         self.round_max_number = round_max_number
         self.player_list_id = []
-        self.player_group: dict[int, list] = {}
+        self.player_group: dict[int, dict] = {}
         self.current_round: m.Match = None
 
         """
@@ -80,6 +80,13 @@ class Round(model.Model):
         """
 
         return self.current_round.pairing_list
+
+    def set_current_round_player_score(self, player_id: int, player_score: float):
+        """
+        gets player id as int and player score as float
+        returns none
+        """
+        self.current_round.set_player_score(player_id=player_id, player_match_result=player_score)
 
     def set_random_scores(self):
         """

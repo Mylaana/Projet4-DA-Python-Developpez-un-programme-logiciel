@@ -2,7 +2,6 @@
 Controller module
 """
 
-import os
 import sys
 from Model import model as m
 from View import view as v

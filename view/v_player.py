@@ -32,7 +32,16 @@ class ViewPlayer(v.View):
                              title="liste des joueurs")
         return input("")
 
-    def prompt_player_group_creation(self, round_number: int) -> list[dict[str, str]]:
+    def prompt_player_number(self) -> int:
+        """
+        gets none
+        returns integer
+        """
+        self.show_in_console("Combien voulez vous ajouter de joueur au tournoi ?",
+                             "liste des joueurs - ajouter des joueurs")
+        return input("")
+
+    def prompt_player_group_creation(self, round_number: int) -> list[dict[str, str]]:  # DELETE
         """
         gets none
         return a player list of dict with informations :
@@ -114,3 +123,17 @@ class ViewPlayer(v.View):
                 {"name": "Élise", "last_name": "Lévesque", "birth_date": "03/28/2004"},
                 {"name": "Orville", "last_name": "Mireault", "birth_date": "02/24/2003"},
                 {"name": "Étienne", "last_name": "Salois", "birth_date": "09/11/1993"}]
+
+    def invalid_player_number_minimum(self, minimum_number):
+        """
+        gets int for minimum player number
+        returns none
+        """
+        self.invalid_info_entered(f"il faut au minimum {minimum_number} joueurs pour ce tournoi !")
+
+    def invalid_player_number_uneven(self):
+        """
+        gets none
+        returns none
+        """
+        self.invalid_info_entered("il faut un nombre de joueur pair pour ce tournoi !")

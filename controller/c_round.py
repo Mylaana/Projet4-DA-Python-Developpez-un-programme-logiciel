@@ -16,6 +16,7 @@ class ControllerRound(c.Controller):
     """
     Controller class
     """
+
     def __init__(self, model: m.Round, view: v.ViewRound, debug: bool = False):
         super().__init__(model=model, view=view)
         self.model: m.Round = model
@@ -31,14 +32,13 @@ class ControllerRound(c.Controller):
         Returns True when last round is over
         """
         while not self.model.round_counter > self.model.round_max_number:
-            self.update_data()
-            self.save_data()
-
             # creating new round with pairings
             if self.model.current_round_step == 0:
                 self.view.clear_console()
                 self.start_new_round()
                 self.model.current_round_step = 1
+                self.update_data()
+                self.save_data()
                 continue
 
             # displaying pairings and asking for round score method
@@ -55,15 +55,17 @@ class ControllerRound(c.Controller):
                 result = self.rooter(choice=prompt_result, choice_dict=choice_dict)
                 if result:
                     self.model.current_round_step = 2
-
+                    self.update_data()
+                    self.save_data()
                 continue
 
             if self.model.current_round_step == 2:
                 self.display_scores()
                 prompt_result = self.view.prompt_next_round()
-
                 if prompt_result == self.menu.command_one:
                     self.finalize_round()
+                    self.update_data()
+                    self.save_data()
 
                 if prompt_result == self.menu.command_exit:
                     self.exit_program()
@@ -71,7 +73,8 @@ class ControllerRound(c.Controller):
                 continue
 
         self.step_validated = True
-
+        self.update_data()
+        self.save_data()
         return self.step_validated
 
     def start_new_round(self) -> None:
@@ -92,11 +95,46 @@ class ControllerRound(c.Controller):
 
     def enter_score_results(self):
         """
-        prompts user for players' scores on the current round
+        gets None
+        prompts user for player's score on the active round
+        Returns bool
         """
-        print("pas encore possible")
+        while True:
+            prompt_list = []
+            for player_id in self.model.current_round.player_list_id:
+                prompt_list.append(self.get_prompt_dict_from_var(
+                    attribute=self.model.current_round.player_score_round[player_id],
+                    message=f"score J{player_id}-{self.model.player_group[player_id]['name']}"))
 
-        return False
+            result = self.get_info_list_from_user(info_list=prompt_list.copy(),
+                                                  title=f"round : {self.model.round_counter} - resultat du round")
+
+            # check for info list content being conform
+            data_is_valid = True
+            for result_line in result:
+                if result_line["value"] is None:
+                    data_is_valid = False
+                    error_message = result_line["caption"] + " n'a pas été rempli"
+                    break
+
+                if str(type(result_line["value"])) != str(result_line["type"]):
+                    data_is_valid = False
+                    error_message = result_line["caption"] + " n'est pas du bon type"
+                    if self.debug:
+                        error_message = error_message + \
+                            f"{str(type(result_line['value']))} VS {str(result_line['type'])}"
+                    break
+
+            if not data_is_valid:
+                self.view.invalid_info_entered(error_message)
+            else:
+                break
+
+        for player_id in self.model.current_round.player_list_id:
+            self.model.current_round.set_player_score(
+                player_id=player_id, player_match_result=result[player_id-1]["value"])
+
+        return True
 
     def set_random_scores(self):
         """

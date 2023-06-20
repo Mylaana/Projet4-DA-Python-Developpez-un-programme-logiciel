@@ -42,12 +42,93 @@ class ControllerPlayer(c.Controller):
 
     def create_player_group(self):
         """
-        Create new tournament from view's player list
+        gets none
         returns None
         """
-        player_list = self.view.prompt_player_group_creation()
-        if player_list:
-            return True
+        while True:
+            player_number = self.view.prompt_player_number()
+            if not player_number.isdigit():
+                self.view.invalid_info_entered_number_needed()
+                continue
+
+            player_number = int(player_number)
+
+            if player_number < self.model.minimum_player_number:
+                self.view.invalid_player_number_minimum(self.model.minimum_player_number)
+                continue
+
+            if player_number % 2 != 0:
+                self.view.invalid_player_number_uneven()
+                continue
+
+            break
+
+        # generates an empty player list and prompt user for entering every player info
+        while True:
+            prompt_list = []
+
+            for player_id in range(1, player_number + 1):
+                # player name
+                prompt_list.append(self.get_prompt_dict_from_var(
+                    attribute="name" + str(player_id),
+                    message="Nom joueur " + str(player_id)))
+
+                # player last name
+                prompt_list.append(self.get_prompt_dict_from_var(
+                    attribute="last_name" + str(player_id),
+                    message="Nom famille joueur " + str(player_id)))
+
+                # player birthday
+                prompt_list.append(self.get_prompt_dict_from_var(
+                    attribute="birthday" + str(player_id),
+                    message="Date de naissance joueur " + str(player_id)))
+
+            result = self.get_info_list_from_user(info_list=prompt_list.copy(),
+                                                  title="liste des joueurs : ajouter des joueurs")
+
+            # check for info list content being conform
+            data_is_valid = True
+            for result_line in result:
+                if result_line["value"] is None:
+                    data_is_valid = False
+                    error_message = result_line["caption"] + " n'a pas été rempli"
+                    break
+
+                if str(type(result_line["value"])) != str(result_line["type"]):
+                    data_is_valid = False
+                    error_message = result_line["caption"] + " n'est pas du bon type"
+                    if self.debug:
+                        error_message = error_message + \
+                            f"{str(type(result_line['value']))} VS {str(result_line['type'])}"
+                    break
+
+            if not data_is_valid:
+                self.view.invalid_info_entered(error_message)
+            else:
+                break
+
+        player_list = []
+        info_counter = 1
+        for line in result:
+            if info_counter == 1:
+                player_dict = {}
+                player_dict["name"] = line["value"]
+                info_counter += 1
+                continue
+
+            elif info_counter == 2:
+                player_dict["last_name"] = line["value"]
+                info_counter += 1
+                continue
+
+            elif info_counter == 3:
+                player_dict["birthday"] = line["value"]
+                player_list.append(player_dict.copy())
+                info_counter = 1
+                continue
+
+        self.model.set_player_group(player_list)
+        return True
 
     def load_existing_player_list(self):
         """

@@ -63,6 +63,12 @@ class View:
         """
         self.display_error_message("Les informations entrées ne sont pas valide !", message)
 
+    def invalid_info_entered_number_needed(self):
+        """
+        shows the choice is not valid
+        """
+        self.display_error_message("Veuillez entrer un nombre !")
+
     def prompt_info_list(self, info_list: list[dict], title) -> list[dict]:
         """
         gets list
@@ -88,10 +94,14 @@ class View:
                 line["value"] = str(line["default_value"])
 
             # if the value is numeric, converts it to the expected type
-            if line["value"].isdigit():
-                if str(line["type"]) == str(int):
-                    line["value"] = int(line["value"])
-                elif str(line["type"]) == str(float):
-                    line["value"] = float(line["value"])
+            if str(line["type"]) not in [str(int), str(float)]:
+                continue
+            if not line["value"].replace(".", "").replace(",", "").isdigit():
+                continue
+
+            if str(line["type"]) == str(int):
+                line["value"] = int(line["value"].replace(",", "."))
+            elif str(line["type"]) == str(float):
+                line["value"] = float(line["value"].replace(",", "."))
 
         return info_list

@@ -27,11 +27,11 @@
 
 # pour finaliser :
 to do :
--menu de création :
---tournoi
---joueur
---scores
+-rapports
+-gestionnaire de fichiers save/load
+
 
 
 questions :
 est-ce que je dois créer une base de donnée dédiée aux joueurs et l'utiliser lors de la création de la liste de joueur du tournoi?
+

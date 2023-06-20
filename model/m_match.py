@@ -92,7 +92,7 @@ class Match:
 
         return list_before_pop.index(first_player_after_remove)
 
-    def set_player_score(self, player_id, player_match_result: float):
+    def set_player_score(self, player_id: int, player_match_result: float):
         """
         gets a player_id and a float(player_match_result)
         updates score for player_id
