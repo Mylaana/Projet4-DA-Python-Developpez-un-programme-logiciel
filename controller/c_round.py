@@ -36,7 +36,7 @@ class ControllerRound(c.Controller):
 
             # creating new round with pairings
             if self.model.current_round_step == 0:
-                self.clear_console()
+                self.view.clear_console()
                 self.start_new_round()
                 self.model.current_round_step = 1
                 continue
@@ -118,7 +118,7 @@ class ControllerRound(c.Controller):
         display score and total score end of round
         Returns none
         """
-        self.clear_console()
+        self.view.clear_console()
 
         # display round's score
         self.view.display_scores(

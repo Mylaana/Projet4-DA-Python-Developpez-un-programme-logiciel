@@ -5,6 +5,7 @@ Controller module
 import os
 import sys
 from Model import model as m
+from View import view as v
 from CommonClass import menu
 sys.path.insert(0, '../CommonClass')
 
@@ -13,9 +14,9 @@ class Controller:
     """
     Controller class
     """
-    def __init__(self, model: m.Model, view, debug: bool = False):
+    def __init__(self, model: m.Model, view: v.View, debug: bool = False):
         self.model: m.Model = model
-        self.view = view
+        self.view: v.View = view
         self.menu = menu.Menu()
         self.debug = debug
         self.step_validated = False
@@ -44,7 +45,7 @@ class Controller:
         self.model.data.update_all()
         sys.exit()
 
-    def menu_cleaner(self, running_menu_name: str):
+    def menu_cleaner(self, running_menu_name: str):  # DELETE
         """
         Gets the name of RUNNING MENU and sets his parent to false
         Cleans self variable and reset related status if needed
@@ -67,14 +68,6 @@ class Controller:
         """
         self.model.player_list_id = player_list
         self.model.player_group = player_group
-
-    def clear_console(self):
-        """
-        clear console
-        """
-        if self.debug:
-            return
-        os.system('cls' if os.name == 'nt' else 'clear')
 
     def set_up_data_info(self):
         """
@@ -118,3 +111,39 @@ class Controller:
         returns none
         """
         self.model.save_data()
+
+    def get_info_list_from_user(self, info_list: list[dict], title: str) -> list[dict]:
+        """
+        gets a list of dict, each dict containing :
+        value name
+        value type
+
+        returns bool if list is filled and valid
+        """
+        return self.view.prompt_info_list(info_list=info_list, title=title)
+
+    def get_prompt_dict_from_var(self, attribute, message: str) -> dict:
+        """
+        gets a variable name
+        returns a dictionnary like :
+        "name" : variable_name
+        "type" : type(variable)
+        "value" : None
+        """
+        return {
+            "caption": str(message),
+            "type": type(attribute),
+            "value": None,
+            "default_value": attribute
+        }
+
+    def get_model_attribute_as_printable_list(self) -> list:  # DELETE
+        """
+        gets none
+        return model's formated info as list like  [attribute_name : value]
+        """
+
+        message = [f"{attribute} : {value}" for attribute, value in vars(self.model).items()
+                   if attribute not in self.model.data_excluded]
+
+        return message

@@ -26,20 +26,20 @@ def main():
     """
     main function
     """
-    DEBUG = True  # pylint: disable=C0103
+    DEBUG = False  # pylint: disable=C0103
     clear_console()
 
     # initialize MVC relations
     model_tournament: m_tournament.Tournament = m_tournament.Tournament()
-    view_tournament = v_tournament.ViewTournament()
+    view_tournament = v_tournament.ViewTournament(DEBUG)
     controller_tournament = c_tournament.ControllerTournament(model_tournament, view_tournament, DEBUG)
 
     model_round_list: m_round.Round = m_round.Round()
-    view_round = v_round.ViewRound()
+    view_round = v_round.ViewRound(DEBUG)
     controller_round = c_round.ControllerRound(model_round_list, view_round, DEBUG)
 
     model_player_list = m_player.PlayerList()
-    view_player = v_player.ViewPlayer()
+    view_player = v_player.ViewPlayer(DEBUG)
     controller_player = c_player.ControllerPlayer(model_player_list, view_player, DEBUG)
 
     # initialize data object
@@ -77,7 +77,7 @@ def main():
         database.save_data()
 
         if controller_player.step_validated is False:
-            # clear_console()
+            clear_console()
 
             controller_player.step_validated = controller_player.select_player_list()
 

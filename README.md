@@ -23,3 +23,15 @@
 ## classe save_load
 - gere les ecritures / lectures du fichier .json du tournois
 - les fonctions update_all/load_all permettent de lancer les fonctions correspondantes de chaque model.
+
+
+# pour finaliser :
+to do :
+-menu de création :
+--tournoi
+--joueur
+--scores
+
+
+questions :
+est-ce que je dois créer une base de donnée dédiée aux joueurs et l'utiliser lors de la création de la liste de joueur du tournoi?

@@ -36,3 +36,16 @@ class ViewTournament(v.View):
         returns none
         """
         self.show_in_console(message=message, title="loading status")
+
+    def prompt_tournament_creation_mode(self) -> str:
+        """
+        Prompts user for information
+        Returns command value as str
+        """
+        self.show_in_console(message=["souhaitez-vous :",
+                                      f"{self.menu.command_one} entrer les informations du tournoi",
+                                      f"{self.menu.command_two} [demo mode] utiliser les informations par défaut",
+                                      "",
+                                      f"{self.menu.command_exit} : quitter le programme."],
+                             title="tournoi - creation du tournoi")
+        return input("")
