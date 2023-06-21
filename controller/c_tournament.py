@@ -106,7 +106,7 @@ class ControllerTournament(c.Controller):
         # gets file name to load
         self.model.data.file_name = self.view.prompt_tournament_load(self.model.data.get_file_list()) + ".json"
 
-        self.model.data.load_file()
+        self.model.data.load_tournament()
         self.model.data.load_all()
         self.model.data.update_all()
         self.model.data.save_data()

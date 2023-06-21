@@ -119,10 +119,10 @@ class ViewPlayer(v.View):
                 {"name": "Dexter", "last_name": "Chesnay", "birth_date": "1995/07/16"},
                 {"name": "Chandler", "last_name": "Bisaillon", "birth_date": "1969/02/15"},
                 {"name": "Guillaume", "last_name": "Aoust", "birth_date": "1994/10/12"},
-                {"name": "Christiane", "last_name": "Laramée", "birth_date": "06/17/1998"},
-                {"name": "Élise", "last_name": "Lévesque", "birth_date": "03/28/2004"},
-                {"name": "Orville", "last_name": "Mireault", "birth_date": "02/24/2003"},
-                {"name": "Étienne", "last_name": "Salois", "birth_date": "09/11/1993"}]
+                {"name": "Christiane", "last_name": "Laramée", "birth_date": "1998/06/06/17"},
+                {"name": "Élise", "last_name": "Lévesque", "birth_date": "2004/03/28"},
+                {"name": "Orville", "last_name": "Mireault", "birth_date": "2003/02/24"},
+                {"name": "Étienne", "last_name": "Salois", "birth_date": "1993/09/11"}]
 
     def invalid_player_number_minimum(self, minimum_number):
         """

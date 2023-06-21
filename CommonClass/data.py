@@ -5,6 +5,7 @@ import json
 import os
 import sys
 import re
+import time
 
 
 class Data:
@@ -16,29 +17,56 @@ class Data:
         self.file_name: str = ""
         self._path = os.path.dirname(os.path.abspath(sys.argv[0])) + "/Data/"
         self.data = {"status": {"finished": False}}
-        self.player_base_file_name = "player_base"
+        self.player_base_file_name = "player_base.json"
         self.player_base_data = {}
         self.loaded_data = None
         self.controller_list: list = []
 
+        # creates player_base file if not exists,
+        # else, loads it
         if not os.path.exists(self._path + self.player_base_file_name):
-            with open(file=self._path + self.player_base_file_name + ".json",
+            with open(file=self._path + self.player_base_file_name,
                       mode="w", encoding="utf-8") as data_file:
                 json.dump(self.player_base_data, data_file, indent=4)
+        else:
+            with open(file=self._path + self.player_base_file_name, encoding="utf-8") as data_file:
+                self.player_base_data = json.load(data_file)
 
     def save_data(self):
         """
         dumps data into the json
         """
+        print("save data")
         with open(file=self._path + self.file_name, mode="w", encoding="utf-8") as data_file:
             json.dump(self.data, data_file, indent=4)
 
-    def load_file(self):
+    def save_player_base(self):
+        """
+        dumps player info in player_base
+        """
+        for value in self.data["player_list"]["player_group"]:
+            self.player_base_data[
+                self.data["player_list"]["player_group"][int(value)]['last_name'] + "-" +
+                self.data["player_list"]["player_group"][int(value)]['name']] = {
+                "last_name": self.data["player_list"]["player_group"][int(value)]['last_name'],
+                "name": self.data["player_list"]["player_group"][int(value)]['name'],
+                "birth_dage": self.data["player_list"]["player_group"][int(value)]['birth_date']}
+
+        with open(file=self._path + self.player_base_file_name, mode="w", encoding="utf-8") as data_file:
+            json.dump(self.player_base_data, data_file, indent=4)
+
+    def load_file(self, file_name):
         """
         gets data from the file_name json
         """
-        with open(file=self._path + self.file_name, encoding="utf-8") as data_file:
-            self.loaded_data = json.load(data_file)
+        with open(file=file_name, encoding="utf-8") as data_file:
+            return json.load(data_file)
+
+    def load_tournament(self):
+        """
+        gets data from the file_name json
+        """
+        self.data = self.load_file(self._path + self.file_name)
 
     def create_json(self, name: str):
         """
@@ -81,6 +109,8 @@ class Data:
         for index, tournament in enumerate(tournament_list):
             tournament_list[index] = tournament.replace(".json", "")
 
+        tournament_list.remove(self.player_base_file_name.replace(".json", ""))
+
         return tournament_list
 
     def report_player_list(self) -> list:
@@ -88,8 +118,13 @@ class Data:
         gets none
         returns list
         """
+        player_list = []
+        for value in self.player_base_data.values():
+            player_list.append(f"{value['last_name']} {value['name']} {value['birth_date']}")
 
-    def report_file_list(self) -> list:
+        return sorted(player_list)
+
+    def report_tournament_list(self) -> list:
         """
         gets none
         returns list
@@ -106,3 +141,35 @@ class Data:
             player_list.append(f"{value['last_name']} {value['name']}")
 
         return sorted(player_list)
+
+    def report_tournament_info(self, tournament_name):
+        """
+        gets none
+        returns list
+        """
+        filename = tournament_name + ".json"
+        file_data = self.load_file(file_name=self._path + filename)
+
+        tournament_info = []
+        if "tournament" in file_data:
+            tournament_info.append(f"tournoi : {file_data['tournament']['name']}")
+
+            if 'cul' not in file_data['tournament']:
+                print("cul")
+            if file_data['tournament']['date_start'] is not None:
+                tournament_info.append(
+                    f"date de début : {file_data['tournament']['date_start'][0]}/"
+                    f"{file_data['tournament']['date_start'][1]}/"
+                    f"{file_data['tournament']['date_start'][2]}")
+            else:
+                tournament_info.append("date de début : le tournoi n'a pas encore commencé.")
+
+            if file_data['tournament']['date_end'] is not None:
+                tournament_info.append(
+                    f"date de fin : {file_data['tournament']['date_end'][0]}/"
+                    f"{file_data['tournament']['date_end'][1]}/"
+                    f"{file_data['tournament']['date_end'][2]}")
+            else:
+                tournament_info.append("date de fin : le tournoi est toujours en cours.")
+
+        return tournament_info

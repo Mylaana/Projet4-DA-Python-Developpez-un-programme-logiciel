@@ -15,19 +15,12 @@ from Model import m_round
 from CommonClass import data
 
 
-def clear_console():
-    """
-    clear console
-    """
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-
 def main():
     """
     main function
     """
-    DEBUG = False  # pylint: disable=C0103
-    clear_console()
+    DEBUG = True  # pylint: disable=C0103
+
 
     # initialize MVC relations
     model_tournament: m_tournament.Tournament = m_tournament.Tournament()
@@ -54,6 +47,19 @@ def main():
     controller_round.set_up_data_info()
     # controller_round.model.save_data()
 
+    controller_tournament.view.clear_console()
+
+    print("player list :")
+    controller_tournament.view.show_in_console(controller_tournament.model.data.report_player_list())
+
+    print("file list :")
+    controller_tournament.view.show_in_console(controller_tournament.model.data.report_tournament_list())
+
+    print("tournament info :")
+    nom_tournoi = "Tournoi-club-local-2023-6-21"
+    print(nom_tournoi + " saisi par user")
+    controller_tournament.view.show_in_console(controller_tournament.model.data.report_tournament_info(tournament_name=nom_tournoi))
+
     while True:
         # update data section status
         controller_tournament.model.data.data["status"][
@@ -70,6 +76,8 @@ def main():
             controller_player.model.minimum_player_number = controller_tournament.model.round_number * 2
 
             continue
+        
+        print(controller_tournament.model.data.report_active_tournament_player_list())
 
         controller_tournament.model.update_data()
         controller_player.model.update_data()
@@ -77,7 +85,7 @@ def main():
         database.save_data()
 
         if controller_player.step_validated is False:
-            clear_console()
+            controller_tournament.view.clear_console()
 
             controller_player.step_validated = controller_player.select_player_list()
 
@@ -87,6 +95,9 @@ def main():
                                                        player_group=controller_player.get_player_group())
                 controller_round.set_player_group(player_list=controller_player.get_player_list_id(),
                                                   player_group=controller_player.get_player_group())
+
+                controller_player.model.update_data()
+                controller_tournament.model.data.save_player_base()
 
             continue
 
@@ -102,5 +113,5 @@ def main():
 
 
 if __name__ == "__main__":
-    clear_console()
+    os.system('cls' if os.name == 'nt' else 'clear')
     main()
