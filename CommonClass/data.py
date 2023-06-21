@@ -170,3 +170,20 @@ class Data:
                 tournament_info.append("date de fin : le tournoi est toujours en cours.")
 
         return tournament_info
+
+    def report_rounds_and_match(self):
+        """
+        gets none
+        returns list
+        """
+        round_info = []
+        player_group = self.data["round"]["player_group"]
+        for key in self.data['round']['round_list'].keys():
+            round_info.append(f"Round {key} :")
+            for values in self.data['round']['round_list'][key]['pairing_list']:
+                round_info.append(f"J{values[0][0]} {player_group[values[0][0]]['name']} VS " +
+                                  f"J{values[1][0]} {player_group[values[1][0]]['name']}")
+
+            round_info.append("")
+
+        return round_info

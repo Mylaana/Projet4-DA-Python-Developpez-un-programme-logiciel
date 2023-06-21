@@ -55,7 +55,6 @@ def main():
                                                title="report - file list")
 
     nom_tournoi = "Tournoi-club-local-2023-6-21"
-    print(nom_tournoi + " saisi par user")
     controller_tournament.view.show_in_console(controller_tournament.model.data.report_tournament_info(tournament_name=nom_tournoi),
                                                title="report - tournament info")
 
@@ -84,6 +83,10 @@ def main():
         controller_tournament.view.show_in_console(
             controller_tournament.model.data.report_active_tournament_player_list(),
             title="report - active player")
+
+        controller_tournament.view.show_in_console(
+            message=controller_tournament.model.data.report_rounds_and_match(),
+            title="report - rounds & match")
 
         if controller_player.step_validated is False:
             controller_tournament.view.clear_console()
