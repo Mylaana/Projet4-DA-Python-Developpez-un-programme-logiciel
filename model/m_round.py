@@ -167,7 +167,6 @@ class Round(model.Model):
             self.round_list.append(load_match)
             self.current_round = load_match
             self.add_previous_pairings()
-            print(self.current_round.pairing_list)
 
     def formated_dict_int_float(self, dict_to_format: dict) -> dict[int, float]:
         """

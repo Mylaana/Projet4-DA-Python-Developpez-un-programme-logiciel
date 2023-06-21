@@ -42,12 +42,12 @@ class ViewRound(v.View):
         if total_score:
             list_of_tuple = sorted(score.items(), key=lambda x: x[1], reverse=True)
             score_list = [f"J{k[0]} {player_group[k[0]]['name']} : {float(score[k[0]])}" for k in list_of_tuple]
-            title = f"classement à fin de round {round_number}"
+            title = f"round {round_number} - classement score total"
 
         else:
             for key, value in score.items():
                 score_list.append(f"J{key} {player_group[key]['name']} : {float(value)}")
-            title = f"resultat du round {round_number}"
+            title = f"round {round_number} - resultat"
 
         self.show_in_console(message=score_list, title=title)
 

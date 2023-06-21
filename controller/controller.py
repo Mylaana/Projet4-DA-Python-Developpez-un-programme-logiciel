@@ -121,6 +121,25 @@ class Controller:
         """
         return self.view.prompt_info_list(info_list=info_list, title=title)
 
+    def check_info_list_result(self, info_list: list[dict]) -> bool:
+        """
+        gets a list to check
+        returns bool for check pass result
+        """
+        data_is_valid = True
+        for result_line in info_list:
+            if result_line["value"] is None:
+                data_is_valid = False
+                self.view.invalid_info_entered_empty(result_line["caption"])
+                break
+
+            if str(type(result_line["value"])) != str(result_line["type"]):
+                data_is_valid = False
+                self.view.invalid_info_entered_type(result_line["caption"])
+                break
+
+        return data_is_valid
+
     def get_prompt_dict_from_var(self, attribute, message: str) -> dict:
         """
         gets a variable name
@@ -135,14 +154,3 @@ class Controller:
             "value": None,
             "default_value": attribute
         }
-
-    def get_model_attribute_as_printable_list(self) -> list:  # DELETE
-        """
-        gets none
-        return model's formated info as list like  [attribute_name : value]
-        """
-
-        message = [f"{attribute} : {value}" for attribute, value in vars(self.model).items()
-                   if attribute not in self.model.data_excluded]
-
-        return message

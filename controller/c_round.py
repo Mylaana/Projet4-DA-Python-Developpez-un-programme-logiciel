@@ -75,7 +75,7 @@ class ControllerRound(c.Controller):
         self.step_validated = True
         self.update_data()
         self.save_data()
-        return self.step_validated
+        return True
 
     def start_new_round(self) -> None:
         """
@@ -110,24 +110,10 @@ class ControllerRound(c.Controller):
                                                   title=f"round : {self.model.round_counter} - resultat du round")
 
             # check for info list content being conform
-            data_is_valid = True
-            for result_line in result:
-                if result_line["value"] is None:
-                    data_is_valid = False
-                    error_message = result_line["caption"] + " n'a pas été rempli"
-                    break
+            data_is_valid = self.check_info_list_result(result)
 
-                if str(type(result_line["value"])) != str(result_line["type"]):
-                    data_is_valid = False
-                    error_message = result_line["caption"] + " n'est pas du bon type"
-                    if self.debug:
-                        error_message = error_message + \
-                            f"{str(type(result_line['value']))} VS {str(result_line['type'])}"
-                    break
-
-            if not data_is_valid:
-                self.view.invalid_info_entered(error_message)
-            else:
+            # exit loop if everything conform
+            if data_is_valid:
                 break
 
         for player_id in self.model.current_round.player_list_id:

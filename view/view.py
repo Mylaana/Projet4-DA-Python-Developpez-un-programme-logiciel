@@ -31,7 +31,8 @@ class View:
         """
         # print("\n\n")
         if title != "":
-            print("-----------------------------------\n" + title.upper() + "\n-----------------------------------\n")
+            print("-------------------------------------------------\n" + title.upper() +
+                  "\n-------------------------------------------------\n")
 
         if message == "":
             return
@@ -62,6 +63,20 @@ class View:
         shows the choice is not valid
         """
         self.display_error_message("Les informations entrées ne sont pas valide !", message)
+
+    def invalid_info_entered_type(self, message: str = ""):
+        """
+        shows the choice is not valid
+        """
+        self.display_error_message(error_title="Les informations entrées ne sont pas valide !",
+                                   error_message=f"{message} n'est pas du bon type")
+
+    def invalid_info_entered_empty(self, message: str = ""):
+        """
+        shows the choice is not valid
+        """
+        self.display_error_message(error_title="Les informations entrées ne sont pas valide !",
+                                   error_message=f"{message} n'a pas été rempli")
 
     def invalid_info_entered_number_needed(self):
         """

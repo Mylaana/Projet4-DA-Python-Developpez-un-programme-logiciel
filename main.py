@@ -26,7 +26,7 @@ def main():
     """
     main function
     """
-    DEBUG = True  # pylint: disable=C0103
+    DEBUG = False  # pylint: disable=C0103
     clear_console()
 
     # initialize MVC relations

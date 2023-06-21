@@ -44,10 +44,15 @@ class ControllerTournament(c.Controller):
         returns None
         """
         self.view.clear_console()
-        return self.rooter(choice=self.view.prompt_tournament_creation_mode(),
-                           choice_dict={self.menu.command_one: self.get_tournament_info,
-                                        self.menu.command_two: self.dummy_create_tournament,
-                                        self.menu.command_exit: self.exit_program})
+        result = self.rooter(choice=self.view.prompt_tournament_creation_mode(),
+                             choice_dict={self.menu.command_one: self.get_tournament_info,
+                                          self.menu.command_two: self.dummy_create_tournament,
+                                          self.menu.command_exit: self.exit_program})
+
+        self.model.data.create_json(self.model.name + f" {self.model.date_start.tm_year}"
+                                    f" {self.model.date_start.tm_mon} {self.model.date_start.tm_mday}")
+
+        return result
 
     def get_tournament_info(self):
         """
@@ -68,21 +73,10 @@ class ControllerTournament(c.Controller):
             result = self.get_info_list_from_user(info_list=prompt_list.copy(), title="tournoi - creation tournoi")
 
             # check for info list content being conform
-            data_is_valid = True
-            for result_line in result:
-                if result_line["value"] is None:
-                    data_is_valid = False
-                    error_message = result_line["caption"] + " n'a pas été rempli"
-                    break
+            data_is_valid = self.check_info_list_result(result)
 
-                if str(type(result_line["value"])) != str(result_line["type"]):
-                    data_is_valid = False
-                    error_message = result_line["caption"] + " n'est pas du bon type"
-                    break
-
-            if not data_is_valid:
-                self.view.invalid_info_entered(error_message)
-            else:
+            # exit loop if everything conform
+            if data_is_valid:
                 break
 
         self.model.name = result[0]["value"]
@@ -98,10 +92,10 @@ class ControllerTournament(c.Controller):
         gets none
         returns bool
         """
-        self.model.name = "Tournoi club du vieux Lyon"
-        self.model.location = "Lyon - France"
+        self.model.name = "Tournoi club local"
+        self.model.location = "a coté de la mairie"
         self.model.date_start = time.localtime()
-        self.model.description = "tournoi par temps bleu"
+        self.model.description = "ouvert à tous"
 
         return True
 
@@ -109,16 +103,17 @@ class ControllerTournament(c.Controller):
         """
         load an existing tournament
         """
+        # gets file name to load
+        self.model.data.file_name = self.view.prompt_tournament_load(self.model.data.get_file_list()) + ".json"
+
         self.model.data.load_file()
         self.model.data.load_all()
         self.model.data.update_all()
         self.model.data.save_data()
 
         if self.step_validated is False:
-            message = "pas de donnée à charger dans ce tournoi, veuillez en créer un nouveau"
+            self.view.invalid_no_data_found()
         else:
-            message = self.get_model_attribute_as_printable_list()
-
-        self.view.display_loading_status(message=message)
+            self.view.display_loading_status(data_loaded=self.model.data.data)
 
         return self.step_validated
