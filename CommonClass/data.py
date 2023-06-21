@@ -5,7 +5,6 @@ import json
 import os
 import sys
 import re
-import time
 
 
 class Data:
@@ -50,7 +49,7 @@ class Data:
                 self.data["player_list"]["player_group"][int(value)]['name']] = {
                 "last_name": self.data["player_list"]["player_group"][int(value)]['last_name'],
                 "name": self.data["player_list"]["player_group"][int(value)]['name'],
-                "birth_dage": self.data["player_list"]["player_group"][int(value)]['birth_date']}
+                "birth_date": self.data["player_list"]["player_group"][int(value)]['birth_date']}
 
         with open(file=self._path + self.player_base_file_name, mode="w", encoding="utf-8") as data_file:
             json.dump(self.player_base_data, data_file, indent=4)
@@ -66,7 +65,7 @@ class Data:
         """
         gets data from the file_name json
         """
-        self.data = self.load_file(self._path + self.file_name)
+        self.loaded_data = self.load_file(self._path + self.file_name)
 
     def create_json(self, name: str):
         """
@@ -137,7 +136,7 @@ class Data:
         returns list
         """
         player_list = []
-        for value in self.data["player_list"]["player_group"]:
+        for value in self.data["player_list"]["player_group"].values():
             player_list.append(f"{value['last_name']} {value['name']}")
 
         return sorted(player_list)
@@ -154,8 +153,6 @@ class Data:
         if "tournament" in file_data:
             tournament_info.append(f"tournoi : {file_data['tournament']['name']}")
 
-            if 'cul' not in file_data['tournament']:
-                print("cul")
             if file_data['tournament']['date_start'] is not None:
                 tournament_info.append(
                     f"date de début : {file_data['tournament']['date_start'][0]}/"

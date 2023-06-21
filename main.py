@@ -21,7 +21,6 @@ def main():
     """
     DEBUG = True  # pylint: disable=C0103
 
-
     # initialize MVC relations
     model_tournament: m_tournament.Tournament = m_tournament.Tournament()
     view_tournament = v_tournament.ViewTournament(DEBUG)
@@ -49,16 +48,16 @@ def main():
 
     controller_tournament.view.clear_console()
 
-    print("player list :")
-    controller_tournament.view.show_in_console(controller_tournament.model.data.report_player_list())
+    controller_tournament.view.show_in_console(controller_tournament.model.data.report_player_list(),
+                                               title="report - player list")
 
-    print("file list :")
-    controller_tournament.view.show_in_console(controller_tournament.model.data.report_tournament_list())
+    controller_tournament.view.show_in_console(controller_tournament.model.data.report_tournament_list(),
+                                               title="report - file list")
 
-    print("tournament info :")
     nom_tournoi = "Tournoi-club-local-2023-6-21"
     print(nom_tournoi + " saisi par user")
-    controller_tournament.view.show_in_console(controller_tournament.model.data.report_tournament_info(tournament_name=nom_tournoi))
+    controller_tournament.view.show_in_console(controller_tournament.model.data.report_tournament_info(tournament_name=nom_tournoi),
+                                               title="report - tournament info")
 
     while True:
         # update data section status
@@ -76,13 +75,15 @@ def main():
             controller_player.model.minimum_player_number = controller_tournament.model.round_number * 2
 
             continue
-        
-        print(controller_tournament.model.data.report_active_tournament_player_list())
 
         controller_tournament.model.update_data()
         controller_player.model.update_data()
         controller_round.model.update_data()
         database.save_data()
+
+        controller_tournament.view.show_in_console(
+            controller_tournament.model.data.report_active_tournament_player_list(),
+            title="report - active player")
 
         if controller_player.step_validated is False:
             controller_tournament.view.clear_console()
