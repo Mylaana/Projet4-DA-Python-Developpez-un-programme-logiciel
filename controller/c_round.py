@@ -49,6 +49,7 @@ class ControllerRound(c.Controller):
 
                 choice_dict = {self.menu.command_one: self.enter_score_results,
                                self.menu.command_two: self.set_random_scores,
+                               self.menu.command_three: self.report_selection,
                                self.menu.command_exit: self.exit_program}
 
                 prompt_result = self.view.prompt_score_calculation_method()

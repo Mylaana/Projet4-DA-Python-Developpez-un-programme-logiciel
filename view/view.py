@@ -120,3 +120,38 @@ class View:
                 line["value"] = float(line["value"].replace(",", "."))
 
         return info_list
+
+    def prompt_report_choice(self, report_list: list) -> str:
+        """
+        gets list of tournament names
+        return tournament name as string
+        """
+        self.clear_console()
+        choice_dict = {}
+        for index, report in enumerate(report_list):
+            report_list[index] = f"{index + 1}: {report}"
+            choice_dict[str(index + 1)] = report
+
+        report_list.insert(0, "Veuillez sélectionner un rapport :")
+        while True:
+            self.clear_console()
+            self.show_in_console(message=report_list,
+                                 title="rapport")
+
+            choice = str(input(""))
+
+            if choice in choice_dict:
+                break
+
+            self.invalid_info_entered()
+
+        return choice_dict[choice]
+
+    def display_report(self, report_result, report_title):
+        """
+        gets list
+        returns none
+        """
+        self.clear_console()
+        self.show_in_console(message=report_result, title="rapport - " + report_title)
+        input("appuyez sur entrée")

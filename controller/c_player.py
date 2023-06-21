@@ -31,13 +31,11 @@ class ControllerPlayer(c.Controller):
         Returns boolean == choice in choice list and could be executed.
         """
         prompt_result = self.view.prompt_player_list_selection()
-        if prompt_result == self.menu.command_return:
-            self.menu_cleaner(self.menu.navigation_player_list)
-            return False
 
         return self.rooter(choice=prompt_result,
                            choice_dict={self.menu.command_one: self.create_player_group,
                                         self.menu.command_two: self.load_dummy_default_player_list,
+                                        self.menu.command_three: self.report_selection,
                                         self.menu.command_exit: self.exit_program})
 
     def create_player_group(self):

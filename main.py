@@ -19,7 +19,7 @@ def main():
     """
     main function
     """
-    DEBUG = True  # pylint: disable=C0103
+    DEBUG = False  # pylint: disable=C0103
 
     # initialize MVC relations
     model_tournament: m_tournament.Tournament = m_tournament.Tournament()
@@ -47,16 +47,6 @@ def main():
     # controller_round.model.save_data()
 
     controller_tournament.view.clear_console()
-
-    controller_tournament.view.show_in_console(controller_tournament.model.data.report_player_list(),
-                                               title="report - player list")
-
-    controller_tournament.view.show_in_console(controller_tournament.model.data.report_tournament_list(),
-                                               title="report - file list")
-
-    nom_tournoi = "Tournoi-club-local-2023-6-21"
-    controller_tournament.view.show_in_console(controller_tournament.model.data.report_tournament_info(tournament_name=nom_tournoi),
-                                               title="report - tournament info")
 
     while True:
         # update data section status

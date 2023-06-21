@@ -25,6 +25,7 @@ class ViewTournament(v.View):
         self.show_in_console(message=["souhaitez-vous :",
                                       f"{self.menu.command_one} créer un nouveau tournoi",
                                       f"{self.menu.command_two} charger un tournoi existant",
+                                      f"{self.menu.command_three} afficher un rapport",
                                       "",
                                       f"{self.menu.command_exit} : quitter le programme."],
                              title="tournoi")

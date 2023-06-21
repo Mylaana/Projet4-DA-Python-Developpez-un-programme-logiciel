@@ -27,6 +27,7 @@ class ViewPlayer(v.View):
         self.show_in_console(message=["souhaitez-vous :",
                                       f"{self.menu.command_one} : créer une liste de joueurs",
                                       f"{self.menu.command_two} : [demo mode] utiliser la liste de joueurs par défaut",
+                                      f"{self.menu.command_three} : afficher un rapport",
                                       "",
                                       f"{self.menu.command_exit} : {self.menu.command_description_exit}"],
                              title="liste des joueurs")

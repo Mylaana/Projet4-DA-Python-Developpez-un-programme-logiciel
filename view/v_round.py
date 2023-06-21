@@ -66,6 +66,7 @@ class ViewRound(v.View):
         self.show_in_console(message=["souhaitez-vous :",
                                       f"{self.menu.command_one} : entrer les scores des joueurs",
                                       f"{self.menu.command_two} : [demo mode] utiliser les scores aléatoires",
+                                      f"{self.menu.command_three} : afficher un rapport",
                                       "",
                                       f"{self.menu.command_exit} : {self.menu.command_description_exit}"],)
         return input("")

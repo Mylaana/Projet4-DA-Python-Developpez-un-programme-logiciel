@@ -44,21 +44,6 @@ class Controller:
         self.model.data.update_all()
         sys.exit()
 
-    def menu_cleaner(self, running_menu_name: str):  # DELETE
-        """
-        Gets the name of RUNNING MENU and sets his parent to false
-        Cleans self variable and reset related status if needed
-        """
-        # sets the parent of running_menu_name menu selection value to false
-        """
-        if running_menu_name != self.menu.navigation_tournament:
-            self.selected_element[self.menu.tree_parent[running_menu_name]] = False
-
-        # sets every child selection value to false if parent is set to false
-        for parent, child in self.menu.tree_child.items():
-            if not self.selected_element[parent]:
-                self.selected_element[child] = False
-        """
     def set_player_group(self, player_list: list, player_group: dict[int, dict]):
         """
         gets a list of player id
@@ -154,3 +139,41 @@ class Controller:
             "value": None,
             "default_value": attribute
         }
+
+    def report_selection(self) -> None:
+        """
+        gets none
+        creates a rooter on a choice dict depending on the tournament status
+        returns none
+        """
+
+        report_list = ["Liste de tous les joueurs",
+                       "Liste de tous les tournois",
+                       "Informations sur un tournoi",
+                       "Lister les joueurs du tournoi actif",
+                       "Lister les rounds/matchs du tournoi actif"]
+
+        report_dict = {report_list[0]: self.model.data.report_player_list,
+                       report_list[1]: self.model.data.report_tournament_list,
+                       report_list[2]: self.model.data.report_tournament_info,
+                       report_list[3]: self.model.data.report_active_tournament_player_list,
+                       report_list[4]: self.model.data.report_rounds_and_match}
+
+        report_title = {report_list[0]: "liste des joueurs",
+                        report_list[1]: "liste des tournois",
+                        report_list[2]: "informations sur le tournoi",
+                        report_list[3]: "liste des joueurs du tournoi",
+                        report_list[4]: "rounds et matchs"}
+
+        prompt_list = report_list.copy()
+
+        if self.model.data.data["status"]["player_list"] is False:
+            prompt_list.remove(report_list[3])
+
+        if self.model.data.data["round"]["round_counter"] == 1 and self.model.data.data["round"]["current_round_step"] == 0:
+            prompt_list.remove(report_list[4])
+
+        report_selected = self.view.prompt_report_choice(prompt_list)
+        self.view.display_report(report_dict[report_selected](), report_title[report_selected])
+
+        return False

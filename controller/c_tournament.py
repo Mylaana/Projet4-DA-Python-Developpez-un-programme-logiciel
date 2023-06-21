@@ -36,6 +36,7 @@ class ControllerTournament(c.Controller):
         return self.rooter(choice=self.view.prompt_tournament_selection(),
                            choice_dict={self.menu.command_one: self.create_new_tournament,
                                         self.menu.command_two: self.load_existing_tournament,
+                                        self.menu.command_three: self.report_selection,
                                         self.menu.command_exit: self.exit_program})
 
     def create_new_tournament(self):
