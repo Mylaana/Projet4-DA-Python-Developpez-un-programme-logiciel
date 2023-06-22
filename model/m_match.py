@@ -109,31 +109,3 @@ class Match:
                 self.pairing_list[i] = ([match[0][0], match[0][1]], [match[1][0], player_match_result])
             else:
                 continue
-
-    def get_id_player_a(self, match: tuple) -> int:
-        """
-        gets the match as tuple
-        returns player_a id
-        """
-        return match[0][0]
-
-    def get_id_player_b(self, match: tuple) -> int:
-        """
-        gets the match as tuple
-        returns player_a id
-        """
-        return match[1][0]
-
-    def get_score_player_a(self, match: tuple) -> float:
-        """
-        gets the match as tuple
-        returns player_a id
-        """
-        return match[0][1]
-
-    def get_score_player_b(self, match: tuple) -> float:
-        """
-        gets the match as tuple
-        returns player_a id
-        """
-        return match[1][1]

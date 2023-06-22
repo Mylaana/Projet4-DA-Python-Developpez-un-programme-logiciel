@@ -18,6 +18,14 @@ class ControllerTournament(c.Controller):
     Controller class
     """
     def __init__(self, model: m.Tournament, view: v.ViewTournament, debug: bool = False):
+        """
+        Initialize the ControllerTournament object.
+
+        Args:
+        - model (m.Tournament): The Tournament model object.
+        - view (v.ViewTournament): The ViewTournament object.
+        - debug (bool, optional): Debug mode flag. Defaults to False.
+        """
         super().__init__(model=model, view=view)
         self.view: v.ViewTournament = view
         self.model: m.Tournament = model
@@ -28,10 +36,11 @@ class ControllerTournament(c.Controller):
 
     def select_tournament(self) -> bool:
         """
-        Ask view if the user wants to create or load tournament.
-        Roots view's return to related function.
+        Ask the view if the user wants to create or load a tournament.
+        Calls the related function.
 
-        Returns boolean == choice in choice list and could be executed.
+        Returns:
+        - (bool) The choice in the choice list and whether it can be executed.
         """
         self.view.clear_console()
         return self.rooter(choice=self.view.prompt_tournament_selection(),
@@ -42,8 +51,10 @@ class ControllerTournament(c.Controller):
 
     def create_new_tournament(self):
         """
-        Create new tournament from view's player list
-        returns None
+        Roots the user choice to the appropriate tournament creation method.
+
+        Returns:
+        - None.
         """
         self.view.clear_console()
         result = self.rooter(choice=self.view.prompt_tournament_creation_mode(),
@@ -58,8 +69,10 @@ class ControllerTournament(c.Controller):
 
     def get_tournament_info(self):
         """
-        gets None
-        Returns bool
+        Get information for creating a tournament.
+
+        Returns:
+        - (bool) True if successful.
         """
         while True:
             self.view.clear_console()
@@ -92,8 +105,10 @@ class ControllerTournament(c.Controller):
 
     def dummy_create_tournament(self):
         """
-        gets none
-        returns bool
+        Create a dummy tournament.
+
+        Returns:
+        -(bool) True if successful.
         """
         self.model.name = "Tournoi club local"
         self.model.location = "a coté de la mairie"
@@ -102,10 +117,14 @@ class ControllerTournament(c.Controller):
 
         return True
 
-    def load_existing_tournament(self):
+    def load_existing_tournament(self) -> bool:
         """
-        load an existing tournament
+        Load an existing tournament.
+
+        Returns:
+        - (bool): True if successful.
         """
+
         # gets file name to load
         tournament_list = self.model.data.get_file_list()
         if tournament_list == []:
@@ -115,6 +134,8 @@ class ControllerTournament(c.Controller):
         self.model.data.file_name = self.view.prompt_tournament_load(self.model.data.get_file_list()) + ".json"
 
         self.model.data.load_tournament()
+
+        # locks the data object if loaded tournament is already finished
         if self.model.data.data["status"]["finished"]:
             self.model.data.data_locked = True
             self.model.data.data = self.model.data.loaded_data.copy()
@@ -127,10 +148,12 @@ class ControllerTournament(c.Controller):
 
         return self.step_validated
 
-    def set_tournament_finished(self) -> None:
+    def set_tournament_finished(self):
         """
-        gets none
-        returns none
+        Set the tournament as finished.
+
+        Returns:
+        - None.
         """
         self.model.data.data["status"]["finished"] = True
         self.model.date_end = time.localtime()
@@ -138,10 +161,12 @@ class ControllerTournament(c.Controller):
         self.model.save_data()
         self.model.data.data_locked = True
 
-    def tournament_finished(self) -> None:
+    def tournament_finished(self):
         """
-        gets none
-        returns none
+        Handle the post tournament finished menu.
+
+        Returns:
+        - None.
         """
         self.view.clear_console()
         return self.rooter(choice=self.view.prompt_tournament_finished(),

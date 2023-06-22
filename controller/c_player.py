@@ -14,9 +14,17 @@ sys.path.insert(0, '../CommonClass')
 
 class ControllerPlayer(c.Controller):
     """
-    Controller class
+    Controller player class
     """
     def __init__(self, model: m.PlayerList, view: v.ViewPlayer, debug: bool = False):
+        """
+        Initialize the ControllerPlayer object.
+
+        Args:
+        - model (m.PlayerList): The PlayerList model object.
+        - view (v.ViewPlayer): The ViewPlayer object.
+        - debug (bool, optional): Debug mode flag. Defaults to False.
+        """
         super().__init__(model=model, view=view)
         self.view: v.ViewPlayer = view
         self.model: m.PlayerList = model
@@ -27,8 +35,10 @@ class ControllerPlayer(c.Controller):
     def select_player_list(self) -> bool:
         """
         Ask view for player list
-        Roots view's return to related function.
-        Returns boolean == choice in choice list and could be executed.
+        Calls the related function.
+
+        Returns:
+        - (bool) if the related function was successful.
         """
         prompt_result = self.view.prompt_player_list_selection()
 
@@ -38,10 +48,12 @@ class ControllerPlayer(c.Controller):
                                         self.menu.command_three: self.report_selection,
                                         self.menu.command_exit: self.exit_program})
 
-    def create_player_group(self):
+    def create_player_group(self) -> bool:
         """
-        gets none
-        returns None
+        Create a list of player using view's output.
+
+        Returns:
+        - (bool) True if successful
         """
         while True:
             player_number = self.view.prompt_player_number()
@@ -116,27 +128,33 @@ class ControllerPlayer(c.Controller):
 
     def load_existing_player_list(self):
         """
-        load an existing tournament
+        load data into model.
+
+        Returns:
+        - None.
         """
         self.model.load_data()
 
-    def load_dummy_default_player_list(self):
+    def load_dummy_default_player_list(self) -> bool:
         """
-        load an existing tournament
+        set model's player group from view's dummy player list.
+
+        Returns:
+        - (bool) True if successful.
         """
         self.model.set_player_group(self.view.dummy_generate_player_list())
         return True
 
     def get_player_list_id(self) -> list:
         """
-        gets none
-        returns a player id list
+        Returns:
+        - (list) of player ID from model.
         """
         return self.model.player_list_id
 
     def get_player_group(self) -> dict[int, dict]:
         """
-        gets none
-        returns a player id list
+        Returns:
+        - (dict) player_group containing all players informations from model.
         """
         return self.model.player_group

@@ -14,10 +14,18 @@ sys.path.insert(0, '../CommonClass')
 
 class ControllerRound(c.Controller):
     """
-    Controller class
+    Controller round class
     """
 
     def __init__(self, model: m.Round, view: v.ViewRound, debug: bool = False):
+        """
+        Initialize the ControllerRound object.
+
+        Args:
+        - model (m.Round): The Round model object.
+        - view (v.ViewRound): The ViewRound object.
+        - debug (bool, optional): Debug mode flag. Defaults to False.
+        """
         super().__init__(model=model, view=view)
         self.model: m.Round = model
         self.view: v.ViewRound = view
@@ -27,10 +35,12 @@ class ControllerRound(c.Controller):
         self.menu.name_controller = self.model.data_section_name
         self.step_validated = False
 
-    def round_loop(self):
+    def round_loop(self) -> bool:
         """
-        Loops while rounds need to be run
-        Returns True when last round is over
+        Loops on the round dedicated methods while rounds are not all finished.
+
+        Returns:
+        - (bool) when last round is over
         """
 
         while not self.model.round_counter > self.model.round_max_number:
@@ -82,27 +92,28 @@ class ControllerRound(c.Controller):
         self.save_data()
         return self.step_validated
 
-    def start_new_round(self) -> None:
+    def start_new_round(self):
         """
-        gets none
-        create new round
-        returns none
+        Run create new round method from model.
+        Returns:
+        - None
         """
         self.model.create_new_round()
 
     def finalize_round(self):
         """
-        gets none
-        runs round finalization
-        returns none
+        Run current round finalization method from model.
+        Returns:
+        - None
         """
         self.model.finalize_round()
 
-    def enter_score_results(self):
+    def enter_score_results(self) -> bool:
         """
-        gets None
-        prompts user for player's score on the active round
-        Returns bool
+        Prompt the user for player's scores in the active round.
+
+        Returns:
+        - (bool) if successful
         """
         while True:
             prompt_list = []
@@ -129,23 +140,24 @@ class ControllerRound(c.Controller):
 
     def set_random_scores(self):
         """
-        generates random scores for the current round
+        Generate random scores for the current round.
+
+        Returns:
+        - (bool) if successful
         """
         self.model.set_random_scores()
 
         return True
 
-    def display_scores_previous_round(self):
+    def display_scores(self):
         """
-        Calls display scores with previous round = true
-        """
-        self.display_scores(previous_round=True)
+        Display the scores and total scores at the end of the round.
 
-    def display_scores(self, previous_round: bool = False):
-        """
-        gets none
-        display score and total score end of round
-        Returns none
+        Args:
+        - previous_round (bool, optional): Flag to display scores from the previous round. Defaults to False.
+
+        Returns:
+        - None.
         """
         self.view.clear_console()
 
@@ -165,6 +177,6 @@ class ControllerRound(c.Controller):
 
     def load_existing_rounds(self):
         """
-        load an existing tournament
+        Load existing rounds for the tournament.
         """
         self.model.load_data()

@@ -34,7 +34,11 @@ class Data:
 
     def save_data(self):
         """
-        dumps data into the json
+        Dumps data dict into the json file.
+
+        Returns:
+        - None.
+
         """
         if self.data_locked:
             return
@@ -44,7 +48,11 @@ class Data:
 
     def save_player_base(self):
         """
-        dumps player info in player_base
+        Dumps player info in player_base .json file.
+
+        Returns:
+        - None.
+
         """
         for value in self.data["player_list"]["player_group"]:
             self.player_base_data[
@@ -57,23 +65,39 @@ class Data:
         with open(file=self._path + self.player_base_file_name, mode="w", encoding="utf-8") as data_file:
             json.dump(self.player_base_data, data_file, indent=4)
 
-    def load_file(self, file_name):
+    def load_file(self, file_name: str) -> dict:
         """
-        gets data from the file_name json
+        Loads a file in DATA folder matching file_name
+
+        Attr:
+        - file_name (str): name of the .json file to load
+
+        Returns:
+        - (dict).
+
         """
         with open(file=file_name, encoding="utf-8") as data_file:
             return json.load(data_file)
 
     def load_tournament(self):
         """
-        gets data from the file_name json
+        Gets data from the file_name json.
+
+        Returns:
+        - None.
         """
         self.loaded_data = self.load_file(self._path + self.file_name)
         self.data["status"] = self.loaded_data["status"]
 
     def create_json(self, name: str):
         """
-        create a new tournament.json file
+        Create a new .json file
+
+        Attr:
+        - name (str): name of the .json file.
+
+        Returns:
+        - None.
         """
 
         self.file_name = re.sub(r"[^a-zA-Z0-9\s-]", "", name)
@@ -85,18 +109,19 @@ class Data:
 
     def update_all(self):
         """
-        gets none
-        call every model update method
-        returns none
+        Call every controller 'update' method.
+
+        Returns:
+        - None
         """
         for controller in self.controller_list:
             controller.update_data()
 
     def load_all(self):
         """
-        gets none
-        call every model update method
-        returns none
+        Call every controller 'load' method.
+        Returns:
+        - None
         """
         for controller in self.controller_list:
             controller.load_data()
@@ -105,8 +130,8 @@ class Data:
 
     def get_file_list(self) -> list:
         """
-        gets none
-        returns list of file names
+        Returns:
+        - (list) of file names found in DATA folder.
         """
         tournament_list = os.listdir(self._path)
         for index, tournament in enumerate(tournament_list):
@@ -118,8 +143,9 @@ class Data:
 
     def report_player_list(self) -> list:
         """
-        gets none
-        returns list
+        Returns:
+        - (list) of player information extracted from self.player_base_data object,
+        sorted in last_name alphabetical order.
         """
         player_list = []
         for value in self.player_base_data.values():
@@ -129,15 +155,15 @@ class Data:
 
     def report_tournament_list(self) -> list:
         """
-        gets none
-        returns list
+        Returns:
+        - (list) of tournament files found in DATA folder, sorted in alphabetical order.
         """
         return sorted(self.get_file_list())
 
     def report_active_tournament_player_list(self) -> list:
         """
-        gets none
-        returns list
+        Returns:
+        - (list) of player info found in self.data object (from active tournament file).
         """
         player_list = []
         for value in self.data["player_list"]["player_group"].values():
@@ -145,10 +171,10 @@ class Data:
 
         return sorted(player_list)
 
-    def report_tournament_info(self, tournament_name):
+    def report_tournament_info(self, tournament_name) -> list:
         """
-        gets none
-        returns list
+        Returns:
+        - (list) of tournament information (name, start date, end date).
         """
         filename = tournament_name + ".json"
         file_data = self.load_file(file_name=self._path + filename)
@@ -175,10 +201,10 @@ class Data:
 
         return tournament_info
 
-    def report_rounds_and_match(self):
+    def report_rounds_and_match(self) -> list:
         """
-        gets none
-        returns list
+        Returns:
+        - (list) rounds and match details.
         """
         round_info = []
         player_group = self.data["round"]["player_group"]

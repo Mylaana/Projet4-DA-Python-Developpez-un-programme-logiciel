@@ -13,7 +13,16 @@ class Controller:
     """
     Controller class
     """
+
     def __init__(self, model: m.Model, view: v.View, debug: bool = False):
+        """
+        Initialize the Controller object.
+
+        Args:
+        - model (m.Model): The Model object.
+        - view (v.View): The View object.
+        - debug (bool, optional): Debug mode flag. Defaults to False.
+        """
         self.model: m.Model = model
         self.view: v.View = view
         self.menu = menu.Menu()
@@ -22,10 +31,15 @@ class Controller:
 
     def rooter(self, choice: str, choice_dict: dict) -> bool:
         """
-        Gets a string as choice (coming from view) and a dict like : dict[str]: function_name
-        Call the function corresponding to choice if found.
+        Gets a string as choice (coming from view) and a dict like: dict[str]: function_name.
+        Calls the function corresponding to choice if found.
 
-        Returns Boolean : True if found, False if not
+        Args:
+        - choice (str): used to select the related method to call from choice_dict.
+        - choice_dict (dict): Dictionary containing the method to call.
+
+        Returns:
+        - (bool) True if found, False if not.
         """
         if choice not in choice_dict:
             self.view.invalid_choice()
@@ -36,7 +50,7 @@ class Controller:
 
     def exit_program(self, show_exit_message: bool = True) -> None:
         """
-        Exit program
+        Exit the program
         """
         if show_exit_message:
             self.view.show_in_console(title="fin du programme")
@@ -46,18 +60,24 @@ class Controller:
 
     def set_player_group(self, player_list: list, player_group: dict[int, dict]):
         """
-        gets a list of player id
-        pass the list to model
-        returns none
+        Set the player group.
+
+        Args:
+        - player_list (list): List of player IDs.
+        - player_group (dict): Dictionary containing player information.
+
+        Returns:
+        - None.
         """
         self.model.player_list_id = player_list
         self.model.player_group = player_group
 
     def set_up_data_info(self):
         """
-        gets none
-        set up information in data object
-        returns none
+        Set up information in data object.
+
+        Returns:
+        - None.
         """
 
         # links the controller to the controller list in data object for load/save/update ..._all functions
@@ -73,43 +93,54 @@ class Controller:
 
     def load_data(self):
         """
-        gets none
-        loads previously saved data
-        returns none
+        Load previously saved data
+
+        Returns:
+        - None.
         """
         self.model.load_data()
         self.step_validated = self.model.data.loaded_data["status"][self.menu.name_controller]
 
     def update_data(self):
         """
-        gets none
-        calls model.update_data
-        returns none
+        Update data.
+
+        Returns:
+        - None.
         """
         self.model.update_data()
 
     def save_data(self):
         """
-        gets none
-        calls model.update_data
-        returns none
+        Save data.
+
+        Returns:
+        - None.
         """
         self.model.save_data()
 
     def get_info_list_from_user(self, info_list: list[dict], title: str) -> list[dict]:
         """
-        gets a list of dict, each dict containing :
-        value name
-        value type
+        Prompt the user for a list of information.
 
-        returns bool if list is filled and valid
+        Args:
+        - info_list (list[dict]): List of dictionaries containing information details.
+        - title (str): Title of the prompt.
+
+        Returns:
+        - list[dict]: List of dictionaries with user-entered information.
         """
         return self.view.prompt_info_list(info_list=info_list, title=title)
 
     def check_info_list_result(self, info_list: list[dict]) -> bool:
         """
-        gets a list to check
-        returns bool for check pass result
+        Check if the user-entered information is valid.
+
+        Args:
+        - info_list (list[dict]): List of dictionaries containing information details.
+
+        Returns:
+        - (bool): True if the information is valid, False otherwise.
         """
         data_is_valid = True
         for result_line in info_list:
@@ -127,11 +158,14 @@ class Controller:
 
     def get_prompt_dict_from_var(self, attribute, message: str) -> dict:
         """
-        gets a variable name
-        returns a dictionnary like :
-        "name" : variable_name
-        "type" : type(variable)
-        "value" : None
+        Create a prompt dictionary from a variable name.
+
+        Args:
+        - attribute: The variable value.
+        - message (str): The prompt message.
+
+        Returns:
+        - (dict): A dictionary with keys 'caption', 'type', 'value', and 'default_value'.
         """
         return {
             "caption": str(message),
@@ -142,9 +176,10 @@ class Controller:
 
     def report_selection(self) -> None:
         """
-        gets none
-        creates a rooter on a choice dict depending on the tournament status
-        returns none
+        Display a menu for report selection and execute the selected report.
+
+        Returns:
+        - None.
         """
 
         report_list = ["Liste de tous les joueurs",
@@ -170,22 +205,27 @@ class Controller:
         if self.model.data.data["status"]["player_list"] is False:
             prompt_list.remove(report_list[3])
 
-        if self.model.data.data["round"]["round_counter"] == 1 and self.model.data.data["round"]["current_round_step"] == 0:
+        if (self.model.data.data["round"]["round_counter"] == 1 and
+                self.model.data.data["round"]["current_round_step"] == 0):
             prompt_list.remove(report_list[4])
 
         report_selected = self.view.prompt_report_choice(prompt_list)
-        self.view.display_report(report_dict[report_selected](), report_title[report_selected])
+        self.view.display_report(
+            report_dict[report_selected](), report_title[report_selected])
 
         return False
 
     def report_tournament_info(self) -> list:
         """
-        gets none
-        returns none
+        Prompt the user to select a tournament.
+
+        Returns:
+        - list: List containing the tournament information to be displayed.
         """
         tournament_list = self.model.data.report_tournament_list()
         if tournament_list == []:
             return []
 
-        tournament_name = self.view.prompt_report_tournament_name(tournament_list)
+        tournament_name = self.view.prompt_report_tournament_name(
+            tournament_list)
         return self.model.data.report_tournament_info(tournament_name=tournament_name)
