@@ -33,6 +33,7 @@ class ControllerTournament(c.Controller):
 
         Returns boolean == choice in choice list and could be executed.
         """
+        self.view.clear_console()
         return self.rooter(choice=self.view.prompt_tournament_selection(),
                            choice_dict={self.menu.command_one: self.create_new_tournament,
                                         self.menu.command_two: self.load_existing_tournament,
@@ -105,6 +106,11 @@ class ControllerTournament(c.Controller):
         load an existing tournament
         """
         # gets file name to load
+        tournament_list = self.model.data.get_file_list()
+        if tournament_list == []:
+            self.view.invalid_no_tournament_found_in_data()
+            return self.step_validated
+
         self.model.data.file_name = self.view.prompt_tournament_load(self.model.data.get_file_list()) + ".json"
 
         self.model.data.load_tournament()

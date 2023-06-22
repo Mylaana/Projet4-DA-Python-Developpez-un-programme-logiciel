@@ -27,11 +27,11 @@
 
 # pour finaliser :
 to do :
--rapports
--gestionnaire de fichiers save/load
+-docstrings
+-clean fonctions inutiles
+-blinder les menu selection
+-checker tous les choix
 
 
 
-questions :
-est-ce que je dois créer une base de donnée dédiée aux joueurs et l'utiliser lors de la création de la liste de joueur du tournoi?
 

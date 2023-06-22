@@ -155,7 +155,7 @@ class Controller:
 
         report_dict = {report_list[0]: self.model.data.report_player_list,
                        report_list[1]: self.model.data.report_tournament_list,
-                       report_list[2]: self.model.data.report_tournament_info,
+                       report_list[2]: self.report_tournament_info,
                        report_list[3]: self.model.data.report_active_tournament_player_list,
                        report_list[4]: self.model.data.report_rounds_and_match}
 
@@ -177,3 +177,15 @@ class Controller:
         self.view.display_report(report_dict[report_selected](), report_title[report_selected])
 
         return False
+
+    def report_tournament_info(self) -> list:
+        """
+        gets none
+        returns none
+        """
+        tournament_list = self.model.data.report_tournament_list()
+        if tournament_list == []:
+            return []
+
+        tournament_name = self.view.prompt_report_tournament_name(tournament_list)
+        return self.model.data.report_tournament_info(tournament_name=tournament_name)

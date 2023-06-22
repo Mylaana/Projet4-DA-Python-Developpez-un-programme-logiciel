@@ -70,14 +70,6 @@ def main():
         controller_round.model.update_data()
         database.save_data()
 
-        controller_tournament.view.show_in_console(
-            controller_tournament.model.data.report_active_tournament_player_list(),
-            title="report - active player")
-
-        controller_tournament.view.show_in_console(
-            message=controller_tournament.model.data.report_rounds_and_match(),
-            title="report - rounds & match")
-
         if controller_player.step_validated is False:
             controller_tournament.view.clear_console()
 

@@ -24,7 +24,7 @@ class View:
             return
         os.system('cls' if os.name == 'nt' else 'clear')
 
-    def show_in_console(self, message="", title=""):  # type: (str or list or None, str or None) -> None
+    def show_in_console(self, message="", title="", carriage_return_end_message: bool = True):
         """
         Receives either str or list[str]
         Returns none
@@ -42,21 +42,22 @@ class View:
         elif isinstance(message, list):
             for line in message:
                 print(line)
-        print("\n")
+        if carriage_return_end_message:
+            print("\n")
 
     def display_error_message(self, error_title: str = "", error_message: str = ""):
         """
         gets error message as string
         returns none
         """
-        self.show_in_console(title=error_title, message=error_message)
-        input("")
+        self.show_in_console(title=error_title, message=error_message, carriage_return_end_message=False)
+        self.display_input_press_enter()
 
     def invalid_choice(self):
         """
         shows the choice is not valid
         """
-        self.display_error_message("Le choix effectué n'est pas valide !")
+        self.display_error_message(error_message="Le choix effectué n'est pas valide !")
 
     def invalid_info_entered(self, message: str = ""):
         """
@@ -84,13 +85,23 @@ class View:
         """
         self.display_error_message("Veuillez entrer un nombre !")
 
+    def invalid_no_tournament_found_in_data(self) -> None:
+        """
+        gets none
+        returns none
+        """
+        self.clear_console()
+        self.display_error_message(
+            error_title="TOURNOI",
+            error_message="Aucun tournoi sauvegardé !")
+
     def prompt_info_list(self, info_list: list[dict], title) -> list[dict]:
         """
         gets list
         returns list
         """
+        self.clear_console()
         for line in info_list:
-            self.clear_console()
             message = ["Liste des informations à entrer :"]
             for line_message in info_list:
                 if line_message["value"] is None:
@@ -153,5 +164,67 @@ class View:
         returns none
         """
         self.clear_console()
+        if report_result == []:
+            report_result = ["Aucune information à afficher."]
         self.show_in_console(message=report_result, title="rapport - " + report_title)
-        input("appuyez sur entrée")
+        self.display_input_press_enter()
+
+    def prompt_report_tournament_name(self, tournament_list: list) -> str:
+        """
+        gets list
+        returns string
+        """
+        message = ["Liste des tournois sauvegardés :"]
+        tournament_dict = {}
+
+        for index, value in enumerate(tournament_list):
+            tournament_dict[str(index + 1)] = value
+            message.append(f"{index + 1}: {value}")
+
+        while True:
+            self.clear_console()
+            self.show_in_console(message=message, title="rapport - information sur le tournoi")
+            choice = input("\n\nveuillez entrer le numéro correspondant au tournoi :\n")
+
+            if str(choice) in tournament_dict:
+                break
+
+            self.invalid_choice()
+
+        return tournament_dict[str(choice)]
+
+    def prompt_choice_selection(self, title: str, choice_dict: dict, message_before_choice: str = "") -> str:
+        """
+        gets :
+        -dict with key=str(key to press), value=text to display
+        -a title for the menu
+        -optionnal message to display before the choice listed
+        returns key pressed
+        """
+        if message_before_choice != "":
+            message_list = [message_before_choice]
+        else:
+            message_list = ["Souhaitez-vous:"]
+
+        for key, value in choice_dict.items():
+            message_list.append(f"{key}: {value}")
+
+        while True:
+            self.clear_console()
+            self.show_in_console(title=title, message=message_list)
+
+            choice = input("\n\n Veuillez taper votre choix puis appuyer sur 'entrée':\n")
+
+            if choice in choice_dict:
+                break
+
+            self.invalid_choice()
+
+        return choice
+
+    def display_input_press_enter(self) -> None:
+        """
+        gets none
+        returns none
+        """
+        input("Veuillez appuyer sur entrée pour continuer.")

@@ -51,20 +51,20 @@ class ViewTournament(v.View):
                 message.append(f"Joueur{key} : {value['name']} {value['last_name']}")
 
         self.show_in_console(message=message, title="loading status")
-        input("appuyez sur entrée pour continuer")
+        self.display_input_press_enter()
 
     def prompt_tournament_creation_mode(self) -> str:
         """
         Prompts user for information
         Returns command value as str
         """
-        self.show_in_console(message=["souhaitez-vous :",
-                                      f"{self.menu.command_one} entrer les informations du tournoi",
-                                      f"{self.menu.command_two} [demo mode] utiliser les informations par défaut",
-                                      "",
-                                      f"{self.menu.command_exit} : quitter le programme."],
-                             title="tournoi - creation du tournoi")
-        return input("")
+        choice = self.prompt_choice_selection(
+            title="tournoi - creation du tournoi",
+            choice_dict={self.menu.command_one: "entrer les informations du tournoi",
+                         self.menu.command_two: "[demo mode] utiliser les informations par défaut",
+                         self.menu.command_exit: "quitter le programme."},)
+
+        return choice
 
     def prompt_tournament_load(self, tournament_list) -> str:
         """
