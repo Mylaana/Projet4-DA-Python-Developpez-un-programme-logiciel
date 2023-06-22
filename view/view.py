@@ -18,7 +18,7 @@ class View:
 
     def clear_console(self):
         """
-        clear console
+        Clears the console.
         """
         if self.debug:
             return
@@ -26,10 +26,16 @@ class View:
 
     def show_in_console(self, message="", title="", carriage_return_end_message: bool = True):
         """
-        Receives either str or list[str]
-        Returns none
+        Displays a message in the console.
+
+        Args:
+        - message: Message to display (str or list[str])
+        - title: Title for the message (str)
+        - carriage_return_end_message: Whether to add a carriage return at the end of the message (bool)
+
+        Returns:
+        - None
         """
-        # print("\n\n")
         if title != "":
             print("-------------------------------------------------\n" + title.upper() +
                   "\n-------------------------------------------------\n")
@@ -47,48 +53,53 @@ class View:
 
     def display_error_message(self, error_title: str = "", error_message: str = ""):
         """
-        gets error message as string
-        returns none
+        Displays an error message.
+
+        Args:
+        - error_title: Title of the error message (str)
+        - error_message: Error message to display (str)
+
+        Returns:
+        - None
         """
         self.show_in_console(title=error_title, message=error_message, carriage_return_end_message=False)
         self.display_input_press_enter()
 
     def invalid_choice(self):
         """
-        shows the choice is not valid
+        Displays an error message for an invalid choice.
         """
         self.display_error_message(error_message="Le choix effectué n'est pas valide !")
 
     def invalid_info_entered(self, message: str = ""):
         """
-        shows the choice is not valid
+        Displays an error message for invalid information entered.
         """
         self.display_error_message("Les informations entrées ne sont pas valide !", message)
 
     def invalid_info_entered_type(self, message: str = ""):
         """
-        shows the choice is not valid
+        Displays an error message for invalid information type entered.
         """
         self.display_error_message(error_title="Les informations entrées ne sont pas valide !",
                                    error_message=f"{message} n'est pas du bon type")
 
     def invalid_info_entered_empty(self, message: str = ""):
         """
-        shows the choice is not valid
+        Displays an error message for empty information entered.
         """
         self.display_error_message(error_title="Les informations entrées ne sont pas valide !",
                                    error_message=f"{message} n'a pas été rempli")
 
     def invalid_info_entered_number_needed(self):
         """
-        shows the choice is not valid
+        Displays an error message for a number needed to be entered.
         """
         self.display_error_message("Veuillez entrer un nombre !")
 
     def invalid_no_tournament_found_in_data(self) -> None:
         """
-        gets none
-        returns none
+        Displays an error message when no tournament is found in the data.
         """
         self.clear_console()
         self.display_error_message(
@@ -97,8 +108,14 @@ class View:
 
     def prompt_info_list(self, info_list: list[dict], title) -> list[dict]:
         """
-        gets list
-        returns list
+        Prompts the user for a list of information.
+
+        Args:
+        - info_list: List of information (list[dict])
+        - title: Title for the prompt (str)
+
+        Returns:
+        Updated list of information (list[dict])
         """
         for line in info_list:
             self.clear_console()
@@ -134,8 +151,13 @@ class View:
 
     def prompt_report_choice(self, report_list: list) -> str:
         """
-        gets list of tournament names
-        return tournament name as string
+        Prompts the user for a report choice.
+
+        Args:
+        - report_list: List of report names (list)
+
+        Returns:
+        Selected report name as string
         """
         self.clear_console()
         choice_dict = {}
@@ -160,8 +182,14 @@ class View:
 
     def display_report(self, report_result, report_title):
         """
-        gets list
-        returns none
+        Displays a report.
+
+        Args:
+        - report_result: List of report results (list)
+        - report_title: Title of the report (str)
+
+        Returns:
+        - None
         """
         self.clear_console()
         if report_result == []:
@@ -171,8 +199,13 @@ class View:
 
     def prompt_report_tournament_name(self, tournament_list: list) -> str:
         """
-        gets list
-        returns string
+        Prompts the user for a tournament name for the report.
+
+        Args:
+        - tournament_list: List of tournament names (list)
+
+        Returns:
+        - Selected tournament name as string
         """
         message = ["Liste des tournois sauvegardés :"]
         tournament_dict = {}
@@ -196,11 +229,15 @@ class View:
     def prompt_choice_selection_defined_keys(
             self, title: str, choice_dict: dict, message_before_choice: str = "") -> str:
         """
-        gets :
-        -dict with key=str(key to press), value=text to display
-        -a title for the menu
-        -optionnal message to display before the choice listed
-        returns key pressed
+        Prompts the user for a choice selection from a defined set of keys.
+
+        Args:
+        - title: Title for the menu (str)
+        - choice_dict: Dictionary with key=str(key to press), value=text to display (dict)
+        - message_before_choice: Optional message to display before the choice listed (str)
+
+        Returns:
+        - Key pressed as str
         """
         if message_before_choice != "":
             message_list = [message_before_choice]
@@ -226,25 +263,31 @@ class View:
     def prompt_choice_selection_from_list(
             self, title: str, choice_list: list, message_before_choice: str = "") -> str:
         """
-        gets :
-        -list of options with value=text to display
-        -a title for the menu
-        -optionnal message to display before the choice listed
-        returns key pressed
+        Prompts the user for a choice selection from a list of options.
+
+        Args:
+        - title: Title for the menu (str)
+        - choice_list: List of options with value=text to display (list)
+        - message_before_choice: Optional message to display before the choice listed (str)
+
+        Returns:
+        - Key pressed as str
         """
         choice_dict = {}
         for index, values in enumerate(choice_list):
             choice_dict[str(index + 1)] = values
 
         choice = self.prompt_choice_selection_defined_keys(title=title,
-                                                         choice_dict=choice_dict,
-                                                         message_before_choice=message_before_choice)
+                                                           choice_dict=choice_dict,
+                                                           message_before_choice=message_before_choice)
 
         return choice_dict[choice]
 
     def display_input_press_enter(self) -> None:
         """
-        gets none
-        returns none
+        Displays a message to prompt the user to press enter.
+
+        Returns:
+        - None
         """
         input("Veuillez appuyer sur entrée pour continuer.")

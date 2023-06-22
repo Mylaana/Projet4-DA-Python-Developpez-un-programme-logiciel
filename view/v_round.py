@@ -8,17 +8,17 @@ class ViewRound(v.View):
     """
     View class
     """
-    def dummy_generate_scores(self):
-        """
-        Randomly generate players scores for this round.
-        This is a dummy function (the scores should be determined by every games,
-        instead of randomed for app building purpose).
-        """
-
     def display_round_pairings(self, pairing_list: list, round_number: int, player_group: dict[int, dict]):
         """
-        gets list of pairings with each line being 'player_a_id-player_b_id'
-        returns none
+        Displays the pairings for the current round.
+
+        Args:
+        - pairing_list: List of pairings, where each line is 'player_a_id-player_b_id'
+        - round_number: The round number
+        - player_group: Dictionary containing player information
+
+        Returns:
+        - None.
         """
         round_pairings = []
         table_number = 0
@@ -34,9 +34,16 @@ class ViewRound(v.View):
 
     def display_scores(self, score: dict, round_number: int, total_score: bool, player_group: dict[int, dict]):
         """
-        gets a list
-        show list in console
-        returns none
+        Displays the scores for the current round.
+
+        Args:
+        - score: Dictionary containing the scores of the players
+        - round_number: The round number
+        - total_score: Boolean indicating whether to display total scores or individual round scores
+        - player_group: Dictionary containing player information
+
+        Returns:
+        - None
         """
         score_list = []
         if total_score:
@@ -53,15 +60,15 @@ class ViewRound(v.View):
 
     def prompt_score_calculation_method(self) -> str:
         """
-        Gets None\n
-        Prompts user for a choice,\n
-        Returns str :
-        - [COMMAND_ONE] enter match results
-        - [COMMAND_TWO] demo mode - use random match results
+        Prompts the user to choose a score calculation method.
+
+        Returns:
+        - [COMMAND_ONE] to enter match results
+        - [COMMAND_TWO] for demo mode - use random match results
         - [COMMAND_RETURN] to return to tournament player list selection
         - [COMMAND_SAVE] to save the tournament actual state
         - [COMMAND_LOAD] to load a previously saved tournament
-        - [COMMAND_EXIT] to exit program
+        - [COMMAND_EXIT] to exit the program
         """
         self.show_in_console(message=["souhaitez-vous :",
                                       f"{self.menu.command_one} : entrer les scores des joueurs",
@@ -73,22 +80,16 @@ class ViewRound(v.View):
 
     def prompt_next_round(self):
         """
-        Gets None\n
-        Prompts user for a choice,\n
-        Returns str :
-        - [COMMAND_ONE] go to next round
+        Prompts the user for the next round.
+
+        Returns:
+        - [COMMAND_ONE] to go to the next round
         - [COMMAND_SAVE] to save the tournament actual state
         - [COMMAND_LOAD] to load a previously saved tournament
-        - [COMMAND_EXIT] to exit program
+        - [COMMAND_EXIT] to exit the program
         """
         self.show_in_console(message=["souhaitez-vous :",
                                       f"{self.menu.command_one} : passer au round suivant",
                                       "",
                                       f"{self.menu.command_exit} : {self.menu.command_description_exit}"])
         return input("")
-
-    def display_invalid_list(self, message):
-        """
-        gets message
-        returns none
-        """

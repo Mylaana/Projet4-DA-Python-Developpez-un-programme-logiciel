@@ -10,8 +10,10 @@ class ViewTournament(v.View):
     """
     def prompt_tournament_selection(self) -> str:
         """
-        Prompts user for information
-        Returns command value as str
+        Prompts the user for tournament selection.
+
+        Returns:
+        Command value as str
         """
         choice = self.prompt_choice_selection_defined_keys(
             title="tournoi",
@@ -24,8 +26,13 @@ class ViewTournament(v.View):
 
     def display_loading_status(self, data_loaded: dict) -> None:
         """
-        gets a message to display as dict
-        returns none
+        Displays the loading status of the tournament.
+
+        Args:
+        - data_loaded: Dictionary containing the loaded data
+
+        Returns:
+        None
         """
         self.clear_console()
         message = []
@@ -46,8 +53,10 @@ class ViewTournament(v.View):
 
     def prompt_tournament_creation_mode(self) -> str:
         """
-        Prompts user for information
-        Returns command value as str
+        Prompts the user for the tournament creation mode.
+
+        Returns:
+        Command value as str
         """
         choice = self.prompt_choice_selection_defined_keys(
             title="tournoi - creation du tournoi",
@@ -59,8 +68,13 @@ class ViewTournament(v.View):
 
     def prompt_tournament_load(self, tournament_list) -> str:
         """
-        gets list of tournament names
-        return tournament name as string
+        Prompts the user to load an existing tournament.
+
+        Args:
+        - tournament_list: List of tournament names
+
+        Returns:
+        Tournament name as string
         """
         return self.prompt_choice_selection_from_list(
             title="tournoi - chargement d'un tournoi existant",
@@ -69,8 +83,10 @@ class ViewTournament(v.View):
 
     def prompt_tournament_finished(self):
         """
-        Prompts user for information
-        Returns command value as str
+        Prompts the user for choice, after tournament completion.
+
+        Returns:
+        Command value as str
         """
         choice = self.prompt_choice_selection_defined_keys(
             title="tournoi terminé",
@@ -81,8 +97,10 @@ class ViewTournament(v.View):
 
     def invalid_no_data_found(self):
         """
-        gets none
-        returns none
+        Displays an error message when no data is found.
+
+        Returns:
+        None
         """
         self.show_in_console(title="Erreur de chargement",
                              message="Pas de donnée à charger dans ce fichier")
