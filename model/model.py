@@ -10,9 +10,21 @@ sys.path.insert(0, '../CommonClass')
 
 class Model(m_save_load.SaveLoad):
     """
-    Controller class
+    Model class
     """
     def __init__(self):
+        """
+        Initialize the Model class.
+
+        Attributes:
+        - data (data.Data): An instance of the data.Data class for data management.
+        - data_section_name (str): The name of the data section for the model.
+        - data_excluded (list[str]): A list of attribute names to exclude when updating or loading data.
+        - player_group (dict[int, list]): A dictionary representing the player group.
+
+        Note: The values of the attributes are initialized accordingly.
+
+        """
         super().__init__()
         self.data: data.Data = None
         self.data_section_name = ""
@@ -21,9 +33,7 @@ class Model(m_save_load.SaveLoad):
 
     def load_data(self):
         """
-        gets none
-        reformat the player_group after loading it
-        returns none
+        Load data from the data object and reformat the player_group after loading it.
         """
         super().load_data()
 

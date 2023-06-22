@@ -88,7 +88,6 @@ def main():
 
         if controller_round.step_validated is False:
             controller_round.step_validated = controller_round.round_loop()
-            print(f"sortie de round loop {controller_round.step_validated}")
 
             if controller_round.step_validated:
                 controller_round.model.data.data["status"]["round"] = controller_round.step_validated

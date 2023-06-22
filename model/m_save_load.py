@@ -1,6 +1,7 @@
 """
-Save/load model class
+Save/load model module
 """
+
 import sys
 from abc import ABC
 from CommonClass import data
@@ -9,17 +10,31 @@ sys.path.insert(0, '../CommonClass')
 
 class SaveLoad(ABC):
     """
-    blabla
+    Save/load model class
     """
     def __init__(self):
+        """
+        Initialize the SaveLoad class.
+
+        Attributes:
+        - data (data.Data): An instance of the data.Data class.
+        - data_excluded (list): A list of excluded data attributes.
+        - data_section_name (str): The name of the data section.
+
+        Note: The values of the attributes 'data', 'data_excluded',
+        and 'data_section_name' are initialized accordingly.
+
+        """
         self.data: data.Data = data.Data()
         self.data_excluded = []
         self.data_section_name = ""
 
     def update_data(self) -> None:
         """
-        updates the tournament's json file with every attribute's value
-        returns None
+        Update the tournament's JSON file with the values of all attributes.
+
+        Returns:
+        - None
         """
         if self.data.data_locked:
             return
@@ -32,19 +47,27 @@ class SaveLoad(ABC):
 
     def update_data_excluded(self) -> None:
         """
-        void function, must be overridden
+        Override: Update excluded data.
+
+        Returns:
+        - None
         """
 
     def save_data(self) -> None:
         """
-        calls the save data into json function
+        Call the save_data() function to save the data into a JSON file.
+
+        Returns:
+        - None
         """
         self.data.save_data()
 
     def load_data(self):
         """
-        loads data from the data object
-        returns None
+        Load data from the data object.
+
+        Returns:
+        - None
         """
         for attribute, value in vars(self).items():
             if attribute not in self.data_excluded:
@@ -54,5 +77,8 @@ class SaveLoad(ABC):
 
     def load_data_excluded(self):
         """
-        void function, must be overridden
+        Override: Load excluded data.
+
+        Returns:
+        - None
         """
