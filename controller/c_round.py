@@ -25,6 +25,7 @@ class ControllerRound(c.Controller):
         self.debug = debug
         self.model.data_section_name = self.menu.navigation_round
         self.menu.name_controller = self.model.data_section_name
+        self.step_validated = False
 
     def round_loop(self):
         """
@@ -74,8 +75,9 @@ class ControllerRound(c.Controller):
                     self.exit_program()
 
                 continue
-        
+
         self.step_validated = True
+        self.model.round_counter = self.model.round_max_number
         self.update_data()
         self.save_data()
         return self.step_validated

@@ -20,6 +20,7 @@ class Data:
         self.player_base_data = {}
         self.loaded_data = None
         self.controller_list: list = []
+        self.data_locked: bool = False
 
         # creates player_base file if not exists,
         # else, loads it
@@ -35,7 +36,9 @@ class Data:
         """
         dumps data into the json
         """
-        print("save data")
+        if self.data_locked:
+            return
+
         with open(file=self._path + self.file_name, mode="w", encoding="utf-8") as data_file:
             json.dump(self.data, data_file, indent=4)
 
@@ -43,7 +46,6 @@ class Data:
         """
         dumps player info in player_base
         """
-        print(self.data["player_list"]["player_group"])
         for value in self.data["player_list"]["player_group"]:
             self.player_base_data[
                 self.data["player_list"]["player_group"][int(value)]['last_name'] + "-" +
@@ -67,6 +69,7 @@ class Data:
         gets data from the file_name json
         """
         self.loaded_data = self.load_file(self._path + self.file_name)
+        self.data["status"] = self.loaded_data["status"]
 
     def create_json(self, name: str):
         """
@@ -182,8 +185,8 @@ class Data:
         for key in self.data['round']['round_list'].keys():
             round_info.append(f"Round {key} :")
             for values in self.data['round']['round_list'][key]['pairing_list']:
-                round_info.append(f"J{values[0][0]} {player_group[values[0][0]]['name']} VS " +
-                                  f"J{values[1][0]} {player_group[values[1][0]]['name']}")
+                round_info.append(f"J{values[0][0]} {player_group[str(values[0][0])]['name']} VS " +
+                                  f"J{values[1][0]} {player_group[str(values[1][0])]['name']}")
 
             round_info.append("")
 

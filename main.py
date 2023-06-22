@@ -47,17 +47,15 @@ def main():
     controller_tournament.view.clear_console()
 
     while True:
+        if controller_tournament.model.data.data["status"]["finished"]:
+            controller_tournament.tournament_finished()
+            continue
+
         # update data section status
         controller_tournament.model.data.data["status"][
             controller_tournament.menu.name_controller] = controller_tournament.step_validated
         controller_player.model.data.data["status"][
             controller_player.menu.name_controller] = controller_player.step_validated
-        controller_player.model.data.data["status"][
-            controller_round.menu.name_controller] = controller_round.step_validated
-
-        if controller_tournament.model.data.data["status"]["finished"]:
-            controller_tournament.tournament_finished()
-            continue
 
         # select a tournament by either creating or loading one
         if controller_tournament.step_validated is False:
@@ -90,13 +88,14 @@ def main():
 
         if controller_round.step_validated is False:
             controller_round.step_validated = controller_round.round_loop()
+            print(f"sortie de round loop {controller_round.step_validated}")
 
             if controller_round.step_validated:
+                controller_round.model.data.data["status"]["round"] = controller_round.step_validated
+                controller_round.model.update_data()
                 controller_tournament.set_tournament_finished()
 
             continue
-
-
 
 
 if __name__ == "__main__":

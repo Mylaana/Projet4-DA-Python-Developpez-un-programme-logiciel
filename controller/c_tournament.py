@@ -115,14 +115,15 @@ class ControllerTournament(c.Controller):
         self.model.data.file_name = self.view.prompt_tournament_load(self.model.data.get_file_list()) + ".json"
 
         self.model.data.load_tournament()
+        if self.model.data.data["status"]["finished"]:
+            self.model.data.data_locked = True
+            self.model.data.data = self.model.data.loaded_data.copy()
+            return
+
         self.model.data.load_all()
+        self.view.display_loading_status(data_loaded=self.model.data.data)
         self.model.data.update_all()
         self.model.data.save_data()
-
-        if self.step_validated is False:
-            self.view.invalid_no_data_found()
-        else:
-            self.view.display_loading_status(data_loaded=self.model.data.data)
 
         return self.step_validated
 
@@ -132,7 +133,10 @@ class ControllerTournament(c.Controller):
         returns none
         """
         self.model.data.data["status"]["finished"] = True
-        self.model.data.save_data()
+        self.model.date_end = time.localtime()
+        self.model.update_data()
+        self.model.save_data()
+        self.model.data.data_locked = True
 
     def tournament_finished(self) -> None:
         """

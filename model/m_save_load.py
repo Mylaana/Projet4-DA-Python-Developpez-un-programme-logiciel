@@ -12,7 +12,7 @@ class SaveLoad(ABC):
     blabla
     """
     def __init__(self):
-        self.data = data.Data()
+        self.data: data.Data = data.Data()
         self.data_excluded = []
         self.data_section_name = ""
 
@@ -21,6 +21,8 @@ class SaveLoad(ABC):
         updates the tournament's json file with every attribute's value
         returns None
         """
+        if self.data.data_locked:
+            return
 
         for attribute, values in vars(self).items():
             if attribute not in self.data_excluded:
