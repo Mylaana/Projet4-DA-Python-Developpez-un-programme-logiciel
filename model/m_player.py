@@ -14,7 +14,8 @@ class PlayerList(m.Model):
         Initialize the player list model.
 
         Attributes:
-        - player_group (dict[int, dict]): A dictionary to store player information. Key: player ID, Value: player dictionary.
+        - player_group (dict[int, dict]): A dictionary to store player information. Key: player ID,
+        Value: player dictionary.
         - player_list_id (list[int]): A list to store the IDs of players.
         - minimum_player_number (int): The minimum number of players required.
         """

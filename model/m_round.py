@@ -26,7 +26,7 @@ class Round(model.Model):
         - round_counter (int): The current round counter.
         - round_max_number (int): The maximum number of rounds in the tournament.
         - player_list_id (list[int]): A list to store the IDs of the players.
-        - player_group (dict[int, dict]): A dictionary to store player information. 
+        - player_group (dict[int, dict]): A dictionary to store player information.
         Key: player ID, Value: player dictionary.
         - current_round (m.Match): The current round of the tournament.
         - current_round_step (int): The current step of the current round.
