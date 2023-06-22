@@ -7,10 +7,17 @@ import time
 
 class Match:
     """
-    manage 1 round and all matches infos
+    Manages one round and all match information.
     """
 
     def __init__(self, player_list_id: list):
+        """
+        Initialize a Match instance.
+
+        Args:
+        - player_list_id (list[int]): List of player IDs.
+
+        """
         self.player_list_id: list[int] = player_list_id.copy()
         self.pairing_list: list[tuple] = []
 
@@ -23,9 +30,14 @@ class Match:
 
     def generate_round_pairings(self, is_first_round: bool, previous_pairing: dict[int, list]) -> None:
         """
-        gets a bool for round number rooting and previous pairing dict of [int,list]
-        calls the correct pairing calculation method (related to round number)
-        returns none
+        Generate pairings for the round based on the round number and previous pairings.
+
+        Args:
+        - is_first_round (bool): True if it is the first round, False otherwise.
+        - previous_pairing (dict[int, list]): Dictionary containing the previous pairings.
+
+        Returns:
+        - None
         """
         if is_first_round:
             self.set_pairings_random()
@@ -34,16 +46,26 @@ class Match:
 
     def get_id_list_from_sorted_scores(self, score: dict, sort_reverse: bool = False) -> list:
         """
-        Gets a score dictionnary.\n
-        Sorts the players scores.\n
-        Returns a list of int('player id')
+        Get a list of player IDs sorted based on the scores.
+
+        Args:
+        - score (dict): Dictionary containing player scores.
+        - sort_reverse (bool, optional): True to sort in descending order, False for ascending order.
+                                           Defaults to False.
+
+        Returns:
+        - list: List of player IDs.
+
         """
         list_of_tuple = sorted(score.items(), key=lambda x: x[1], reverse=sort_reverse)
         return [t[0] for t in list_of_tuple]
 
     def set_pairings_random(self):
         """
-        create parings at random
+        Create pairings randomly.
+
+        Returns:
+        - None.
         """
         unpaired_players = self.player_list_id.copy()
 
@@ -57,7 +79,13 @@ class Match:
 
     def set_pairings_descending_score(self, previous_pairing: dict[int, list]):
         """
-        create parings following descendig scores
+        Create pairings based on descending scores.
+
+        Args:
+        - previous_pairing (dict[int, list]): Dictionary containing the previous pairings.
+
+        Returns:
+        - None
         """
         # copy start of round score dict into a list to sort scores
         unpaired_players = self.get_id_list_from_sorted_scores(score=self.player_score_total_start_of_round,
@@ -81,8 +109,14 @@ class Match:
 
     def first_player_not_in_list(self, player_list: list[int], player_list_to_exclude: list[int]) -> int:
         """
-        gets a list of player_id and a player_list_to_exclude
-        Returns the index of first int in player_list wich is not in player_list_to_exclude
+        Find the index of the first player in the player_list that is not in the player_list_to_exclude.
+
+        Args:
+        - player_list (list[int]): List of player IDs.
+        - player_list_to_exclude (list[int]): List of player IDs to exclude.
+
+        Returns:
+        - int: Index of the first player in player_list that is not in player_list_to_exclude.
         """
         list_before_pop = player_list.copy()
         for line in player_list_to_exclude:
@@ -94,9 +128,14 @@ class Match:
 
     def set_player_score(self, player_id: int, player_match_result: float):
         """
-        gets a player_id and a float(player_match_result)
-        updates score for player_id
-        returns None
+        Update the score of a player for the round.
+
+        Args:
+        - player_id (int): ID of the player.
+        - player_match_result (float): Match result of the player.
+
+        Returns:
+        - None.
         """
         self.player_score_round[player_id] = player_match_result
         self.player_score_total_end_of_round[player_id] = self.player_score_total_start_of_round[player_id] + \

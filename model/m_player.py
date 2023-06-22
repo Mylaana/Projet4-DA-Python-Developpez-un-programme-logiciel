@@ -5,32 +5,18 @@ Player and player list model
 from . import model as m
 
 
-class Player:
-    """
-    player class
-    """
-    def __init__(self, player_id: int, name: str = "", family_name: str = "",
-                 birth_date: str = ""):
-        self.name = name
-        self.last_name = family_name
-        self.birth_date = birth_date
-        self.player_id = player_id
-
-    def get_player_info(self):
-        """
-        returns player info as a string
-        """
-        return "name : " + self.name + "  last name : " + self.last_name
-
-
 class PlayerList(m.Model):
     """
-    player list
+    Player list model class.
     """
     def __init__(self):
         """
-        stores player list with a dictionnaty :
-        Key = id, value = class Player
+        Initialize the player list model.
+
+        Attributes:
+        - player_group (dict[int, dict]): A dictionary to store player information. Key: player ID, Value: player dictionary.
+        - player_list_id (list[int]): A list to store the IDs of players.
+        - minimum_player_number (int): The minimum number of players required.
         """
         super().__init__()
         self.player_group: dict[int, dict] = {}
@@ -39,10 +25,17 @@ class PlayerList(m.Model):
 
     def set_player_group(self, player_info_list: list[dict]) -> None:
         """
-        get a list of dict :
-        'Name1 FamilyName1 Birthdate1',
-        'Name2 FamilyName2 Birthdate2',
-        returns none
+        Set the player group based on the provided player information list.
+
+        Args:
+        - player_info_list (list[dict]): A list of player information dictionaries.
+          Each dictionary should contain the following keys:
+          - 'name': The name of the player.
+          - 'family_name': The family name of the player.
+          - 'birth_date': The birth date of the player.
+
+        Returns:
+        - None
         """
         # reset player group
         self.player_group = {}
@@ -53,9 +46,17 @@ class PlayerList(m.Model):
 
     def add_player_to_group(self, player: dict) -> None:
         """
-        stores player in dict
-        gets a player class argument
-        returns none
+        Add a player to the player group.
+
+        Args:
+        - player (dict): A dictionary containing the player information.
+          It should have the following keys:
+          - 'name': The name of the player.
+          - 'family_name': The family name of the player.
+          - 'birth_date': The birth date of the player.
+
+        Returns:
+        - None
         """
         self.player_group[len(self.player_group) + 1] = player
         self.player_list_id.append(len(self.player_group))

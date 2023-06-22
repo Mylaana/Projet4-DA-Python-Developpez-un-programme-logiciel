@@ -11,10 +11,31 @@ sys.path.insert(0, '../CommonClass')
 
 class Round(model.Model):
     """
-    Model = tournament class
+    Tournament class model.
     """
 
     def __init__(self, round_max_number: int = 4):
+        """
+        Initialize the Round model.
+
+        Args:
+        - round_max_number (int): The maximum number of rounds in the tournament.
+
+        Attributes:
+        - round_list (list[m.Match]): A list to store the rounds of the tournament.
+        - round_counter (int): The current round counter.
+        - round_max_number (int): The maximum number of rounds in the tournament.
+        - player_list_id (list[int]): A list to store the IDs of the players.
+        - player_group (dict[int, dict]): A dictionary to store player information. 
+        Key: player ID, Value: player dictionary.
+        - current_round (m.Match): The current round of the tournament.
+        - current_round_step (int): The current step of the current round.
+        - previous_pairings (dict[int, list]): A dictionary to store previous pairings of players.
+
+        Note: The values of the attributes 'round_list', 'round_counter', 'player_list_id', 'player_group',
+        'current_round', 'current_round_step', and 'previous_pairings' are initialized accordingly.
+
+        """
         super().__init__()
         self.round_list: list[m.Match] = []
         self.round_counter = 1
@@ -42,8 +63,10 @@ class Round(model.Model):
 
     def create_new_round(self):
         """
-        Generates new round and player pairings.
-        Returns None
+        Generate a new round and player pairings.
+
+        Returns:
+        - bool: True if the round counter is greater than or equal to the maximum number of rounds, False otherwise.
         """
 
         self.current_round = m.Match(self.player_list_id.copy())
@@ -62,9 +85,10 @@ class Round(model.Model):
 
     def finalize_round(self):
         """
-        gets none
-        cleans round data and prepare for next
-        returns none
+        Clean up round data and prepare for the next round.
+
+        Returns:
+        - None
         """
         self.round_counter += 1
         self.current_round.date_end = time.localtime()
@@ -73,27 +97,33 @@ class Round(model.Model):
 
     def get_current_round_pairings(self) -> list:
         """
-        gets none
-        returns current round pairings as list like :
-        str('playerA - playerB')
-        str('playerA - playerB')
+        Get the current round pairings.
+
+        Returns:
+        - list: The current round pairings as a list of strings in the format 'playerA - playerB'.
         """
 
         return self.current_round.pairing_list
 
     def set_current_round_player_score(self, player_id: int, player_score: float):
         """
-        gets player id as int and player score as float
-        returns none
+        Set the score of a player in the current round.
+
+        Args:
+        - player_id (int): The ID of the player.
+        - player_score (float): The score of the player.
+
+        Returns:
+        - None
         """
         self.current_round.set_player_score(player_id=player_id, player_match_result=player_score)
 
     def set_random_scores(self):
         """
-        Gets None
-        randoms scores for current round
-        for each match, randoms the score of the player_a and deduct the score of player_b
-        returns None
+        Set random scores for the current round.
+
+        Returns:
+        - None
         """
 
         for match in self.current_round.pairing_list:
@@ -108,7 +138,10 @@ class Round(model.Model):
 
     def add_previous_pairings(self):
         """
-        adds the curent round pairings to the previous pairings dict
+        Add the current round pairings to the previous pairings dictionary.
+
+        Returns:
+        - None
         """
         if not self.previous_pairings:
             for player_id in self.player_list_id:
@@ -120,7 +153,10 @@ class Round(model.Model):
 
     def update_data_excluded(self) -> None:
         """
-        void function, must be overridden
+        Override: Update excluded data.
+
+        Returns:
+        - None
         """
         counter = 1
         self.data.data["round"]["round_list"] = {}
@@ -134,9 +170,10 @@ class Round(model.Model):
 
     def load_data_excluded(self):
         """
-        gets none
-        loads match objects and tuple pairings from json file
-        returns none
+        Load match objects and tuple pairings from a JSON file.
+
+        Returns:
+        - None
         """
 
         if self.data.loaded_data["status"]["player_list"] is False:
@@ -170,8 +207,13 @@ class Round(model.Model):
 
     def formated_dict_int_float(self, dict_to_format: dict) -> dict[int, float]:
         """
-        gets unformated dict
-        returns formated dict[int,float]
+        Format a dictionary with integer keys and float values.
+
+        Args:
+        - dict_to_format (dict): The dictionary to format.
+
+        Returns:
+        - dict[int, float]: The formatted dictionary.
         """
         formated_dict = {}
         for key, value in dict_to_format.items():
