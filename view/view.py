@@ -100,8 +100,8 @@ class View:
         gets list
         returns list
         """
-        self.clear_console()
         for line in info_list:
+            self.clear_console()
             message = ["Liste des informations à entrer :"]
             for line_message in info_list:
                 if line_message["value"] is None:
@@ -193,7 +193,8 @@ class View:
 
         return tournament_dict[str(choice)]
 
-    def prompt_choice_selection(self, title: str, choice_dict: dict, message_before_choice: str = "") -> str:
+    def prompt_choice_selection_defined_keys(
+            self, title: str, choice_dict: dict, message_before_choice: str = "") -> str:
         """
         gets :
         -dict with key=str(key to press), value=text to display
@@ -221,6 +222,25 @@ class View:
             self.invalid_choice()
 
         return choice
+
+    def prompt_choice_selection_from_list(
+            self, title: str, choice_list: list, message_before_choice: str = "") -> str:
+        """
+        gets :
+        -list of options with value=text to display
+        -a title for the menu
+        -optionnal message to display before the choice listed
+        returns key pressed
+        """
+        choice_dict = {}
+        for index, values in enumerate(choice_list):
+            choice_dict[str(index + 1)] = values
+
+        choice = self.prompt_choice_selection_defined_keys(title=title,
+                                                         choice_dict=choice_dict,
+                                                         message_before_choice=message_before_choice)
+
+        return choice_dict[choice]
 
     def display_input_press_enter(self) -> None:
         """

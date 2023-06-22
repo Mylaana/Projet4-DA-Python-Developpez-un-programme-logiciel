@@ -43,6 +43,7 @@ class Data:
         """
         dumps player info in player_base
         """
+        print(self.data["player_list"]["player_group"])
         for value in self.data["player_list"]["player_group"]:
             self.player_base_data[
                 self.data["player_list"]["player_group"][int(value)]['last_name'] + "-" +

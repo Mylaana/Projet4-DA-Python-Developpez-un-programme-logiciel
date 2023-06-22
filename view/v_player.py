@@ -38,6 +38,7 @@ class ViewPlayer(v.View):
         gets none
         returns integer
         """
+        self.clear_console()
         self.show_in_console("Combien voulez vous ajouter de joueur au tournoi ?",
                              "liste des joueurs - ajouter des joueurs")
         return input("")
@@ -47,6 +48,7 @@ class ViewPlayer(v.View):
         gets none
         return a player list of dict with informations :
         [{name : 'player name', last_name : 'player last name', birth_date : 'DD/MM/YYYY'}]
+        """
         """
         player_list = []
         list_complete = False
@@ -73,10 +75,12 @@ class ViewPlayer(v.View):
             return False
 
         return player_list
-
-    def prompt_new_player(self):
         """
-        prompt user if he wants new player or if he's done
+
+    def prompt_new_player(self):  # DELETE
+        """
+        prompt user if he wants new player or if he's done 
+        """
         """
         while True:
             self.show_in_console(message=["souhaitez-vous :",
@@ -89,11 +93,13 @@ class ViewPlayer(v.View):
                 return self.menu.command_two
             else:
                 self.invalid_choice()
-
+        """
+    
     def get_new_player_info(self) -> dict:
         """
         gets None
         returns dict
+        """
         """
         player = {}
         player["name"] = input("enter player name :")
@@ -101,6 +107,7 @@ class ViewPlayer(v.View):
         player["birth_date"] = input("enter player birth date :")
 
         return player
+        """
 
     def get_player_list(self):
         """

@@ -62,6 +62,7 @@ class ControllerTournament(c.Controller):
         Returns bool
         """
         while True:
+            self.view.clear_console()
             prompt_list = []
             prompt_list.append(self.get_prompt_dict_from_var(
                 attribute=self.model.name, message="nom du tournoi"))
@@ -124,3 +125,21 @@ class ControllerTournament(c.Controller):
             self.view.display_loading_status(data_loaded=self.model.data.data)
 
         return self.step_validated
+
+    def set_tournament_finished(self) -> None:
+        """
+        gets none
+        returns none
+        """
+        self.model.data.data["status"]["finished"] = True
+        self.model.data.save_data()
+
+    def tournament_finished(self) -> None:
+        """
+        gets none
+        returns none
+        """
+        self.view.clear_console()
+        return self.rooter(choice=self.view.prompt_tournament_finished(),
+                           choice_dict={self.menu.command_one: self.report_selection,
+                                        self.menu.command_exit: self.exit_program})

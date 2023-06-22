@@ -35,7 +35,6 @@ def main():
     controller_player = c_player.ControllerPlayer(model_player_list, view_player, DEBUG)
 
     # initialize data object
-    # controller_tournament.model.data.create_json()  # DELETE
     database = data.Data()
     controller_tournament.model.data: data.Data = database
     controller_player.model.data: data.Data = database
@@ -44,7 +43,6 @@ def main():
     controller_tournament.set_up_data_info()
     controller_player.set_up_data_info()
     controller_round.set_up_data_info()
-    # controller_round.model.save_data()
 
     controller_tournament.view.clear_console()
 
@@ -54,15 +52,19 @@ def main():
             controller_tournament.menu.name_controller] = controller_tournament.step_validated
         controller_player.model.data.data["status"][
             controller_player.menu.name_controller] = controller_player.step_validated
+        controller_player.model.data.data["status"][
+            controller_round.menu.name_controller] = controller_round.step_validated
+
+        if controller_tournament.model.data.data["status"]["finished"]:
+            controller_tournament.tournament_finished()
+            continue
 
         # select a tournament by either creating or loading one
         if controller_tournament.step_validated is False:
-
             controller_tournament.step_validated = controller_tournament.select_tournament()
 
             # forces the minimum player number to two times the number of round
             controller_player.model.minimum_player_number = controller_tournament.model.round_number * 2
-
             continue
 
         controller_tournament.model.update_data()
@@ -84,18 +86,17 @@ def main():
 
                 controller_player.model.update_data()
                 controller_tournament.model.data.save_player_base()
-
             continue
 
         if controller_round.step_validated is False:
             controller_round.step_validated = controller_round.round_loop()
 
-        # end of tournament
-        controller_tournament.view.show_in_console(title="fin du tournoi")
-        controller_tournament.model.data.data["status"]["finished"] = True
-        controller_tournament.model.data.save_data()
+            if controller_round.step_validated:
+                controller_tournament.set_tournament_finished()
 
-        controller_tournament.exit_program(show_exit_message=False)
+            continue
+
+
 
 
 if __name__ == "__main__":

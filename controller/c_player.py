@@ -78,7 +78,7 @@ class ControllerPlayer(c.Controller):
 
                 # player birthday
                 prompt_list.append(self.get_prompt_dict_from_var(
-                    attribute="birthday" + str(player_id),
+                    attribute="birth_date" + str(player_id),
                     message="Date de naissance joueur " + str(player_id)))
 
             result = self.get_info_list_from_user(info_list=prompt_list.copy(),
@@ -106,7 +106,7 @@ class ControllerPlayer(c.Controller):
                 continue
 
             elif info_counter == 3:
-                player_dict["birthday"] = line["value"]
+                player_dict["birth_date"] = line["value"]
                 player_list.append(player_dict.copy())
                 info_counter = 1
                 continue

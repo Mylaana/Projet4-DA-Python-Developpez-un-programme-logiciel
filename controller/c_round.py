@@ -31,10 +31,12 @@ class ControllerRound(c.Controller):
         Loops while rounds need to be run
         Returns True when last round is over
         """
+
         while not self.model.round_counter > self.model.round_max_number:
+            self.view.clear_console()
+
             # creating new round with pairings
             if self.model.current_round_step == 0:
-                self.view.clear_console()
                 self.start_new_round()
                 self.model.current_round_step = 1
                 self.update_data()
@@ -72,11 +74,11 @@ class ControllerRound(c.Controller):
                     self.exit_program()
 
                 continue
-
+        
         self.step_validated = True
         self.update_data()
         self.save_data()
-        return True
+        return self.step_validated
 
     def start_new_round(self) -> None:
         """
