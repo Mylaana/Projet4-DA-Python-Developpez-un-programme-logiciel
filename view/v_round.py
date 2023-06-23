@@ -93,3 +93,19 @@ class ViewRound(v.View):
                                       "",
                                       f"{self.menu.command_exit} : {self.menu.command_description_exit}"])
         return input("")
+    
+    def prompt_end_of_tournament(self):
+        """
+        Prompts the user for the next round.
+
+        Returns:
+        - [COMMAND_ONE] to go to the next round
+        - [COMMAND_SAVE] to save the tournament actual state
+        - [COMMAND_LOAD] to load a previously saved tournament
+        - [COMMAND_EXIT] to exit the program
+        """
+        self.show_in_console(message=["souhaitez-vous :",
+                                      f"{self.menu.command_one} : afficher le vainqueur",
+                                      "",
+                                      f"{self.menu.command_exit} : {self.menu.command_description_exit}"])
+        return input("")

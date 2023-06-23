@@ -4,6 +4,7 @@ Match class
 import random
 import time
 
+# DELETE  DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE
 
 class Match:
     """
@@ -88,8 +89,7 @@ class Match:
         - None
         """
         # copy start of round score dict into a list to sort scores
-        unpaired_players = self.get_id_list_from_sorted_scores(score=self.player_score_total_start_of_round,
-                                                               sort_reverse=True)
+        unpaired_players = self.get_id_list_from_sorted_scores(score=self.player_score_total_start_of_round, sort_reverse=True)
 
         # assigns the two first player of the list as a pair
         while unpaired_players:

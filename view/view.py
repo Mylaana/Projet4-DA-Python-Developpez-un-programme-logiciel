@@ -166,6 +166,7 @@ class View:
             choice_dict[str(index + 1)] = report
 
         report_list.insert(0, "Veuillez sélectionner un rapport :")
+
         while True:
             self.clear_console()
             self.show_in_console(message=report_list,

@@ -174,31 +174,37 @@ class Controller:
             "default_value": attribute
         }
 
-    def report_selection(self) -> None:
+    def report_selection(self):
         """
         Display a menu for report selection and execute the selected report.
 
         Returns:
-        - None.
+        - False.
         """
 
         report_list = ["Liste de tous les joueurs",
                        "Liste de tous les tournois",
                        "Informations sur un tournoi",
                        "Lister les joueurs du tournoi actif",
-                       "Lister les rounds/matchs du tournoi actif"]
+                       "Lister les rounds/matchs du tournoi actif",
+                       "Afficher les scores",
+                       "Revenir au menu précédent"]
 
         report_dict = {report_list[0]: self.model.data.report_player_list,
                        report_list[1]: self.model.data.report_tournament_list,
                        report_list[2]: self.report_tournament_info,
                        report_list[3]: self.model.data.report_active_tournament_player_list,
-                       report_list[4]: self.model.data.report_rounds_and_match}
+                       report_list[4]: self.model.data.report_rounds_and_match,
+                       report_list[5]: self.model.data.report_tournament_result,
+                       report_list[6]: ""}
 
         report_title = {report_list[0]: "liste des joueurs",
                         report_list[1]: "liste des tournois",
                         report_list[2]: "informations sur le tournoi",
                         report_list[3]: "liste des joueurs du tournoi",
-                        report_list[4]: "rounds et matchs"}
+                        report_list[4]: "rounds et matchs",
+                        report_list[5]: "classement du tournoi",
+                        report_list[6]: ""}
 
         prompt_list = report_list.copy()
 
@@ -209,7 +215,14 @@ class Controller:
                 self.model.data.data["round"]["current_round_step"] == 0):
             prompt_list.remove(report_list[4])
 
+        if self.model.data.data["status"]["finished"] is False:
+            prompt_list.remove(report_list[5])
+
         report_selected = self.view.prompt_report_choice(prompt_list)
+
+        if report_selected == "Revenir au menu précédent":
+            return False
+            
         self.view.display_report(
             report_dict[report_selected](), report_title[report_selected])
 
@@ -229,3 +242,12 @@ class Controller:
         tournament_name = self.view.prompt_report_tournament_name(
             tournament_list)
         return self.model.data.report_tournament_info(tournament_name=tournament_name)
+
+    def exit_report_menu(self):
+        """
+        Exits the report menu.
+
+        Returns:
+        -False
+        """
+        return False

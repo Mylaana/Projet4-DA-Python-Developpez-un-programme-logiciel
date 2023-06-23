@@ -29,7 +29,4 @@
 to do :
 -blinder les menu selection
 -checker tous les choix
--ajouter une option pour sortir du menu de rapport
--ajouter qui à gagné le tournoi
--ajouter un rapport de classement (score)
 

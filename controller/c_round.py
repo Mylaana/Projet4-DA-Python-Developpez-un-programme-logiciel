@@ -75,7 +75,11 @@ class ControllerRound(c.Controller):
 
             if self.model.current_round_step == 2:
                 self.display_scores()
-                prompt_result = self.view.prompt_next_round()
+                if self.model.round_counter < self.model.round_max_number:
+                    prompt_result = self.view.prompt_next_round()
+                else:
+                    prompt_result = self.view.prompt_end_of_tournament()
+
                 if prompt_result == self.menu.command_one:
                     self.finalize_round()
                     self.update_data()
@@ -85,7 +89,7 @@ class ControllerRound(c.Controller):
                     self.exit_program()
 
                 continue
-
+        
         self.step_validated = True
         self.model.round_counter = self.model.round_max_number
         self.update_data()

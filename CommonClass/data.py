@@ -213,9 +213,42 @@ class Data:
 
         for key in self.data['round']['round_list'].keys():
             round_info.append(f"Round {key} :")
-            for values in self.data['round']['round_list'][str(key)]['pairing_list']:
+            for values in self.data['round']['round_list'][key]['pairing_list']:
                 round_info.append(f"J{values[0][0]} {player_group[str(values[0][0])]['name']} VS " +
                                   f"J{values[1][0]} {player_group[str(values[1][0])]['name']}")
             round_info.append("")
 
         return round_info
+
+    def report_tournament_result(self) -> list:
+        """
+        Returns:
+        - (list) of total scores and tournament winner.
+        """
+
+        report_list = []
+        player_group = {}
+        round_data = {}
+        winner = ""
+        winner_score = 0
+        for key, value in self.data["round"]["player_group"].items():
+            player_group[str(key)] = value
+
+        for key, value in self.data['round']['round_list'].items():
+            if str(key) != str(self.data['round']['round_counter']):
+                continue
+            
+            round_data = value['player_score_total_end_of_round']
+            break
+
+        for key, value in round_data.items():
+            report_list.append(f"J{key} {player_group[str(key)]['name']}: {value}")
+            if value > winner_score:
+                winner_score = value
+                winner = player_group[str(key)]['name']
+
+        if self.data["status"]["finished"] is True:
+            report_list.append("")
+            report_list.append(f"{winner} remporte le tournoi !")
+
+        return report_list
