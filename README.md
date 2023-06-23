@@ -30,3 +30,6 @@ to do :
 -blinder les menu selection
 -checker tous les choix
 
+
+
+flake8 --format=html --htmldir=flake-report --max-line-length 119
