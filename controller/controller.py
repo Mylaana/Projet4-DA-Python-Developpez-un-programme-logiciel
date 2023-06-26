@@ -222,7 +222,7 @@ class Controller:
 
         if report_selected == "Revenir au menu précédent":
             return False
-            
+
         self.view.display_report(
             report_dict[report_selected](), report_title[report_selected])
 

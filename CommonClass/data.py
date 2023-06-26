@@ -237,7 +237,7 @@ class Data:
         for key, value in self.data['round']['round_list'].items():
             if str(key) != str(self.data['round']['round_counter']):
                 continue
-            
+
             round_data = value['player_score_total_end_of_round']
             break
 

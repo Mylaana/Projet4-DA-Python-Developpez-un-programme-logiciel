@@ -93,7 +93,7 @@ class ViewRound(v.View):
                                       "",
                                       f"{self.menu.command_exit} : {self.menu.command_description_exit}"])
         return input("")
-    
+
     def prompt_end_of_tournament(self):
         """
         Prompts the user for the next round.

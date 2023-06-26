@@ -93,7 +93,8 @@ def main():
                 controller_round.model.data.data["status"]["round"] = controller_round.step_validated
                 controller_round.model.update_data()
                 controller_tournament.set_tournament_finished()
-                controller_tournament.view.display_report(controller_tournament.model.data.report_tournament_result(), "resultat du tournoi")
+                controller_tournament.view.display_report(
+                    controller_tournament.model.data.report_tournament_result(), "resultat du tournoi")
             continue
 
 
