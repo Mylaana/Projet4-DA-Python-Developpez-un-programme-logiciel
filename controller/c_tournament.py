@@ -142,9 +142,9 @@ class ControllerTournament(c.Controller):
             return
 
         self.model.data.load_all()
-        self.view.display_loading_status(data_loaded=self.model.data.data)
         self.model.data.update_all()
         self.model.data.save_data()
+        self.view.display_loading_status(data_loaded=self.model.data.data)
 
         return self.step_validated
 
