@@ -3,7 +3,7 @@
 ## Scénario
 En tant que développeur, je suis missionné pour créer un programme de gestion de tournois d'échecs avec les contraintes suivantes :
 
-- Le programme doit pouvoir être éxecuté hors ligne
+- le programme doit pouvoir être éxecuté hors ligne
 - être développé selon les principes du pattern "MVC"
 - utiliser un systèeme de sauvegarde/chargement à chaque action de l'utilisateur
 - respecter la PEP8 et utiliser flake8 comme linter
