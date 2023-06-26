@@ -26,7 +26,7 @@ cd nom-du-repertoire-du-depot
 4. Exécutez le programme Python en utilisant la commande suivante :
 
 ```
-python nom_du_programme.py
+python main.py
 ```
 
 5. Le programme utilise des menus/listes d'options pour naviguer.
