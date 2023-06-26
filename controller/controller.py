@@ -177,6 +177,7 @@ class Controller:
     def report_selection(self):
         """
         Display a menu for report selection and execute the selected report.
+        Excludes some report depending on the tournament progression status.
 
         Returns:
         - False.

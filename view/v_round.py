@@ -65,9 +65,7 @@ class ViewRound(v.View):
         Returns:
         - [COMMAND_ONE] to enter match results
         - [COMMAND_TWO] for demo mode - use random match results
-        - [COMMAND_RETURN] to return to tournament player list selection
-        - [COMMAND_SAVE] to save the tournament actual state
-        - [COMMAND_LOAD] to load a previously saved tournament
+        - [COMMAND_THREE] to show a report
         - [COMMAND_EXIT] to exit the program
         """
         self.show_in_console(message=["souhaitez-vous :",
@@ -84,8 +82,6 @@ class ViewRound(v.View):
 
         Returns:
         - [COMMAND_ONE] to go to the next round
-        - [COMMAND_SAVE] to save the tournament actual state
-        - [COMMAND_LOAD] to load a previously saved tournament
         - [COMMAND_EXIT] to exit the program
         """
         self.show_in_console(message=["souhaitez-vous :",
@@ -99,9 +95,7 @@ class ViewRound(v.View):
         Prompts the user for the next round.
 
         Returns:
-        - [COMMAND_ONE] to go to the next round
-        - [COMMAND_SAVE] to save the tournament actual state
-        - [COMMAND_LOAD] to load a previously saved tournament
+        - [COMMAND_ONE] display tournament's winner
         - [COMMAND_EXIT] to exit the program
         """
         self.show_in_console(message=["souhaitez-vous :",

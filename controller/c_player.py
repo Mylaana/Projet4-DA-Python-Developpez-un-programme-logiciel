@@ -99,10 +99,10 @@ class ControllerPlayer(c.Controller):
             # check for info list content being conform
             data_is_valid = self.check_info_list_result(result)
 
-            # exit loop if everything conform
             if data_is_valid:
                 break
 
+        # converts the dictionnary informations into a list before passing it to model
         player_list = []
         info_counter = 1
         for line in result:

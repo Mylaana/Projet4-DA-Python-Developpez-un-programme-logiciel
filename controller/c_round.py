@@ -73,6 +73,7 @@ class ControllerRound(c.Controller):
                     self.save_data()
                 continue
 
+            # round is finished, displays scores and prompt user for next step
             if self.model.current_round_step == 2:
                 self.display_scores()
                 if self.model.round_counter < self.model.round_max_number:

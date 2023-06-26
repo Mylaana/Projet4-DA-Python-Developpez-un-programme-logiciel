@@ -17,8 +17,8 @@ class ViewPlayer(v.View):
         - Exiting the program
 
         Returns:
-        - [COMMAND_ONE] for using the default player list
-        - [COMMAND_TWO] for creating a new player list
+        - [COMMAND_ONE] creating a list of player
+        - [COMMAND_TWO] use the demo player list
         - [COMMAND_THREE] for displaying a report
         - [COMMAND_EXIT] for exiting the program
         """

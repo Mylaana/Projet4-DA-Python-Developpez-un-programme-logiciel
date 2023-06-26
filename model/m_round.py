@@ -195,7 +195,7 @@ class Round(model.Model):
             pairing_list: list[tuple(list)] = self.data.loaded_data[
                 self.data_section_name]["round_list"][str(i)]["pairing_list"]
 
-            # formating the score result into tuple for each match for each score
+            # formating the score result into tuple for each match and for each score
             for match in pairing_list:
                 match_formated: tuple(list) = ([match[0][0], match[0][1]],
                                                [match[1][0], match[1][1]])
