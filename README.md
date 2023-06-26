@@ -29,10 +29,10 @@ cd nom-du-repertoire-du-depot
 python main.py
 ```
 
-5. Le programme utilise des menus/listes d'options pour naviguer.  
-   Chaque liste d'options est structurée avec un caractère (chiffre/lettre) suivi de la description de l'option.
-   Entrez le caractere qui correspond à votre choix et appuyez sur entrée.
-   Vous serez également amené à entrer des informations comme le nom du tournoi, les informations des joueurs.
+markdown
+Copy code
+
+5. Suivez les instructions qui s'affichent dans la console pour naviguer dans le programme.
 
 ## Génération du rapport Flake8
 
