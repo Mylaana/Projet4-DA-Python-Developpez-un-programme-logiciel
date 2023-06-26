@@ -1,6 +1,16 @@
 # Projet4-DA-Python-Développez-un-programme-logiciel
 
-Description concise du projet.
+## Scénario
+Vous êtes un développeur junior depuis deux mois et vous travaillez en freelance pour écrire des scripts simples afin d’aider les petites entreprises locales à gérer leur inventaire. 
+
+En tant que développeur, je suis missionné pour créer un programme de gestion de tournois d'échecs avec les contraintes suivantes :
+
+- Le programme doit pouvoir être éxecuté hors ligne
+- être développé selon les principes du pattern "MVC"
+- utiliser un systèeme de sauvegarde/chargement à chaque action de l'utilisateur
+- respecter la PEP8 et utiliser flake8 comme linter
+
+
 
 ## Exécution du Programme
 
@@ -46,39 +56,3 @@ cd nom-du-repertoire-du-depot
 flake8 --format=html --htmldir=flake-report --max-line-length 119
 ```
    Le rapport sera édité dans un dossier "flake-report" dans le repertoire du programme.
-
-
-
-# Description de la structure du code :  
-## Pattern MVC :  
-## Module main de haut niveau  
-- initialise les controllers et leurs passe leurs models et views.
-
-## Controller tournament :  
-- 1 model
-- 1 view
-- 1 objet save_load
-
-## Controller player :  
-- 1 model player_list + 1 player class manipulée par player_list
-- 1 view
-- 1 objet save_load
-
-## Controller round :  
-- 1 model round + 1 match class manipulée par player_list
-- 1 view
-- 1 objet save_load
-
-## classe save_load
-- gere les ecritures / lectures du fichier .json du tournois
-- les fonctions update_all/load_all permettent de lancer les fonctions correspondantes de chaque model.
-
-
-# pour finaliser :
-to do :
--blinder les menu selection
--checker tous les choix
-
-
-
-flake8 --format=html --htmldir=flake-report --max-line-length 119
