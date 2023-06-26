@@ -1,8 +1,6 @@
 # Projet4-DA-Python-Développez-un-programme-logiciel
 
 ## Scénario
-Vous êtes un développeur junior depuis deux mois et vous travaillez en freelance pour écrire des scripts simples afin d’aider les petites entreprises locales à gérer leur inventaire. 
-
 En tant que développeur, je suis missionné pour créer un programme de gestion de tournois d'échecs avec les contraintes suivantes :
 
 - Le programme doit pouvoir être éxecuté hors ligne
